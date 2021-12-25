@@ -2,7 +2,6 @@
 // Created by dominic on 17.12.21.
 //
 
-#include "main.hpp"
 #include <iostream>
 
 int main () {
