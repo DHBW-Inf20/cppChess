@@ -17,10 +17,11 @@ int Figure::getVerticalPosition() {
     return this->verticalPosition;
 }
 
-void Figure::setDelta(int delta1, int delta2, bool moveEndless) {
+void Figure::setDelta(int delta1, int delta2, bool moveEndless, bool moveOnlyForward) {
     this->delta1 = delta1;
     this->delta2 = delta2;
     this->moveEndless = moveEndless;
+    this->moveOnlyForward = moveOnlyForward;
 }
 
 int Figure::getDelta1() {
@@ -33,4 +34,8 @@ int Figure::getDelta2() {
 
 bool Figure::isMoveEndless() {
     return this->moveEndless;
+}
+
+bool Figure::isMoveOnlyForward() {
+    return this->moveOnlyForward;
 }

@@ -14,6 +14,7 @@ class Figure {
         int delta1;
         int delta2;
         bool moveEndless;
+        bool moveOnlyForward;
 
     public:
         void setPosition(std::string horizontal, int vertical);
@@ -22,9 +23,10 @@ class Figure {
         int getDelta1();
         int getDelta2();
         bool isMoveEndless();
+        bool isMoveOnlyForward();
 
     protected:
-        void setDelta(int delta1, int delta2, bool moveEndless);
+        void setDelta(int delta1, int delta2, bool moveEndless, bool moveOnlyForward);
 };
 
 

@@ -7,9 +7,9 @@
 
 #include "../Figure.hpp"
 
-class Horse : Figure {
+class Knight : Figure {
     public:
-        Horse();
+    Knight();
 };
 
 
