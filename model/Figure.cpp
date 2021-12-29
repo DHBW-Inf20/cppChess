@@ -4,6 +4,10 @@
 
 #include "Figure.hpp"
 
+void Figure::setName(std::string name) {
+    this->name = name;
+}
+
 void Figure::setPosition(int position) {
     this->position = position;
 }

@@ -4,8 +4,8 @@
 
 #include "Knight.hpp"
 
-Knight::Knight() {
-    this->moveOnlyForward = false;
-    this->moveEndless = false;
+Knight::Knight(std::string name, int position) {
+    this->setName(name);
+    this->setPosition(position);
     this->setDelta(1, 2, false, false);
 }

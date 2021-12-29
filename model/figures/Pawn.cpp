@@ -4,6 +4,8 @@
 
 #include "Pawn.hpp"
 
-Pawn::Pawn() {
+Pawn::Pawn(std::string name, int position) {
+    this->setName(name);
+    this->setPosition(position);
     this->setDelta(1, 0, false, true);
 }

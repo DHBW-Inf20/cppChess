@@ -9,7 +9,7 @@
 
 class Pawn : Figure {
     public:
-        Pawn();
+        Pawn(std::string name, int position);
 };
 
 

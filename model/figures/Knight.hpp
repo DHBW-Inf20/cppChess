@@ -9,7 +9,7 @@
 
 class Knight : Figure {
     public:
-    Knight();
+    Knight(std::string name, int position);
 };
 
 

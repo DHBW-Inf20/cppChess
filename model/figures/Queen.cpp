@@ -4,6 +4,8 @@
 
 #include "Queen.hpp"
 
-Queen::Queen() {
+Queen::Queen(std::string name, int position) {
+    this->setName(name);
+    this->setPosition(position);
     this->setDelta(-1,-1, true, false);
 }

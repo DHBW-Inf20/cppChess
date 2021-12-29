@@ -14,20 +14,21 @@
 #include <vector>
 #include <string>
 
-class Opponent {
+class Player {
     private:
-        Rook* firstRook, secondRook;
-        Bishop firstBishop, secondBishop;
-        Knight firstKnight, secondKnight;
-        Queen queen;
-        King king;
-        Pawn* pawns;
+        bool isWhite;
+        Rook *firstRook, *secondRook;
+        Bishop *firstBishop, *secondBishop;
+        Knight *firstKnight, *secondKnight;
+        Queen *queen;
+        King *king;
+        Pawn *pawns[];
 
     public:
-        Opponent(int line);
-        changeFigurePosition(int oldVertical, char oldHorizontal, int vertical, char horizontal);
-        changeFigurePosition(std::string name, int vertical, char horizontal);
-        ~Opponent();
+        Player(bool isWhite);
+        ~Player();
+        void setIsWhite(bool isWhite);
+        Figure* getPieceAtPosition(int position);
 };
 
 

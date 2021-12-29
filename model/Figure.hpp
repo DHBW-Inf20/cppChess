@@ -9,6 +9,7 @@
 
 class Figure {
     private:
+        std::string name;
         int position;     //Horizontal: pos div 8, Vertikal: pos mod 8. Bsp: 14 -> F2
         int delta1;
         int delta2;
@@ -16,6 +17,7 @@ class Figure {
         bool moveOnlyForward;
 
     public:
+        void setName(std::string name);
         void setPosition(int position);
         int getPosition();
         int getDelta1();

@@ -9,7 +9,7 @@
 
 class King : Figure {
     public:
-        King();
+        King(std::string name, int position);
 };
 
 

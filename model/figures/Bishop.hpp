@@ -9,7 +9,7 @@
 
 class Bishop : Figure {
     public:
-        Bishop();
+        Bishop(std::string name, int position);
 };
 
 

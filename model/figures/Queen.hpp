@@ -9,7 +9,7 @@
 
 class Queen : Figure {
     public:
-        Queen();
+        Queen(std::string name, int position);
 };
 
 
