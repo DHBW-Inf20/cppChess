@@ -4,17 +4,12 @@
 
 #include "Figure.hpp"
 
-void Figure::setPosition(std::string horizontal, int vertical) {
-    this->horizontalPosition = horizontal;
-    this->verticalPosition = vertical;
+void Figure::setPosition(int position) {
+    this->position = position;
 }
 
-std::string Figure::getHorizontalPosition() {
-    return this->horizontalPosition;
-}
-
-int Figure::getVerticalPosition() {
-    return this->verticalPosition;
+int Figure::getPosition() {
+    return this->position;
 }
 
 void Figure::setDelta(int delta1, int delta2, bool moveEndless, bool moveOnlyForward) {

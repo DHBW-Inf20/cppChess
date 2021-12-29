@@ -9,17 +9,15 @@
 
 class Figure {
     private:
-        std::string horizontalPosition;
-        int verticalPosition;
+        int position;     //Horizontal: pos div 8, Vertikal: pos mod 8. Bsp: 14 -> F2
         int delta1;
         int delta2;
         bool moveEndless;
         bool moveOnlyForward;
 
     public:
-        void setPosition(std::string horizontal, int vertical);
-        std::string getHorizontalPosition();
-        int getVerticalPosition();
+        void setPosition(int position);
+        int getPosition();
         int getDelta1();
         int getDelta2();
         bool isMoveEndless();
