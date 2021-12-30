@@ -7,3 +7,8 @@
 Rook::Rook(std::string name, int horizontalPosition, int verticalPosition) : Figure (name, horizontalPosition, verticalPosition) {
     this->setDelta(1, 0, true, false);
 }
+
+std::vector<Move*>* Rook::calcPseudoLegalMoves() {
+    std::vector<Move*>* pseudoLegalMoves = new std::vector<Move*>;
+    return pseudoLegalMoves;
+}

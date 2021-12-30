@@ -6,6 +6,8 @@
 #define YETANOTHERCHESSGAME_FIGURE_H
 
 #include <string>
+#include <vector>
+#include "Move.hpp"
 
 class Figure {
     private:
@@ -32,6 +34,7 @@ class Figure {
         int getDelta2();
         bool isMoveEndless();
         bool isMoveOnlyForward();
+        virtual std::vector<Move*>* calcPseudoLegalMoves() = 0;
 
     protected:
         void setDelta(int delta1, int delta2, bool moveEndless, bool moveOnlyForward);

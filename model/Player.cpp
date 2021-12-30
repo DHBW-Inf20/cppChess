@@ -3,6 +3,7 @@
 //
 
 #include "Player.hpp"
+#include <iostream>
 
 Player::Player(bool isWhite) {
     this->setIsWhite(isWhite);
@@ -60,4 +61,16 @@ std::vector<Figure*>* Player::getUncapturedFigures() {
         }
     }
     return uncapturedFigures;
+}
+
+bool Player::hasFigureOnSquare(int horizontalPosition, int verticalPosition) {
+    std::vector<Figure*>* uncapturedFigures = this->getUncapturedFigures();
+    bool foundFigure = false;
+    for (int i = 0; i < uncapturedFigures->size(); i++) {
+        Figure* f = uncapturedFigures->at(i);
+        if ((f->getHorizontalPosition() == horizontalPosition) && (f->getVerticalPosition() == verticalPosition)) {
+            foundFigure = true;
+        }
+    }
+    return foundFigure;
 }

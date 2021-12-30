@@ -10,6 +10,7 @@
 class Bishop : public Figure {
     public:
         Bishop(std::string name, int horizontalPosition, int verticalPosition);
+        std::vector<Move*>* calcPseudoLegalMoves() override;
 };
 
 

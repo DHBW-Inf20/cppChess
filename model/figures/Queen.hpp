@@ -10,6 +10,7 @@
 class Queen : public Figure {
     public:
         Queen(std::string name, int horizontalPosition, int verticalPosition);
+        std::vector<Move*>* calcPseudoLegalMoves() override;
 };
 
 

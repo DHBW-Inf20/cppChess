@@ -10,6 +10,7 @@
 class Rook : public Figure {
     public:
         Rook(std::string name, int horizontalPosition, int verticalPosition);
+        std::vector<Move*>* calcPseudoLegalMoves() override;
 };
 
 
