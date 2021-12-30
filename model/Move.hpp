@@ -5,6 +5,8 @@
 #ifndef YETANOTHERCHESSGAME_MOVE_H
 #define YETANOTHERCHESSGAME_MOVE_H
 
+#include <string>
+
 class Move {
     private:
         int startHorizontalPosition;
@@ -22,6 +24,7 @@ class Move {
         int getStartVerticalPosition();
         int getEndHorizontalPosition();
         int getEndVerticalPosition();
+        std::string getAsString();
 };
 
 

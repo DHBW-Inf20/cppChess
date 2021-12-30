@@ -3,6 +3,8 @@
 //
 
 #include "Move.hpp"
+#include <string>
+#include <iostream>
 
 Move::Move(int startHorizontalPosition, int startVerticalPosition, int endHorizontalPosition, int endVerticalPosition) {
     this->setStartHorizontalPosition(startHorizontalPosition);
@@ -41,4 +43,17 @@ int Move::getEndHorizontalPosition() {
 
 int Move::getEndVerticalPosition() {
     return this->endVerticalPosition;
+}
+
+std::string Move::getAsString() {
+    std::string outputString = "Startposition: ";
+    outputString += std::to_string(this->getStartHorizontalPosition());
+    outputString += ",";
+    outputString += std::to_string(this->getStartVerticalPosition());
+    outputString += "; Endposition: ";
+    outputString += std::to_string(this->getEndHorizontalPosition());
+    outputString += ",";
+    outputString += std::to_string(this->getEndVerticalPosition());
+    return outputString;
+    //std::cout << this->getStartHorizontalPosition() << "," << this->getStartVerticalPosition() << ";" << this->getEndHorizontalPosition() << "," << this->getEndVerticalPosition() << std::endl;
 }
