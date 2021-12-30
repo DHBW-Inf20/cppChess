@@ -7,15 +7,21 @@
 
 class Move {
     private:
-        int startPos;
-        int endPos;
+        int startHorizontalPosition;
+        int startVerticalPosition;
+        int endHorizontalPosition;
+        int endVerticalPosition;
 
     public: 
-        Move(int startPos, int endPos);
-        void setStartPos(int startPos);
-        void setEndPos(int endPos);
-        int getStartPos();
-        int getEndPos();
+         Move(int startHorizontalPosition, int startVerticalPosition, int endHorizontalPosition, int endVerticalPosition);
+        void setStartHorizontalPosition(int startHorizontalPosition);
+        void setStartVerticalPosition(int startVerticalPosition);
+        void setEndHorizontalPosition(int endHorizontalPosition);
+        void setEndVerticalPosition(int endVerticalPosition);
+        int getStartHorizontalPosition();
+        int getStartVerticalPosition();
+        int getEndHorizontalPosition();
+        int getEndVerticalPosition();
 };
 
 

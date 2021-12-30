@@ -3,7 +3,12 @@
 //
 
 #include <iostream>
+#include "model/Player.hpp"
+
 
 int main () {
-    std::cout << "This is a test!" << std::endl;
+    //just a random test...
+    Player* whitePlayer = new Player(true);
+    std::vector<Figure*>* uncapturedFigures = whitePlayer->getUncapturedFigures();
+    Figure* firstBishop = uncapturedFigures->at(2);
 }

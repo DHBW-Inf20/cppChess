@@ -4,23 +4,41 @@
 
 #include "Move.hpp"
 
-Move::Move(int startPos, int endPos) {
-    this->setStartPos(startPos);
-    this->setEndPos(endPos);
+Move::Move(int startHorizontalPosition, int startVerticalPosition, int endHorizontalPosition, int endVerticalPosition) {
+    this->setStartHorizontalPosition(startHorizontalPosition);
+    this->setStartVerticalPosition(startVerticalPosition);
+    this->setEndHorizontalPosition(endHorizontalPosition);
+    this->setEndVerticalPosition(endVerticalPosition);
 }
 
-void Move::setStartPos(int startPos) {
-    this->startPos = startPos;
+void Move::setStartHorizontalPosition(int startHorizontalPosition) {
+    this->startHorizontalPosition = startHorizontalPosition;
 }
 
-void Move::setEndPos(int endPos) {
-    this->endPos = endPos;
+void Move::setStartVerticalPosition(int startVerticalPosition) {
+    this->startVerticalPosition = startVerticalPosition;
 }
 
-int Move::getStartPos() {
-    return this->startPos;
+void Move::setEndHorizontalPosition(int endHorizontalPosition) {
+    this->endHorizontalPosition = endHorizontalPosition;
 }
 
-int Move::getEndPos() {
-    return this->endPos;
+void Move::setEndVerticalPosition(int endVerticalPosition) {
+    this->endVerticalPosition = endVerticalPosition;
+}
+
+int Move::getStartHorizontalPosition() {
+    return this->startHorizontalPosition;
+}
+
+int Move::getStartVerticalPosition() {
+    return this->startVerticalPosition;
+}
+
+int Move::getEndHorizontalPosition() {
+    return this->endHorizontalPosition;
+}
+
+int Move::getEndVerticalPosition() {
+    return this->endVerticalPosition;
 }

@@ -4,6 +4,6 @@
 
 #include "Pawn.hpp"
 
-Pawn::Pawn(std::string name, int position) : Figure (name, position) {
+Pawn::Pawn(std::string name, int horizontalPosition, int verticalPosition) : Figure (name, horizontalPosition, verticalPosition) {
     this->setDelta(1, 0, false, true);
 }

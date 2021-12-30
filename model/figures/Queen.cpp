@@ -4,6 +4,6 @@
 
 #include "Queen.hpp"
 
-Queen::Queen(std::string name, int position) : Figure (name, position) {
+Queen::Queen(std::string name, int horizontalPosition, int verticalPosition) : Figure (name, horizontalPosition, verticalPosition) {
     this->setDelta(-1,-1, true, false);
 }

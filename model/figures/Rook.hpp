@@ -9,7 +9,7 @@
 
 class Rook : public Figure {
     public:
-        Rook(std::string name, int position);
+        Rook(std::string name, int horizontalPosition, int verticalPosition);
 };
 
 
