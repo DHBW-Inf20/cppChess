@@ -28,6 +28,8 @@ class Player {
         Player(bool isWhite);
         ~Player();
         void setIsWhite(bool isWhite);
+        std::vector<Figure*>* getAllFigures();
+        std::vector<Figure*>* getUncapturedFigures(std::vector<Figure*>& allFigures);
         Figure* getPieceAtPosition(int position);
 };
 

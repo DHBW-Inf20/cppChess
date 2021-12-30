@@ -4,8 +4,6 @@
 
 #include "Knight.hpp"
 
-Knight::Knight(std::string name, int position) {
-    this->setName(name);
-    this->setPosition(position);
+Knight::Knight(std::string name, int position) : Figure (name, position) {
     this->setDelta(1, 2, false, false);
 }

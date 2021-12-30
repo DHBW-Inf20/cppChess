@@ -36,3 +36,26 @@ Player::Player(bool isWhite) {
 void Player::setIsWhite(bool isWhite) {
     this->isWhite = isWhite;
 }
+
+std::vector<Figure*>* Player::getAllFigures() {
+    std::vector<Figure*> *figures = new std::vector<Figure*>;
+    figures -> push_back(this->firstRook);
+    figures -> push_back(this->firstKnight);
+    figures -> push_back(this->firstBishop);
+    figures -> push_back(this->queen);
+    figures -> push_back(this->king);
+    figures -> push_back(this->secondBishop);
+    figures -> push_back(this->secondKnight);
+    figures -> push_back(this->secondRook);
+    return figures;
+}
+
+std::vector<Figure*>* Player::getUncapturedFigures(std::vector<Figure*>& allFigures) {
+    std::vector<Figure*>* uncapturedFigures = new std::vector<Figure*>;
+    for (Figure* f: allFigures) {
+        if (f->getNotCaptured()) {
+            uncapturedFigures->push_back(f);
+        }
+    }
+    return uncapturedFigures;
+}

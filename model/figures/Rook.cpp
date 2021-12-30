@@ -4,8 +4,6 @@
 
 #include "Rook.hpp"
 
-Rook::Rook(std::string name, int position) {
-    this->setName(name);
-    this->setPosition(position);
+Rook::Rook(std::string name, int position) : Figure(name, position) {
     this->setDelta(1, 0, true, false);
 }

@@ -7,7 +7,7 @@
 
 #include "../Figure.hpp"
 
-class Rook : Figure {
+class Rook : public Figure {
     public:
         Rook(std::string name, int position);
 };

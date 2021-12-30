@@ -4,6 +4,12 @@
 
 #include "Figure.hpp"
 
+Figure::Figure(std::string name, int position) {
+    this->setName(name);
+    this->setPosition(position);
+    this->setNotCaptured(true);
+}
+
 void Figure::setName(std::string name) {
     this->name = name;
 }
@@ -12,8 +18,20 @@ void Figure::setPosition(int position) {
     this->position = position;
 }
 
+void Figure::setNotCaptured(bool notCaptured) {
+    this->notCaptured = notCaptured;
+}
+
+std::string Figure::getName() {
+    return this->name;
+}
+
 int Figure::getPosition() {
     return this->position;
+}
+
+bool Figure::getNotCaptured() {
+    return this->notCaptured;
 }
 
 void Figure::setDelta(int delta1, int delta2, bool moveEndless, bool moveOnlyForward) {
