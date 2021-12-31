@@ -10,10 +10,10 @@
 
 int main () {
     //just a random test...
-    Player* firstPlayer = new Player(true);
+    Player* firstPlayer = new Player(false);
     std::vector<Figure*>* uncapturedFigures = firstPlayer->getUncapturedFigures();
     std::cout << uncapturedFigures->size();
-    Figure* firstFigure = uncapturedFigures->at(9);
+    Figure* firstFigure = uncapturedFigures->at(3);
     std::vector<Move*>* allMoves = firstFigure->calcPseudoLegalMoves();
     for (int i = 0; i < allMoves->size(); i++) {
         Move* m = allMoves->at(i);
