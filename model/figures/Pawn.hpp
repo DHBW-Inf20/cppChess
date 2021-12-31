@@ -8,8 +8,9 @@
 #include "../Figure.hpp"
 
 class Pawn : public Figure {
+
     public:
-        Pawn(std::string name, int horizontalPosition, int verticalPosition);
+        Pawn(std::string name, bool isWhite, int horizontalPosition, int verticalPosition);
         std::vector<Move*>* calcPseudoLegalMoves() override;
 };
 

@@ -4,8 +4,8 @@
 
 #include "Queen.hpp"
 
-Queen::Queen(std::string name, int horizontalPosition, int verticalPosition) : Figure (name, horizontalPosition, verticalPosition) {
-    this->setDelta(-1,-1, true, false);
+Queen::Queen(std::string name, bool isWhite, int horizontalPosition, int verticalPosition) : Figure (name, isWhite, horizontalPosition, verticalPosition) {
+    
 }
 
 std::vector<Move*>* Queen::calcPseudoLegalMoves() {

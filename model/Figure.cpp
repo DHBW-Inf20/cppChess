@@ -4,8 +4,9 @@
 
 #include "Figure.hpp"
 
-Figure::Figure(std::string name, int horizontalPosition, int verticalPosition) {
+Figure::Figure(std::string name, bool isWhite, int horizontalPosition, int verticalPosition) {
     this->setName(name);
+    this->setIsWhite(isWhite);
     this->setHorizontalPosition(horizontalPosition);
     this->setVerticalPosition(verticalPosition);
     this->setNotCaptured(true);
@@ -13,6 +14,10 @@ Figure::Figure(std::string name, int horizontalPosition, int verticalPosition) {
 
 void Figure::setName(std::string name) {
     this->name = name;
+}
+
+void Figure::setIsWhite(bool isWhite) {
+    this->isWhite = isWhite;
 }
 
 void Figure::setHorizontalPosition(int horizontalPosition) {
@@ -31,6 +36,10 @@ std::string Figure::getName() {
     return this->name;
 }
 
+bool Figure::getIsWhite() {
+    return this->isWhite;
+}
+
 int Figure::getHorizontalPosition() {
     return this->horizontalPosition;
 }
@@ -41,27 +50,4 @@ int Figure::getVerticalPosition() {
 
 bool Figure::getNotCaptured() {
     return this->notCaptured;
-}
-
-void Figure::setDelta(int delta1, int delta2, bool moveEndless, bool moveOnlyForward) {
-    this->delta1 = delta1;
-    this->delta2 = delta2;
-    this->moveEndless = moveEndless;
-    this->moveOnlyForward = moveOnlyForward;
-}
-
-int Figure::getDelta1() {
-    return this->delta1;
-}
-
-int Figure::getDelta2() {
-    return this->delta2;
-}
-
-bool Figure::isMoveEndless() {
-    return this->moveEndless;
-}
-
-bool Figure::isMoveOnlyForward() {
-    return this->moveOnlyForward;
 }

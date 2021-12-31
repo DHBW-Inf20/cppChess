@@ -8,28 +8,28 @@
 Player::Player(bool isWhite) {
     this->setIsWhite(isWhite);
     if (isWhite) {
-        this->firstRook = new Rook("wR", 1, 1);
-        this->firstKnight = new Knight("wN", 2, 1);
-        this->firstBishop = new Bishop("wB", 3, 1);
-        this->queen = new Queen("wQ", 4, 1);
-        this->king = new King("wK", 5, 1);
-        this->secondBishop = new Bishop("wB", 6, 1);
-        this->secondKnight = new Knight("wN", 7, 1);
-        this->secondRook = new Rook("wR", 8, 1);
-        for (int i = 0; i < 8; i++) {
-            this->pawns[i] = new Pawn("wP", i+1, 2);
+        this->firstRook = new Rook("wR", true, 1, 1);
+        this->firstKnight = new Knight("wN", true, 2, 1);
+        this->firstBishop = new Bishop("wB", true, 3, 1);
+        this->queen = new Queen("wQ", true, 4, 1);
+        this->king = new King("wK", true, 5, 1);
+        this->secondBishop = new Bishop("wB", true, 6, 1);
+        this->secondKnight = new Knight("wN", true, 7, 1);
+        this->secondRook = new Rook("wR", true, 8, 1);
+        for (int i = 1; i <= 8; i++) {
+            this->pawns->push_back(new Pawn("wP", true, i, 2));
         }
     } else {    //isWhite == false
-        this->firstRook = new Rook("bR", 1, 8);
-        this->firstKnight = new Knight("bN", 2, 8);
-        this->firstBishop = new Bishop("bB", 3, 8);
-        this->queen = new Queen("bQ", 4, 8);
-        this->king = new King("bK", 5, 8);
-        this->secondBishop = new Bishop("bB", 6, 8);
-        this->secondKnight = new Knight("bN", 7, 8);
-        this->secondRook = new Rook("bR", 8, 8);
-        for (int i = 0; i < 8; i++) {
-            this->pawns[i] = new Pawn("bP", i+1, 7);
+        this->firstRook = new Rook("bR", false, 1, 8);
+        this->firstKnight = new Knight("bN", false, 2, 8);
+        this->firstBishop = new Bishop("bB", false, 3, 8);
+        this->queen = new Queen("bQ", false, 4, 8);
+        this->king = new King("bK", false, 5, 8);
+        this->secondBishop = new Bishop("bB", false, 6, 8);
+        this->secondKnight = new Knight("bN", false, 7, 8);
+        this->secondRook = new Rook("bR", false, 8, 8);
+        for (int i = 1; i <= 8; i++) {
+            this->pawns->push_back(new Pawn("bP", false, i, 7));
         }
     } 
 }
@@ -48,6 +48,9 @@ std::vector<Figure*>* Player::getAllFigures() {
     figures -> push_back(this->secondBishop);
     figures -> push_back(this->secondKnight);
     figures -> push_back(this->secondRook);
+    for (int i = 0; i < this->pawns->size(); i++) {
+        figures->push_back(this->pawns->at(i));
+    }
     return figures;
 }
 

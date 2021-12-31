@@ -9,7 +9,7 @@
 
 class King : public Figure {
     public:
-        King(std::string name, int horizontalPosition, int verticalPosition);
+        King(std::string name, bool isWhite, int horizontalPosition, int verticalPosition);
         std::vector<Move*>* calcPseudoLegalMoves() override;
 };
 

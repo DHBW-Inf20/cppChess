@@ -5,8 +5,8 @@
 #include "Bishop.hpp"
 #include "../Move.hpp"
 
-Bishop::Bishop(std::string name, int horizontalPosition, int verticalPosition) : Figure (name, horizontalPosition, verticalPosition) {
-    this->setDelta(1,1, true, false);
+Bishop::Bishop(std::string name, bool isWhite, int horizontalPosition, int verticalPosition) : Figure (name, isWhite, horizontalPosition, verticalPosition) {
+    
 }
 
 std::vector<Move*>* Bishop::calcPseudoLegalMoves() {

@@ -22,7 +22,7 @@ class Player {
         Knight *firstKnight, *secondKnight;
         Queen *queen;
         King *king;
-        Pawn *pawns[8];
+        std::vector<Pawn*> *pawns = new std::vector<Pawn*>;
 
     public:
         Player(bool isWhite);

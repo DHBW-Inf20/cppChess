@@ -12,32 +12,24 @@
 class Figure {
     private:
         std::string name;
+        bool isWhite;
         int horizontalPosition;
         int verticalPosition;
         bool notCaptured;
-        int delta1;
-        int delta2;
-        bool moveEndless;
-        bool moveOnlyForward;
 
     public:
-        Figure(std::string name, int horizontalPosition, int verticalPosition);
+        Figure(std::string name, bool isWhite, int horizontalPosition, int verticalPosition);
         void setName(std::string name);
+        void setIsWhite(bool isWhite);
         void setHorizontalPosition(int horizontalPosition);
         void setVerticalPosition(int verticalPosition);
         void setNotCaptured(bool notCaptured);
         std::string getName();
+        bool getIsWhite();
         int getHorizontalPosition();
         int getVerticalPosition();
         bool getNotCaptured();
-        int getDelta1();
-        int getDelta2();
-        bool isMoveEndless();
-        bool isMoveOnlyForward();
         virtual std::vector<Move*>* calcPseudoLegalMoves() = 0;
-
-    protected:
-        void setDelta(int delta1, int delta2, bool moveEndless, bool moveOnlyForward);
 };
 
 

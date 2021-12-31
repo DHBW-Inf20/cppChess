@@ -10,11 +10,12 @@
 
 int main () {
     //just a random test...
-    Player* whitePlayer = new Player(true);
-    std::vector<Figure*>* uncapturedFigures = whitePlayer->getUncapturedFigures();
-    Figure* firstBishop = uncapturedFigures->at(2);
-    std::vector<Move*>* allMoves = firstBishop->calcPseudoLegalMoves();
-    for (long unsigned int i = 0; i < allMoves->size(); i++) {
+    Player* firstPlayer = new Player(true);
+    std::vector<Figure*>* uncapturedFigures = firstPlayer->getUncapturedFigures();
+    std::cout << uncapturedFigures->size();
+    Figure* firstFigure = uncapturedFigures->at(9);
+    std::vector<Move*>* allMoves = firstFigure->calcPseudoLegalMoves();
+    for (int i = 0; i < allMoves->size(); i++) {
         Move* m = allMoves->at(i);
         std::cout << m->getAsString() << std::endl;
     }
