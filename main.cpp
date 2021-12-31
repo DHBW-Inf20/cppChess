@@ -14,7 +14,7 @@ int main () {
     std::vector<Figure*>* uncapturedFigures = whitePlayer->getUncapturedFigures();
     Figure* firstBishop = uncapturedFigures->at(2);
     std::vector<Move*>* allMoves = firstBishop->calcPseudoLegalMoves();
-    for (int i = 0; i < allMoves->size(); i++) {
+    for (long unsigned int i = 0; i < allMoves->size(); i++) {
         Move* m = allMoves->at(i);
         std::cout << m->getAsString() << std::endl;
     }

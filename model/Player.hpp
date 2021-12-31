@@ -22,7 +22,7 @@ class Player {
         Knight *firstKnight, *secondKnight;
         Queen *queen;
         King *king;
-        Pawn *pawns[];
+        Pawn *pawns[8];
 
     public:
         Player(bool isWhite);

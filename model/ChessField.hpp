@@ -7,8 +7,17 @@
 
 #include <vector>
 
+#include "Player.hpp"
+
 class ChessField {
 
+    public:
+        ChessField(Player player1, Player player2);
+        bool repaint();
+
+    private:
+        Player player1 = new Player(false);
+        Player player2 = new Player(true);
 };
 
 

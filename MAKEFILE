@@ -1,8 +1,8 @@
 start:
 	./main.o
 
-main: main.cpp
-	g++ -o main.o main.cpp
+all:
+	g++ -I model -o main.o main.cpp
 
 clean:
 	rm -rf *.o
