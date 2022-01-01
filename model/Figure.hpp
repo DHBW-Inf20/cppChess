@@ -29,7 +29,11 @@ class Figure {
         int getHorizontalPosition();
         int getVerticalPosition();
         bool getNotCaptured();
+        std::string returnIcon();
         virtual std::vector<Move*>* calcPseudoLegalMoves() = 0;
+
+    protected:
+        std::string icon;
 };
 
 

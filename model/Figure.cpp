@@ -51,3 +51,7 @@ int Figure::getVerticalPosition() {
 bool Figure::getNotCaptured() {
     return this->notCaptured;
 }
+
+std::string Figure::returnIcon() {
+    return this->icon;
+}

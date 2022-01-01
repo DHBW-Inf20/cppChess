@@ -5,7 +5,11 @@
 #include "Pawn.hpp"
 
 Pawn::Pawn(std::string name, bool isWhite, int horizontalPosition, int verticalPosition) : Figure (name, isWhite, horizontalPosition, verticalPosition) {
-    
+    if(isWhite) {
+        this->icon = "\u2659";
+    } else {
+        this->icon = "\u265F";
+    }
 }
 
 std::vector<Move*>* Pawn::calcPseudoLegalMoves() {

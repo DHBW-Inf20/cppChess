@@ -15,49 +15,49 @@ ChessField::ChessField(Player* player1, Player* player2) {
     this->currentPlayer = 1;
 }
 
+std::string printField(int horizontal, int vertical, std::string icon) {
+    std::string tmp;
+    if((vertical % 2 == 1 && horizontal % 2 == 1) || (vertical % 2 == 0 && horizontal % 2 == 0)) {
+        tmp = "\u25A1";
+    } else {
+        tmp = "\u25A0";
+    }
+    if(icon != "") {
+        tmp = icon;
+    }
+    return tmp;
+}
+
+
 bool ChessField::repaint() {
     try {
-        std::cout << "   A    B    C    D    E    F    G    H" << std::endl;
-        for(int rows = 0; rows <= 7; rows++) {
-            std::cout << " ";
-            for(int columns = 0; columns<=7; columns++) {
-                std::cout << "-----";
-            }
-            std::cout << "-" << std::endl;
+        std::cout << "    A   B   C   D   E   F   G   H" << std::endl;
+        std::cout << "  *********************************" << std::endl;
+        for(int row = 1; row <= 8; row++) {
 
-            std::cout << (rows + 1);
-            for(int columns = 0; columns<=7; columns++) {
-                bool fieldHasFigure = false;
+            std::cout << row << " ";
+            for(int column = 1; column <= 8; column++) {
+                std::string icon = "";
                 for(Figure* figure : *this->player1->getAllFigures()) {
-                    if(rows + 1 == figure->getVerticalPosition() && columns + 1 == figure->getHorizontalPosition() && figure->getNotCaptured()) {
-                        std::cout << "| " << figure->getName() << " ";
-                        fieldHasFigure = true;
+                    if(column == figure->getHorizontalPosition() && row == figure->getVerticalPosition() && figure->getNotCaptured()) {
+                        icon = figure->returnIcon();
                         break;
                     }
                 }
-                if(!fieldHasFigure) {
+                if(icon == "") {
                     for(Figure* figure : *this->player2->getAllFigures()) {
-                        if(rows + 1 == figure->getVerticalPosition() && columns + 1 == figure->getHorizontalPosition() && figure->getNotCaptured()) {
-                            std::cout << "| " << figure->getName() << " ";
-                            fieldHasFigure = true;
+                        if(column == figure->getHorizontalPosition() && row == figure->getVerticalPosition() && figure->getNotCaptured()) {
+                            icon = figure->returnIcon();
                             break;
                         }
                     }
                 }
-
-                if(!fieldHasFigure) {
-                    std::cout << "|    ";
-                }
+                std::cout << "* " << printField(column, row, icon) << " ";
             }
-            std::cout << "|" << std::endl;
-        }
+            std::cout << "*" << std::endl;
 
-        std::cout << " ";
-        for(int columns = 0; columns<=7; columns++) {
-            std::cout << "-----";
+            std::cout << "  *********************************" << std::endl;
         }
-        std::cout << "-" << std::endl;
-
     } catch(std::exception *ex) {
         std::cout << ex->what() << std::endl;
         return false;
