@@ -11,6 +11,7 @@
 #include "figures/King.hpp"
 #include "figures/Queen.hpp"
 #include "figures/Pawn.hpp"
+#include "Figure.hpp"
 #include <vector>
 #include <string>
 
@@ -30,7 +31,7 @@ class Player {
         void setIsWhite(bool isWhite);
         std::vector<Figure*>* getAllFigures();
         std::vector<Figure*>* getUncapturedFigures();
-        Figure* getPieceAtPosition(int position);
+        Figure* getPieceAtPosition(int horizontalPosition, int verticalPosition);
         bool hasFigureOnSquare(int horizontalPosition, int verticalPosition);
 };
 
