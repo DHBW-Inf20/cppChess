@@ -2,7 +2,7 @@ start:
 	./main.o
 
 all:
-	g++ -I model -o main.o main.cpp
+	g++ main.cpp -I ./model -o main.o
 
 clean:
 	rm -rf *.o

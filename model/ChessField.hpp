@@ -10,14 +10,16 @@
 #include "Player.hpp"
 
 class ChessField {
-
     public:
-        ChessField(Player player1, Player player2);
+        ChessField(Player* player1, Player* player2);
         bool repaint();
+        void move();
+        ~ChessField();
 
     private:
-        Player player1 = new Player(false);
-        Player player2 = new Player(true);
+        Player* player1;
+        Player* player2;
+        int currentPlayer;
 };
 
 

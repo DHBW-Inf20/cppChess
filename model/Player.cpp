@@ -77,3 +77,18 @@ bool Player::hasFigureOnSquare(int horizontalPosition, int verticalPosition) {
     }
     return foundFigure;
 }
+
+Player::~Player() {
+
+}
+
+Figure *Player::getPieceAtPosition(int position) {
+    std::vector<Figure*>* figures = this->getAllFigures();
+    for(Figure* figure : *figures) {
+        if(figure->getNotCaptured() && figure->getHorizontalPosition() == (position % 8) && figure->getVerticalPosition() == (position / 8) + 1) {
+            return figure;
+        }
+    }
+
+    return nullptr;
+}
