@@ -16,15 +16,15 @@ ChessField::ChessField(Player* player1, Player* player2) {
     this->currentPlayer = 1;
 }
 
-std::string printField(int horizontal, int vertical, std::string icon) {
+std::string printField(int horizontal, int vertical, Figure* figure) {
     std::string tmp;
     if((vertical % 2 == 1 && horizontal % 2 == 1) || (vertical % 2 == 0 && horizontal % 2 == 0)) {
         tmp = "\u25A1";
     } else {
         tmp = "\u25A0";
     }
-    if(icon != "") {
-        tmp = icon;
+    if(figure != nullptr) {
+        tmp = figure->returnIcon();
     }
     return tmp;
 }
@@ -38,22 +38,22 @@ bool ChessField::repaint() {
 
             std::cout << row << " ";
             for(int column = 1; column <= 8; column++) {
-                std::string icon = "";
+                Figure* f = nullptr;
                 for(Figure* figure : *this->player1->getAllFigures()) {
                     if(column == figure->getHorizontalPosition() && row == figure->getVerticalPosition() && figure->getNotCaptured()) {
-                        icon = figure->returnIcon();
+                        f = figure;
                         break;
                     }
                 }
-                if(icon == "") {
+                if(f == nullptr) {
                     for(Figure* figure : *this->player2->getAllFigures()) {
                         if(column == figure->getHorizontalPosition() && row == figure->getVerticalPosition() && figure->getNotCaptured()) {
-                            icon = figure->returnIcon();
+                            f = figure;
                             break;
                         }
                     }
                 }
-                std::cout << "* " << printField(column, row, icon) << " ";
+                std::cout << "* " << printField(column, row, f) << " ";
             }
             std::cout << "*" << std::endl;
 
