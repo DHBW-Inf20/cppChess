@@ -66,16 +66,15 @@ std::vector<Figure*>* Player::getUncapturedFigures() {
     return uncapturedFigures;
 }
 
-bool Player::hasFigureOnSquare(int horizontalPosition, int verticalPosition) {
+Figure* Player::hasFigureOnSquare(int horizontalPosition, int verticalPosition) {
     std::vector<Figure*>* uncapturedFigures = this->getUncapturedFigures();
-    bool foundFigure = false;
     for (int i = 0; i < uncapturedFigures->size(); i++) {
         Figure* f = uncapturedFigures->at(i);
         if ((f->getHorizontalPosition() == horizontalPosition) && (f->getVerticalPosition() == verticalPosition)) {
-            foundFigure = true;
+            return f;
         }
     }
-    return foundFigure;
+    return nullptr;
 }
 
 Player::~Player() {

@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include "Player.hpp"
+#include "../helper/Converter.cpp"
 
 ChessField::ChessField(Player* player1, Player* player2) {
     this->player1 = player1;
@@ -58,6 +59,7 @@ bool ChessField::repaint() {
 
             std::cout << "  *********************************" << std::endl;
         }
+        std::cout << "    A   B   C   D   E   F   G   H" << std::endl;
     } catch(std::exception *ex) {
         std::cout << ex->what() << std::endl;
         return false;
@@ -65,64 +67,17 @@ bool ChessField::repaint() {
     return true;
 }
 
-unsigned int convertPos(std::string position) {
-    char hor = position[1];
-    unsigned int vert = std::stoi(position.substr(0));
-
-    switch(hor) {
-        case 'A':
-            return vert;
-        case 'B':
-            return 2 * vert;
-        case 'C':
-            return 3 * vert;
-        case 'D':
-            return 4 * vert;
-        case 'E':
-            return 5 * vert;
-        case 'F':
-            return 6 * vert;
-        case 'G':
-            return 7 * vert;
-        case 'H':
-            return 8 * vert;
-        default:
-            return -1;
-    }
-}
-
-std::string convertPos(int vert, int hor) {
-
-    switch(hor) {
-        case 1:
-            return "A" + std::to_string(vert);
-        case 2:
-            return "B" + std::to_string(vert);
-        case 3:
-            return "C" + std::to_string(vert);
-        case 4:
-            return "D" + std::to_string(vert);
-        case 5:
-            return "E" + std::to_string(vert);
-        case 6:
-            return "F" + std::to_string(vert);
-        case 7:
-            return "G" + std::to_string(vert);
-        case 8:
-            return "H" + std::to_string(vert);
-        default:
-            return "";
-    }
-}
-
 void ChessField::move() {
-    Player* tmp;
+    Player* current;
+    Player* opponent;
     std::cout << "It's the turn of Player " << this->currentPlayer << std::endl;
     if(this->currentPlayer == 1) {
-        tmp = this->player1;
+        current = this->player1;
+        opponent = this->player2;
         this->currentPlayer = 2;
     } else {
-        tmp = this->player2;
+        current = this->player2;
+        opponent = this->player1;
         this->currentPlayer = 1;
     }
 
@@ -133,20 +88,29 @@ void ChessField::move() {
 
 
     std::cout << "Possible Moves:" << std::endl;
-    Figure* selectedFigure = tmp->getPieceAtPosition((int) convertPos(position));
+    Figure* selectedFigure = current->getPieceAtPosition((int) convertHorizontal(position), (int) convertVertical(&position));
 
     int i = 1;
     std::vector<Move *>* moves = selectedFigure->calcPseudoLegalMoves();
     for(Move* possible : *moves) {
-        std::cout << i << ". " << convertPos(possible->getEndHorizontalPosition(), possible->getEndVerticalPosition()) << std::endl;
+        std::cout << i << ". " << convertPos(possible->getEndVerticalPosition(), possible->getEndHorizontalPosition()) << std::endl;
         i++;
     }
 
     int choice;
     std::cout << "Your choice:";
     std::cin >> choice;
-    selectedFigure->setVerticalPosition(moves->at(choice-1)->getEndVerticalPosition());
-    selectedFigure->setHorizontalPosition(moves->at(choice-1)->getEndHorizontalPosition());
+
+    Move* mv = moves->at(choice-1);
+    selectedFigure->setVerticalPosition(mv->getEndVerticalPosition());
+    selectedFigure->setHorizontalPosition(mv->getEndHorizontalPosition());
+    std::cout << mv->getAsString() << std::endl;
+
+    Figure* f = opponent->hasFigureOnSquare(mv->getEndHorizontalPosition(), mv->getEndVerticalPosition());
+    if(f != nullptr) {
+        std::cout << f->getName() << " was captured!" << std::endl;
+        f->setNotCaptured(false);
+    }
 }
 
 ChessField::~ChessField() {

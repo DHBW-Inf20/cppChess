@@ -55,5 +55,4 @@ std::string Move::getAsString() {
     outputString += ",";
     outputString += std::to_string(this->getEndVerticalPosition());
     return outputString;
-    //std::cout << this->getStartHorizontalPosition() << "," << this->getStartVerticalPosition() << ";" << this->getEndHorizontalPosition() << "," << this->getEndVerticalPosition() << std::endl;
 }

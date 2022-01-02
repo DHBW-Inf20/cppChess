@@ -32,7 +32,7 @@ class Player {
         std::vector<Figure*>* getAllFigures();
         std::vector<Figure*>* getUncapturedFigures();
         Figure* getPieceAtPosition(int horizontal, int vertical);
-        bool hasFigureOnSquare(int horizontalPosition, int verticalPosition);
+        Figure* hasFigureOnSquare(int horizontalPosition, int verticalPosition);
 };
 
 
