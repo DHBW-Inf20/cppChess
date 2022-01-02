@@ -11,6 +11,7 @@
 #include "figures/King.hpp"
 #include "figures/Queen.hpp"
 #include "figures/Pawn.hpp"
+#include "Figure.hpp"
 #include <vector>
 #include <string>
 
