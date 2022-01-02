@@ -30,7 +30,7 @@ class Player {
         void setIsWhite(bool isWhite);
         std::vector<Figure*>* getAllFigures();
         std::vector<Figure*>* getUncapturedFigures();
-        Figure* getPieceAtPosition(int position);
+        Figure* getPieceAtPosition(int horizontal, int vertical);
         bool hasFigureOnSquare(int horizontalPosition, int verticalPosition);
 };
 

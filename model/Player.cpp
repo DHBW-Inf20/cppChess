@@ -82,10 +82,10 @@ Player::~Player() {
 
 }
 
-Figure *Player::getPieceAtPosition(int position) {
+Figure *Player::getPieceAtPosition(int horizontal, int vertical) {
     std::vector<Figure*>* figures = this->getAllFigures();
     for(Figure* figure : *figures) {
-        if(figure->getNotCaptured() && figure->getHorizontalPosition() == (position % 8) && figure->getVerticalPosition() == (position / 8) + 1) {
+        if(figure->getNotCaptured() && figure->getHorizontalPosition() == horizontal && figure->getVerticalPosition() == vertical) {
             return figure;
         }
     }
