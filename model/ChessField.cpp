@@ -14,6 +14,7 @@ ChessField::ChessField(Player* player1, Player* player2) {
     this->player1 = player1;
     this->player2 = player2;
     this->currentPlayer = 1;
+    this->moveController = new MoveController(player1, player2);
 }
 
 std::string printField(int horizontal, int vertical, Figure* figure) {
@@ -67,12 +68,6 @@ bool ChessField::repaint() {
     return true;
 }
 
-bool validMove(Player* current, Player* opponent, Figure* f, std::vector<Move *>* moves) {
-    std::vector<Move *>* validMoves = new std::vector<Move *>*();
-    for(Move* move : *moves) {
-
-    }
-}
 
 void ChessField::move() {
     Player* current;

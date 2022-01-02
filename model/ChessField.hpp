@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "Player.hpp"
+#include "MoveController.hpp"
 
 #define WHITE_SQUARE 0xDB
 #define BLACK_SQUARE 0xFF
@@ -22,6 +23,7 @@ class ChessField {
     private:
         Player* player1;
         Player* player2;
+        MoveController* moveController;
         int currentPlayer;
 };
 

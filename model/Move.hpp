@@ -15,7 +15,7 @@ class Move {
         int endVerticalPosition;
 
     public: 
-         Move(int startHorizontalPosition, int startVerticalPosition, int endHorizontalPosition, int endVerticalPosition);
+        Move(int startHorizontalPosition, int startVerticalPosition, int endHorizontalPosition, int endVerticalPosition);
         void setStartHorizontalPosition(int startHorizontalPosition);
         void setStartVerticalPosition(int startVerticalPosition);
         void setEndHorizontalPosition(int endHorizontalPosition);
