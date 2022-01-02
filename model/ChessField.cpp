@@ -67,6 +67,13 @@ bool ChessField::repaint() {
     return true;
 }
 
+bool validMove(Player* current, Player* opponent, Figure* f, std::vector<Move *>* moves) {
+    std::vector<Move *>* validMoves = new std::vector<Move *>*();
+    for(Move* move : *moves) {
+
+    }
+}
+
 void ChessField::move() {
     Player* current;
     Player* opponent;
