@@ -53,7 +53,14 @@ std::vector<Move*>* MoveController::getPseudoLegalMoves(Figure* figure) {
 }
 
 std::vector<Move*>* MoveController::getPseudoLegalMovesForAll(std::vector<Figure*>* figures) {
-    return nullptr;
+    std::vector<Move*>* allPseudoLegalMoves = new std::vector<Move*>();
+    for (Figure* figure : *figures) {
+        std::vector<Move*>* figurePseudoLegalMoves = this->getPseudoLegalMoves(figure);
+        for (Move* move : *figurePseudoLegalMoves) {
+            allPseudoLegalMoves->push_back(move);
+        }
+    }
+    return allPseudoLegalMoves;
 }
 
 std::vector<Move*>* MoveController::getBishopMoves(Bishop* bishop) {

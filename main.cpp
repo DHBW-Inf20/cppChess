@@ -16,7 +16,8 @@ int main () {
     Player* secondPlayer = new Player(false);
     Figure* figure = firstPlayer->getUncapturedFigures()->at(4);
     MoveController* moveController = new MoveController(firstPlayer, secondPlayer);
-    std::vector<Move*>* allMoves = moveController->getPseudoLegalMoves(figure);
+    //std::vector<Move*>* allMoves = moveController->getPseudoLegalMoves(figure);
+    std::vector<Move*>* allMoves = moveController->getPseudoLegalMovesForAll(firstPlayer->getUncapturedFigures());
     if (allMoves->size() > 0) {
         for (int i = 0; i < allMoves->size(); i++) {
             Move* m = allMoves->at(i);
@@ -25,7 +26,6 @@ int main () {
     } else {
         std::cout << "Diese Figur hat keine Zuege!" << std::endl;
     }
-    
 
     /*Player* firstPlayer = new Player(true);
     Player* secondPlayer = new Player(false);
