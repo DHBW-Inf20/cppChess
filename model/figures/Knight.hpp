@@ -10,8 +10,7 @@
 class Knight : public Figure {
     public:
         Knight(std::string name, bool isWhite, int horizontalPosition, int verticalPosition);
-        std::vector<Move*>* calcPseudoLegalMoves() override;
+        ~Knight() override;
 };
-
 
 #endif //YETANOTHERCHESSGAME_HORSE_H

@@ -10,25 +10,22 @@
 //#include "model/ChessField.hpp"
 
 int main () {
-    //just a random test...
-    /*Player* firstPlayer = new Player(true);
-    std::vector<Figure*>* uncapturedFigures = firstPlayer->getUncapturedFigures();
-    Figure* firstFigure = uncapturedFigures->at(2);
-    std::vector<Move*>* allMoves = firstFigure->calcPseudoLegalMoves();
-    for (int i = 0; i < allMoves->size(); i++) {
-        Move* m = allMoves->at(i);
-        std::cout << m->getAsString() << std::endl;
-    }*/
-
+    
+    //move calculation test...
     Player* firstPlayer = new Player(true);
     Player* secondPlayer = new Player(false);
-    Figure* figure = firstPlayer->getUncapturedFigures()->at(2);
+    Figure* figure = firstPlayer->getUncapturedFigures()->at(4);
     MoveController* moveController = new MoveController(firstPlayer, secondPlayer);
     std::vector<Move*>* allMoves = moveController->getPseudoLegalMoves(figure);
-    for (int i = 0; i < allMoves->size(); i++) {
-        Move* m = allMoves->at(i);
-        std::cout << m->getAsString() << std::endl;
+    if (allMoves->size() > 0) {
+        for (int i = 0; i < allMoves->size(); i++) {
+            Move* m = allMoves->at(i);
+            std::cout << m->getAsString() << std::endl;
+        }
+    } else {
+        std::cout << "Diese Figur hat keine Zuege!" << std::endl;
     }
+    
 
     /*Player* firstPlayer = new Player(true);
     Player* secondPlayer = new Player(false);

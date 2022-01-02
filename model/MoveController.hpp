@@ -1,5 +1,5 @@
 //
-// Created by dominic on 28.12.21.
+// Created by jannik on 02.01.22.
 //
 
 #ifndef YETANOTHERCHESSGAME_MOVECONTROLLER_H
@@ -14,10 +14,14 @@ class MoveController {
         MoveController(Player* whitePlayer, Player* blackPlayer);
         std::vector<Move*>* getPseudoLegalMoves(Figure* figure);
         std::vector<Move*>* getPseudoLegalMovesForAll(std::vector<Figure*>* figures);
+        void addMoveToHistory(Move* move);
+        Move* getMoveAtIndex(int index);
+        Move* getLastMove();
 
     private:
         Player* whitePlayer;
         Player* blackPlayer;
+        std::vector<Move*>* moveHistory = new std::vector<Move*>();
         std::vector<Move*>* getBishopMoves(Bishop* bishop);
         std::vector<Move*>* getKingMoves(King* king);
         std::vector<Move*>* getKnightMoves(Knight* knight);

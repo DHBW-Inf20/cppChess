@@ -19,6 +19,7 @@ class Figure {
 
     public:
         Figure(std::string name, bool isWhite, int horizontalPosition, int verticalPosition);
+        virtual ~Figure() = default;
         void setName(std::string name);
         void setIsWhite(bool isWhite);
         void setHorizontalPosition(int horizontalPosition);
@@ -30,7 +31,6 @@ class Figure {
         int getVerticalPosition();
         bool getNotCaptured();
         std::string returnIcon();
-        virtual std::vector<Move*>* calcPseudoLegalMoves() = 0;
 
     protected:
         std::string icon;

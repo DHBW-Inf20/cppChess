@@ -87,13 +87,11 @@ void ChessField::move() {
     std::cout << "Enter the position of your figure:";
     std::cin >> position;
 
-
-
     std::cout << "Possible Moves:" << std::endl;
     Figure* selectedFigure = current->getPieceAtPosition((int) convertHorizontal(position), (int) convertVertical(&position));
 
     int i = 1;
-    std::vector<Move *>* moves = selectedFigure->calcPseudoLegalMoves();
+    std::vector<Move *>* moves = this->moveController->getPseudoLegalMoves(selectedFigure);
     for(Move* possible : *moves) {
         std::cout << i << ". " << convertPos(possible->getEndVerticalPosition(), possible->getEndHorizontalPosition()) << std::endl;
         i++;
@@ -104,6 +102,7 @@ void ChessField::move() {
     std::cin >> choice;
 
     Move* mv = moves->at(choice-1);
+    this->moveController->addMoveToHistory(mv);
     selectedFigure->setVerticalPosition(mv->getEndVerticalPosition());
     selectedFigure->setHorizontalPosition(mv->getEndHorizontalPosition());
     std::cout << mv->getAsString() << std::endl;

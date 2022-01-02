@@ -10,7 +10,12 @@
 class King : public Figure {
     public:
         King(std::string name, bool isWhite, int horizontalPosition, int verticalPosition);
-        std::vector<Move*>* calcPseudoLegalMoves() override;
+        ~King() override;
+        bool getCanCastle();
+        void setCanCastle(bool canCastle);
+
+    private:
+        bool canCastle;
 };
 
 

@@ -10,9 +10,21 @@ King::King(std::string name, bool isWhite, int horizontalPosition, int verticalP
     } else {
         this->icon = "\u265A";
     }
+
+    this->setCanCastle(true);
 }
 
-std::vector<Move*>* King::calcPseudoLegalMoves() {
+King::~King() {}
+
+void King::setCanCastle(bool canCastle) {
+    this->canCastle = canCastle;
+}
+
+bool King::getCanCastle() {
+    return this->canCastle;
+}
+
+/*std::vector<Move*>* King::calcPseudoLegalMoves() {
     int figHorizontalPosition = this->getHorizontalPosition();
     int figVerticalPosition = this->getVerticalPosition();
     std::vector<Move*>* pseudoLegalMoves = new std::vector<Move*>;
@@ -56,4 +68,4 @@ std::vector<Move*>* King::calcPseudoLegalMoves() {
     }
 
     return pseudoLegalMoves;
-}
+}*/

@@ -11,7 +11,12 @@ class Pawn : public Figure {
 
     public:
         Pawn(std::string name, bool isWhite, int horizontalPosition, int verticalPosition);
-        std::vector<Move*>* calcPseudoLegalMoves() override;
+        ~Pawn() override;
+        void incrementMoveCounter();
+        int getMoveCounter();
+
+    private:
+        int moveCounter;
 };
 
 
