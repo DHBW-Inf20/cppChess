@@ -6,8 +6,8 @@
 #define YETANOTHERCHESSGAME_CASTLE_H
 
 #include "Move.hpp"
-#include "figures/King.hpp"
-#include "figures/Rook.hpp"
+#include "../figures/King.hpp"
+#include "../figures/Rook.hpp"
 
 class Castle : public Move {
 

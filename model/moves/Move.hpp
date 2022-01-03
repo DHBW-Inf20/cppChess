@@ -6,7 +6,7 @@
 #define YETANOTHERCHESSGAME_MOVE_H
 
 #include <string>
-#include "Figure.hpp"
+#include "../Figure.hpp"
 
 class Move {
     private:

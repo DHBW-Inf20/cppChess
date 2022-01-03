@@ -3,11 +3,12 @@
 //
 
 #include "ChessField.hpp"
+#include "Player.hpp"
+#include "../helper/Converter.cpp"
+
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Player.hpp"
-#include "../helper/Converter.cpp"
 
 ChessField::ChessField(Player* player1, Player* player2) {
     this->player1 = player1;
