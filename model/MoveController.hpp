@@ -6,6 +6,7 @@
 #define YETANOTHERCHESSGAME_MOVECONTROLLER_H
 
 #include "Player.hpp"
+#include "Move.hpp"
 #include <vector>
 
 class MoveController {

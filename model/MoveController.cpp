@@ -89,7 +89,7 @@ std::vector<Move*>* MoveController::getBishopMoves(Bishop* bishop) {
             if (opponent->hasFigureOnSquare(calcHorizontalPosition, calcVerticalPosition)) {
                 breakPoint = true;
             }
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, calcHorizontalPosition, calcVerticalPosition));
+            pseudoLegalMoves->push_back(new Move(bishop, calcHorizontalPosition, calcVerticalPosition));
         } else {
             breakPoint = true;
         } 
@@ -106,7 +106,7 @@ std::vector<Move*>* MoveController::getBishopMoves(Bishop* bishop) {
             if (opponent->hasFigureOnSquare(calcHorizontalPosition, calcVerticalPosition)) {
                 breakPoint = true;
             }
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, calcHorizontalPosition, calcVerticalPosition));
+            pseudoLegalMoves->push_back(new Move(bishop, calcHorizontalPosition, calcVerticalPosition));
         } else {
             breakPoint = true;
         } 
@@ -123,7 +123,7 @@ std::vector<Move*>* MoveController::getBishopMoves(Bishop* bishop) {
             if (opponent->hasFigureOnSquare(calcHorizontalPosition, calcVerticalPosition)) {
                 breakPoint = true;
             }
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, calcHorizontalPosition, calcVerticalPosition));
+            pseudoLegalMoves->push_back(new Move(bishop, calcHorizontalPosition, calcVerticalPosition));
         } else {
             breakPoint = true;
         } 
@@ -140,7 +140,7 @@ std::vector<Move*>* MoveController::getBishopMoves(Bishop* bishop) {
             if (opponent->hasFigureOnSquare(calcHorizontalPosition, calcVerticalPosition)) {
                 breakPoint = true;
             }
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, calcHorizontalPosition, calcVerticalPosition));
+            pseudoLegalMoves->push_back(new Move(bishop, calcHorizontalPosition, calcVerticalPosition));
         } else {
             breakPoint = true;
         } 
@@ -167,15 +167,15 @@ std::vector<Move*>* MoveController::getKingMoves(King* king) {
     if (figHorizontalPosition+1 <= 8) {
         //rechts oben
         if (figVerticalPosition+1 <= 8 && !owner->hasFigureOnSquare(figHorizontalPosition+1, figVerticalPosition+1)) {
-                pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition+1, figVerticalPosition+1));
+                pseudoLegalMoves->push_back(new Move(king, figHorizontalPosition+1, figVerticalPosition+1));
         }
         //rechts mittig
         if (!owner->hasFigureOnSquare(figHorizontalPosition+1, figVerticalPosition)) {
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition+1, figVerticalPosition));
+            pseudoLegalMoves->push_back(new Move(king, figHorizontalPosition+1, figVerticalPosition));
         }
         //rechts unten
         if (figVerticalPosition-1 >= 1 && !owner->hasFigureOnSquare(figHorizontalPosition+1, figVerticalPosition-1)) {
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition+1, figVerticalPosition-1));
+            pseudoLegalMoves->push_back(new Move(king, figHorizontalPosition+1, figVerticalPosition-1));
         }
     }
 
@@ -183,26 +183,26 @@ std::vector<Move*>* MoveController::getKingMoves(King* king) {
     if (figHorizontalPosition-1 >= 1) {
         //links oben
         if (figVerticalPosition+1 <= 8 && !owner->hasFigureOnSquare(figHorizontalPosition-1, figVerticalPosition+1)) {
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition-1, figVerticalPosition+1));
+            pseudoLegalMoves->push_back(new Move(king, figHorizontalPosition-1, figVerticalPosition+1));
         }
         //links mittig
         if (!owner->hasFigureOnSquare(figHorizontalPosition-1, figVerticalPosition)) {
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition-1, figVerticalPosition));
+            pseudoLegalMoves->push_back(new Move(king, figHorizontalPosition-1, figVerticalPosition));
         }
         //links unten
         if (figVerticalPosition-1 >= 1 && !owner->hasFigureOnSquare(figHorizontalPosition-1, figVerticalPosition-1)) {
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition-1, figVerticalPosition-1));
+            pseudoLegalMoves->push_back(new Move(king, figHorizontalPosition-1, figVerticalPosition-1));
         }
     }
 
     //oben
     if (figVerticalPosition+1 <= 8 && !owner->hasFigureOnSquare(figHorizontalPosition, figVerticalPosition+1)) {
-        pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition, figVerticalPosition+1));
+        pseudoLegalMoves->push_back(new Move(king, figHorizontalPosition, figVerticalPosition+1));
     }
 
     //unten
     if (figVerticalPosition-1 >= 1 && !owner->hasFigureOnSquare(figHorizontalPosition, figVerticalPosition-1)) {
-        pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition, figVerticalPosition-1));
+        pseudoLegalMoves->push_back(new Move(king, figHorizontalPosition, figVerticalPosition-1));
     }
 
     return pseudoLegalMoves;
@@ -228,12 +228,12 @@ std::vector<Move*>* MoveController::getKnightMoves(Knight* knight) {
     if (figHorizontalPosition+2 <= 8) {
         if (figVerticalPosition+1 <= 8) {
             if (!owner->hasFigureOnSquare(figHorizontalPosition+2, figVerticalPosition+1)) {
-                pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition+2, figVerticalPosition+1));
+                pseudoLegalMoves->push_back(new Move(knight, figHorizontalPosition+2, figVerticalPosition+1));
             }
         }
         if (figVerticalPosition-1 >= 1) {
             if (!owner->hasFigureOnSquare(figHorizontalPosition+2, figVerticalPosition-1)) {
-                pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition+2, figVerticalPosition-1));
+                pseudoLegalMoves->push_back(new Move(knight, figHorizontalPosition+2, figVerticalPosition-1));
             }
         }
     }
@@ -242,12 +242,12 @@ std::vector<Move*>* MoveController::getKnightMoves(Knight* knight) {
     if (figHorizontalPosition-2 >= 1) {
         if (figVerticalPosition+1 <= 8) {
             if (!owner->hasFigureOnSquare(figHorizontalPosition-2, figVerticalPosition+1)) {
-                pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition-2, figVerticalPosition+1));
+                pseudoLegalMoves->push_back(new Move(knight, figHorizontalPosition-2, figVerticalPosition+1));
             }
         }
         if (figVerticalPosition-1 >= 1) {
             if (!owner->hasFigureOnSquare(figHorizontalPosition-2, figVerticalPosition-1)) {
-                pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition-2, figVerticalPosition-1));
+                pseudoLegalMoves->push_back(new Move(knight, figHorizontalPosition-2, figVerticalPosition-1));
             }
         }
     }
@@ -256,12 +256,12 @@ std::vector<Move*>* MoveController::getKnightMoves(Knight* knight) {
     if (figVerticalPosition+2 <= 8) {
         if (figHorizontalPosition+1 <= 8) {
             if (!owner->hasFigureOnSquare(figHorizontalPosition+1, figVerticalPosition+2)) {
-                pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition+1, figVerticalPosition+2));
+                pseudoLegalMoves->push_back(new Move(knight, figHorizontalPosition+1, figVerticalPosition+2));
             }
         }
         if (figHorizontalPosition-1 >= 1) {
             if (!owner->hasFigureOnSquare(figHorizontalPosition-1, figVerticalPosition+2)) {
-                pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition-1, figVerticalPosition+2));
+                pseudoLegalMoves->push_back(new Move(knight, figHorizontalPosition-1, figVerticalPosition+2));
             }
         }
     }
@@ -270,12 +270,12 @@ std::vector<Move*>* MoveController::getKnightMoves(Knight* knight) {
     if (figVerticalPosition-2 >= 1) {
         if (figHorizontalPosition+1 <= 8) {
             if (!owner->hasFigureOnSquare(figHorizontalPosition+1, figVerticalPosition-2)) {
-                pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition+1, figVerticalPosition-2));
+                pseudoLegalMoves->push_back(new Move(knight, figHorizontalPosition+1, figVerticalPosition-2));
             }
         }
         if (figHorizontalPosition-1 >= 1) {
             if (!owner->hasFigureOnSquare(figHorizontalPosition-1, figVerticalPosition-2)) {
-                pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition-1, figVerticalPosition-2));
+                pseudoLegalMoves->push_back(new Move(knight, figHorizontalPosition-1, figVerticalPosition-2));
             }
         }
     }
@@ -301,37 +301,37 @@ std::vector<Move*>* MoveController::getPawnMoves(Pawn* pawn) {
     if (pawn->getIsWhite()) {
         //normaler Zug: eins vorwärts
         if (!owner->hasFigureOnSquare(figHorizontalPosition, figVerticalPosition+1) && !opponent->hasFigureOnSquare(figHorizontalPosition, figVerticalPosition+1)) {
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition, figVerticalPosition+1));
+            pseudoLegalMoves->push_back(new Move(pawn, figHorizontalPosition, figVerticalPosition+1));
         }
         //noch nicht gezogen: zwei vorwärts
         if (pawn->getMoveCounter() == 0 && !owner->hasFigureOnSquare(figHorizontalPosition, figVerticalPosition+2) && !opponent->hasFigureOnSquare(figHorizontalPosition, figVerticalPosition+2)) {
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition, figVerticalPosition+2));
+            pseudoLegalMoves->push_back(new Move(pawn, figHorizontalPosition, figVerticalPosition+2));
         }
         //gegnerische Figur (diagonal links) schlagen
         if (opponent->hasFigureOnSquare(figHorizontalPosition-1, figVerticalPosition+1)) {
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition-1, figVerticalPosition+1));
+            pseudoLegalMoves->push_back(new Move(pawn, figHorizontalPosition-1, figVerticalPosition+1));
         }
         //gegnerische Figur (diagonal rechts) schlagen
         if (opponent->hasFigureOnSquare(figHorizontalPosition+1, figVerticalPosition+1)) {
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition+1, figVerticalPosition+1));
+            pseudoLegalMoves->push_back(new Move(pawn, figHorizontalPosition+1, figVerticalPosition+1));
         }
 
     } else {    //this->getIsWhite() == false
         //normaler Zug: eins vorwärts
         if (!owner->hasFigureOnSquare(figHorizontalPosition, figVerticalPosition-1) && !opponent->hasFigureOnSquare(figHorizontalPosition, figVerticalPosition-1)) {
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition, figVerticalPosition-1));
+            pseudoLegalMoves->push_back(new Move(pawn, figHorizontalPosition, figVerticalPosition-1));
         }
         //noch nicht gezogen: zwei vorwärts
         if (pawn->getMoveCounter() == 0 && !owner->hasFigureOnSquare(figHorizontalPosition, figVerticalPosition-2) && !opponent->hasFigureOnSquare(figHorizontalPosition, figVerticalPosition-2)) {
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition, figVerticalPosition-2));
+            pseudoLegalMoves->push_back(new Move(pawn, figHorizontalPosition, figVerticalPosition-2));
         }
         //gegnerische Figur (diagonal links) schlagen
         if (opponent->hasFigureOnSquare(figHorizontalPosition-1, figVerticalPosition-1)) {
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition-1, figVerticalPosition-1));
+            pseudoLegalMoves->push_back(new Move(pawn, figHorizontalPosition-1, figVerticalPosition-1));
         }
         //gegnerische Figur (diagonal rechts) schlagen
         if (opponent->hasFigureOnSquare(figHorizontalPosition+1, figVerticalPosition-1)) {
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition+1, figVerticalPosition-1));
+            pseudoLegalMoves->push_back(new Move(pawn, figHorizontalPosition+1, figVerticalPosition-1));
         }
     }
     return pseudoLegalMoves;
@@ -363,7 +363,7 @@ std::vector<Move*>* MoveController::getQueenMoves(Queen* queen) {
             if (opponent->hasFigureOnSquare(calcHorizontalPosition, calcVerticalPosition)) {
                 breakPoint = true;
             }
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, calcHorizontalPosition, calcVerticalPosition));
+            pseudoLegalMoves->push_back(new Move(queen, calcHorizontalPosition, calcVerticalPosition));
         } else {
             breakPoint = true;
         } 
@@ -380,7 +380,7 @@ std::vector<Move*>* MoveController::getQueenMoves(Queen* queen) {
             if (opponent->hasFigureOnSquare(calcHorizontalPosition, calcVerticalPosition)) {
                 breakPoint = true;
             }
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, calcHorizontalPosition, calcVerticalPosition));
+            pseudoLegalMoves->push_back(new Move(queen, calcHorizontalPosition, calcVerticalPosition));
         } else {
             breakPoint = true;
         } 
@@ -397,7 +397,7 @@ std::vector<Move*>* MoveController::getQueenMoves(Queen* queen) {
             if (opponent->hasFigureOnSquare(calcHorizontalPosition, calcVerticalPosition)) {
                 breakPoint = true;
             }
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, calcHorizontalPosition, calcVerticalPosition));
+            pseudoLegalMoves->push_back(new Move(queen, calcHorizontalPosition, calcVerticalPosition));
         } else {
             breakPoint = true;
         } 
@@ -414,7 +414,7 @@ std::vector<Move*>* MoveController::getQueenMoves(Queen* queen) {
             if (opponent->hasFigureOnSquare(calcHorizontalPosition, calcVerticalPosition)) {
                 breakPoint = true;
             }
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, calcHorizontalPosition, calcVerticalPosition));
+            pseudoLegalMoves->push_back(new Move(queen, calcHorizontalPosition, calcVerticalPosition));
         } else {
             breakPoint = true;
         } 
@@ -429,7 +429,7 @@ std::vector<Move*>* MoveController::getQueenMoves(Queen* queen) {
             if (opponent->hasFigureOnSquare(calcHorizontalPosition, figVerticalPosition)) {
                 breakPoint = true;
             }
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, calcHorizontalPosition, figVerticalPosition));
+            pseudoLegalMoves->push_back(new Move(queen, calcHorizontalPosition, figVerticalPosition));
         } else {
             breakPoint = true;
         }
@@ -444,7 +444,7 @@ std::vector<Move*>* MoveController::getQueenMoves(Queen* queen) {
             if (opponent->hasFigureOnSquare(calcHorizontalPosition, figVerticalPosition)) {
                 breakPoint = true;
             }
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, calcHorizontalPosition, figVerticalPosition));
+            pseudoLegalMoves->push_back(new Move(queen, calcHorizontalPosition, figVerticalPosition));
         } else {
             breakPoint = true;
         }
@@ -459,7 +459,7 @@ std::vector<Move*>* MoveController::getQueenMoves(Queen* queen) {
             if (opponent->hasFigureOnSquare(figHorizontalPosition, calcVerticalPosition)) {
                 breakPoint = true;
             }
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition, calcVerticalPosition));
+            pseudoLegalMoves->push_back(new Move(queen, figHorizontalPosition, calcVerticalPosition));
         } else {
             breakPoint = true;
         }
@@ -474,7 +474,7 @@ std::vector<Move*>* MoveController::getQueenMoves(Queen* queen) {
             if (opponent->hasFigureOnSquare(figHorizontalPosition, calcVerticalPosition)) {
                 breakPoint = true;
             }
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition, calcVerticalPosition));
+            pseudoLegalMoves->push_back(new Move(queen, figHorizontalPosition, calcVerticalPosition));
         } else {
             breakPoint = true;
         }
@@ -506,7 +506,7 @@ std::vector<Move*>* MoveController::getRookMoves(Rook* rook) {
             if (opponent->hasFigureOnSquare(calcHorizontalPosition, figVerticalPosition)) {
                 breakPoint = true;
             }
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, calcHorizontalPosition, figVerticalPosition));
+            pseudoLegalMoves->push_back(new Move(rook, calcHorizontalPosition, figVerticalPosition));
         } else {
             breakPoint = true;
         }
@@ -521,7 +521,7 @@ std::vector<Move*>* MoveController::getRookMoves(Rook* rook) {
             if (opponent->hasFigureOnSquare(calcHorizontalPosition, figVerticalPosition)) {
                 breakPoint = true;
             }
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, calcHorizontalPosition, figVerticalPosition));
+            pseudoLegalMoves->push_back(new Move(rook, calcHorizontalPosition, figVerticalPosition));
         } else {
             breakPoint = true;
         }
@@ -536,7 +536,7 @@ std::vector<Move*>* MoveController::getRookMoves(Rook* rook) {
             if (opponent->hasFigureOnSquare(figHorizontalPosition, calcVerticalPosition)) {
                 breakPoint = true;
             }
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition, calcVerticalPosition));
+            pseudoLegalMoves->push_back(new Move(rook, figHorizontalPosition, calcVerticalPosition));
         } else {
             breakPoint = true;
         }
@@ -551,7 +551,7 @@ std::vector<Move*>* MoveController::getRookMoves(Rook* rook) {
             if (opponent->hasFigureOnSquare(figHorizontalPosition, calcVerticalPosition)) {
                 breakPoint = true;
             }
-            pseudoLegalMoves->push_back(new Move(figHorizontalPosition, figVerticalPosition, figHorizontalPosition, calcVerticalPosition));
+            pseudoLegalMoves->push_back(new Move(rook, figHorizontalPosition, calcVerticalPosition));
         } else {
             breakPoint = true;
         }

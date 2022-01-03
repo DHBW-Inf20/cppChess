@@ -6,11 +6,16 @@
 #include <string>
 #include <iostream>
 
-Move::Move(int startHorizontalPosition, int startVerticalPosition, int endHorizontalPosition, int endVerticalPosition) {
-    this->setStartHorizontalPosition(startHorizontalPosition);
-    this->setStartVerticalPosition(startVerticalPosition);
+Move::Move(Figure* figure, int endHorizontalPosition, int endVerticalPosition) {
+    this->setFigure(figure);
+    this->setStartHorizontalPosition(figure->getHorizontalPosition());
+    this->setStartVerticalPosition(figure->getVerticalPosition());
     this->setEndHorizontalPosition(endHorizontalPosition);
     this->setEndVerticalPosition(endVerticalPosition);
+}
+
+void Move::setFigure(Figure* figure) {
+    this->figure = figure;
 }
 
 void Move::setStartHorizontalPosition(int startHorizontalPosition) {
@@ -27,6 +32,10 @@ void Move::setEndHorizontalPosition(int endHorizontalPosition) {
 
 void Move::setEndVerticalPosition(int endVerticalPosition) {
     this->endVerticalPosition = endVerticalPosition;
+}
+
+Figure* Move::getFigure() {
+    return this->figure;
 }
 
 int Move::getStartHorizontalPosition() {

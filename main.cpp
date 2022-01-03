@@ -5,9 +5,6 @@
 #include <iostream>
 #include "model/Player.hpp"
 #include "model/ChessField.hpp"
-#include "model/Figure.hpp"
-#include "model/Move.hpp"
-//#include "model/ChessField.hpp"
 
 int main () {
     
@@ -16,7 +13,6 @@ int main () {
     Player* secondPlayer = new Player(false);
     Figure* figure = firstPlayer->getUncapturedFigures()->at(4);
     MoveController* moveController = new MoveController(firstPlayer, secondPlayer);
-    //std::vector<Move*>* allMoves = moveController->getPseudoLegalMoves(figure);
     std::vector<Move*>* allMoves = moveController->getPseudoLegalMovesForAll(firstPlayer->getUncapturedFigures());
     if (allMoves->size() > 0) {
         for (int i = 0; i < allMoves->size(); i++) {

@@ -3,7 +3,6 @@
 //
 
 #include "Bishop.hpp"
-#include "../Move.hpp"
 
 Bishop::Bishop(std::string name, bool isWhite, int horizontalPosition, int verticalPosition) : Figure (name, isWhite, horizontalPosition, verticalPosition) {
     if(isWhite) {
