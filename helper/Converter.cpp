@@ -2,7 +2,7 @@
 // Created by dominic on 02.01.22.
 //
 
-#include <string>
+#include "Converter.hpp"
 
 unsigned int convertHorizontal(std::string position) {
     char hor = position[0];
@@ -29,12 +29,11 @@ unsigned int convertHorizontal(std::string position) {
     }
 }
 
-unsigned int convertVertical(std::string* position) {
-    return std::stoi(position->substr(1));
+unsigned int convertVertical(std::string position) {
+    return std::stoi(position.substr(1));
 }
 
 std::string convertPos(int vert, int hor) {
-
     switch(hor) {
         case 1:
             return "A" + std::to_string(vert);
@@ -53,6 +52,6 @@ std::string convertPos(int vert, int hor) {
         case 8:
             return "H" + std::to_string(vert);
         default:
-            return "";
+            return "not found";
     }
 }

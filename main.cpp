@@ -8,11 +8,12 @@
 
 int main () {
     
-    //move calculation test...
+    /*//move calculation test...
     Player* firstPlayer = new Player(true);
     Player* secondPlayer = new Player(false);
-    Figure* figure = firstPlayer->getUncapturedFigures()->at(4);
+    //Figure* figure = firstPlayer->getUncapturedFigures()->at(0);
     MoveController* moveController = new MoveController(firstPlayer, secondPlayer);
+    //std::vector<Move*>* allMoves = moveController->getPseudoLegalMoves(figure);
     std::vector<Move*>* allMoves = moveController->getPseudoLegalMovesForAll(firstPlayer->getUncapturedFigures());
     if (allMoves->size() > 0) {
         for (int i = 0; i < allMoves->size(); i++) {
@@ -23,7 +24,11 @@ int main () {
         std::cout << "Diese Figur hat keine Zuege!" << std::endl;
     }
 
-    /*Player* firstPlayer = new Player(true);
+    delete(firstPlayer);
+    delete(secondPlayer);
+    delete(moveController);*/
+
+    Player* firstPlayer = new Player(true);
     Player* secondPlayer = new Player(false);
     ChessField* chessField = new ChessField(firstPlayer, secondPlayer);
     chessField->repaint();
@@ -31,6 +36,8 @@ int main () {
     while (true) {
         chessField->move();
         chessField->repaint();
-    }*/
+    }
+
+    delete(chessField);
     return 0;
 }

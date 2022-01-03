@@ -6,9 +6,9 @@
 
 King::King(std::string name, bool isWhite, int horizontalPosition, int verticalPosition) : Figure (name, isWhite, horizontalPosition, verticalPosition) {
     if(isWhite) {
-        this->icon = "\u2654";
-    } else {
         this->icon = "\u265A";
+    } else {
+        this->icon = "\u2654";
     }
 
     this->setCanCastle(true);

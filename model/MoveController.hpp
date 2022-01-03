@@ -7,12 +7,15 @@
 
 #include "Player.hpp"
 #include "moves/Move.hpp"
+#include "moves/Capture.hpp"
+#include "moves/Castle.hpp"
 #include <vector>
 
 class MoveController {
 
     public:
         MoveController(Player* whitePlayer, Player* blackPlayer);
+        ~MoveController();
         std::vector<Move*>* getPseudoLegalMoves(Figure* figure);
         std::vector<Move*>* getPseudoLegalMovesForAll(std::vector<Figure*>* figures);
         void addMoveToHistory(Move* move);

@@ -4,7 +4,7 @@
 
 #include "ChessField.hpp"
 #include "Player.hpp"
-#include "../helper/Converter.cpp"
+#include "../helper/Converter.hpp"
 
 #include <iostream>
 #include <string>
@@ -35,26 +35,26 @@ bool ChessField::repaint() {
     try {
         std::cout << "    A   B   C   D   E   F   G   H" << std::endl;
         std::cout << "  *********************************" << std::endl;
-        for(int row = 1; row <= 8; row++) {
+        for(int row = 8; row >= 1; row--) {
 
             std::cout << row << " ";
             for(int column = 1; column <= 8; column++) {
                 Figure* f = nullptr;
-                for(Figure* figure : *this->player1->getAllFigures()) {
-                    if(column == figure->getHorizontalPosition() && row == figure->getVerticalPosition() && figure->getNotCaptured()) {
+                for(Figure* figure : *this->player1->getUncapturedFigures()) {
+                    if(column == figure->getHorizontalPosition() && row == figure->getVerticalPosition()) {
                         f = figure;
                         break;
                     }
                 }
                 if(f == nullptr) {
-                    for(Figure* figure : *this->player2->getAllFigures()) {
-                        if(column == figure->getHorizontalPosition() && row == figure->getVerticalPosition() && figure->getNotCaptured()) {
+                    for(Figure* figure : *this->player2->getUncapturedFigures()) {
+                        if(column == figure->getHorizontalPosition() && row == figure->getVerticalPosition()) {
                             f = figure;
                             break;
                         }
                     }
                 }
-                std::cout << "* " << printField(column, row, f) << " ";
+                std::cout << " * " << printField(column, row, f) << " ";
             }
             std::cout << "*" << std::endl;
 
@@ -83,15 +83,30 @@ void ChessField::move() {
         this->currentPlayer = 1;
     }
 
-    std::string position;
-    std::cout << "Enter the position of your figure:";
-    std::cin >> position;
+    Figure* selectedFigure = nullptr;
+    std::vector<Move *>* moves;
+    do {
+        std::string position;
+        std::cout << "Enter the position of your figure:";
+        std::cin >> position;
 
+        Figure* selectedFigure = current->getPieceAtPosition(convertHorizontal(position), convertVertical(position));
+        if (selectedFigure != nullptr) {
+             moves = this->moveController->getPseudoLegalMoves(selectedFigure);
+             if (moves->size() == 0) {
+                 std::cout << "This figure has no moves!" << std::endl;
+             } else {
+                 break;
+             }
+        } else {
+            std::cout << "You don't have a figure on this square!";
+        }
+
+    } while(!selectedFigure);
+    
     std::cout << "Possible Moves:" << std::endl;
-    Figure* selectedFigure = current->getPieceAtPosition((int) convertHorizontal(position), (int) convertVertical(&position));
 
     int i = 1;
-    std::vector<Move *>* moves = this->moveController->getPseudoLegalMoves(selectedFigure);
     for(Move* possible : *moves) {
         std::cout << i << ". " << convertPos(possible->getEndVerticalPosition(), possible->getEndHorizontalPosition()) << std::endl;
         i++;
@@ -103,18 +118,12 @@ void ChessField::move() {
 
     Move* mv = moves->at(choice-1);
     this->moveController->addMoveToHistory(mv);
-    selectedFigure->setVerticalPosition(mv->getEndVerticalPosition());
-    selectedFigure->setHorizontalPosition(mv->getEndHorizontalPosition());
+    mv->execute();
     std::cout << mv->getAsString() << std::endl;
-
-    Figure* f = opponent->hasFigureOnSquare(mv->getEndHorizontalPosition(), mv->getEndVerticalPosition());
-    if(f != nullptr) {
-        std::cout << f->getName() << " was captured!" << std::endl;
-        f->setNotCaptured(false);
-    }
 }
 
 ChessField::~ChessField() {
     delete this->player1;
     delete this->player2;
+    delete this->moveController;
 }

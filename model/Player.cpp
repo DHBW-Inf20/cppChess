@@ -78,7 +78,17 @@ Figure* Player::hasFigureOnSquare(int horizontalPosition, int verticalPosition) 
 }
 
 Player::~Player() {
-
+    delete(this->firstRook);
+    delete(this->firstKnight);
+    delete(this->firstBishop);
+    delete(this->queen);
+    delete(this->king);
+    delete(this->secondBishop);
+    delete(this->secondKnight);
+    delete(this->secondRook);
+    for (Pawn* pawn : *this->pawns) {
+        delete(pawn);
+    }
 }
 
 Figure *Player::getPieceAtPosition(int horizontal, int vertical) {
@@ -88,6 +98,5 @@ Figure *Player::getPieceAtPosition(int horizontal, int vertical) {
             return figure;
         }
     }
-
     return nullptr;
 }

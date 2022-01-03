@@ -17,6 +17,8 @@ class Capture : public Move {
         Capture(Figure* figure, Figure* capturedFigure);
         ~Capture();
         Figure* getCapturedFigure();
+        std::string getAsString();
+        void execute();
 };
 
 #endif //YETANOTHERCHESSGAME_CAPTURE_H

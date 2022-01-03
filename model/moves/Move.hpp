@@ -28,7 +28,8 @@ class Move {
         int getStartVerticalPosition();
         int getEndHorizontalPosition();
         int getEndVerticalPosition();
-        std::string getAsString();
+        virtual std::string getAsString();
+        virtual void execute();
 };
 
 

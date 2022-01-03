@@ -55,13 +55,13 @@ int Move::getEndVerticalPosition() {
 }
 
 std::string Move::getAsString() {
-    std::string outputString = "Startposition: ";
-    outputString += std::to_string(this->getStartHorizontalPosition());
-    outputString += ",";
-    outputString += std::to_string(this->getStartVerticalPosition());
-    outputString += "; Endposition: ";
-    outputString += std::to_string(this->getEndHorizontalPosition());
-    outputString += ",";
-    outputString += std::to_string(this->getEndVerticalPosition());
+    std::string outputString = "Figure from (" + std::to_string(this->getStartHorizontalPosition()) 
+        + "," + std::to_string(this->getStartVerticalPosition()) + ") moves to (" + std::to_string(this->getEndHorizontalPosition())
+        + "," + std::to_string(this->getEndVerticalPosition()) + ")";
     return outputString;
+}
+
+void Move::execute() {
+    this->getFigure()->setHorizontalPosition(this->getEndHorizontalPosition());
+    this->getFigure()->setVerticalPosition(this->getEndVerticalPosition());
 }
