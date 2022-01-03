@@ -21,12 +21,18 @@ add_executable(YetAnotherChessGame
         model/figures/Queen.hpp
         model/figures/Rook.cpp
         model/figures/Rook.hpp
+        model/moves/Capture.cpp
+        model/moves/Capture.hpp
+        model/moves/Castle.cpp
+        model/moves/Capture.hpp
+        model/moves/Move.cpp
+        model/moves/Move.hpp
         model/ChessField.cpp
         model/ChessField.hpp
         model/Figure.cpp
         model/Figure.hpp
-        model/Move.cpp
-        model/Move.hpp
+        model/MoveController.cpp
+        model/MoveController.hpp
         model/Player.cpp
         model/Player.hpp
         main.cpp)
