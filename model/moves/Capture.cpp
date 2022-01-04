@@ -3,6 +3,10 @@
 //
 
 #include "Capture.hpp"
+#include "../figures/Pawn.hpp"
+#include "../figures/King.hpp"
+#include "../figures/Rook.hpp"
+
 
 Capture::Capture(Figure* figure, Figure* capturedFigure) : Move(figure, capturedFigure->getHorizontalPosition(), capturedFigure->getVerticalPosition()) {
     this->setCapturedFigure(capturedFigure);
@@ -29,4 +33,11 @@ void Capture::execute() {
     this->getFigure()->setHorizontalPosition(this->getEndHorizontalPosition());
     this->getFigure()->setVerticalPosition(this->getEndVerticalPosition());
     this->getCapturedFigure()->setNotCaptured(false);
+    if (Pawn* pawn = dynamic_cast<Pawn*>(this->getFigure())) {
+        pawn->incrementMoveCounter();
+    } else if (King* king = dynamic_cast<King*>(this->getFigure())) {
+        king->incrementMoveCounter();
+    } else if (Rook* rook = dynamic_cast<Rook*>(this->getFigure())) {
+        rook->incrementMoveCounter();
+    }
 }

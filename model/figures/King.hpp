@@ -11,11 +11,11 @@ class King : public Figure {
     public:
         King(std::string name, bool isWhite, int horizontalPosition, int verticalPosition);
         ~King() override;
-        bool getCanCastle();
-        void setCanCastle(bool canCastle);
+        void incrementMoveCounter();
+        int getMoveCounter();
 
     private:
-        bool canCastle;
+        int moveCounter;
 };
 
 

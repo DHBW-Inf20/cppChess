@@ -8,21 +8,21 @@ unsigned int convertHorizontal(std::string position) {
     char hor = position[0];
 
     switch(hor) {
-        case 'A':
+        case 'A' | 'a':
             return 1;
-        case 'B':
+        case 'B' | 'b':
             return 2;
-        case 'C':
+        case 'C' | 'c':
             return 3;
-        case 'D':
+        case 'D' | 'd':
             return 4;
-        case 'E':
+        case 'E' | 'e':
             return 5;
-        case 'F':
+        case 'F' | 'f':
             return 6;
-        case 'G':
+        case 'G' | 'g':
             return 7;
-        case 'H':
+        case 'H' | 'h':
             return 8;
         default:
             return -1;
@@ -36,21 +36,21 @@ unsigned int convertVertical(std::string position) {
 std::string convertPos(int vert, int hor) {
     switch(hor) {
         case 1:
-            return "A" + std::to_string(vert);
+            return "a" + std::to_string(vert);
         case 2:
-            return "B" + std::to_string(vert);
+            return "b" + std::to_string(vert);
         case 3:
-            return "C" + std::to_string(vert);
+            return "c" + std::to_string(vert);
         case 4:
-            return "D" + std::to_string(vert);
+            return "d" + std::to_string(vert);
         case 5:
-            return "E" + std::to_string(vert);
+            return "e" + std::to_string(vert);
         case 6:
-            return "F" + std::to_string(vert);
+            return "f" + std::to_string(vert);
         case 7:
-            return "G" + std::to_string(vert);
+            return "g" + std::to_string(vert);
         case 8:
-            return "H" + std::to_string(vert);
+            return "h" + std::to_string(vert);
         default:
             return "not found";
     }

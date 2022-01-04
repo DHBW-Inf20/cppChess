@@ -3,6 +3,9 @@
 //
 
 #include "Move.hpp"
+#include "../figures/Pawn.hpp"
+#include "../figures/King.hpp"
+#include "../figures/Rook.hpp"
 #include <string>
 #include <iostream>
 
@@ -64,4 +67,11 @@ std::string Move::getAsString() {
 void Move::execute() {
     this->getFigure()->setHorizontalPosition(this->getEndHorizontalPosition());
     this->getFigure()->setVerticalPosition(this->getEndVerticalPosition());
+    if (Pawn* pawn = dynamic_cast<Pawn*>(this->getFigure())) {
+        pawn->incrementMoveCounter();
+    } else if (King* king = dynamic_cast<King*>(this->getFigure())) {
+        king->incrementMoveCounter();
+    } else if (Rook* rook = dynamic_cast<Rook*>(this->getFigure())) {
+        rook->incrementMoveCounter();
+    }
 }

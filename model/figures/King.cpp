@@ -10,16 +10,15 @@ King::King(std::string name, bool isWhite, int horizontalPosition, int verticalP
     } else {
         this->icon = "\u2654";
     }
-
-    this->setCanCastle(true);
+    this->moveCounter = 0;
 }
 
 King::~King() {}
 
-void King::setCanCastle(bool canCastle) {
-    this->canCastle = canCastle;
+void King::incrementMoveCounter() {
+    this->moveCounter++;
 }
 
-bool King::getCanCastle() {
-    return this->canCastle;
+int King::getMoveCounter() {
+    return this->moveCounter;
 }
