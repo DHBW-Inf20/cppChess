@@ -8,7 +8,6 @@ include_directories(model)
 include_directories(model/figures)
 
 add_executable(YetAnotherChessGame
-        gui/Gui.cpp
         model/figures/Bishop.cpp
         model/figures/Bishop.hpp
         model/figures/King.cpp
@@ -37,4 +36,4 @@ add_executable(YetAnotherChessGame
         model/Player.hpp
         helper/Converter.cpp
         helper/Converter.hpp
-        main.cpp)
+        main.cpp helper/Settings.cpp helper/Settings.hpp)

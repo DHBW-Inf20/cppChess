@@ -17,24 +17,39 @@ ChessField::ChessField(Player* player1, Player* player2) {
     this->moveController = new MoveController(player1, player2);
 }
 
-std::string printField(int horizontal, int vertical, Figure* figure) {
+int ChessField::getCurrentPlayer() {
+    return this->currentPlayer;
+}
+
+std::string printField(int horizontal, int vertical, Figure* figure, bool showIcons) {
     std::string tmp;
-    if((vertical % 2 == 1 && horizontal % 2 == 1) || (vertical % 2 == 0 && horizontal % 2 == 0)) {
-        tmp = "\u25A1";
+    if(showIcons) {
+        if((vertical % 2 == 1 && horizontal % 2 == 1) || (vertical % 2 == 0 && horizontal % 2 == 0)) {
+            tmp = "\u25A1";
+        } else {
+            tmp = "\u25A0";
+        }
     } else {
-        tmp = "\u25A0";
+        tmp = "  ";
     }
     if(figure != nullptr) {
-        tmp = figure->returnIcon();
+        tmp = figure->returnIcon(showIcons);
     }
     return tmp;
 }
 
 
-bool ChessField::repaint() {
+bool ChessField::repaint(bool showIcons) {
     try {
-        std::cout << "    A   B   C   D   E   F   G   H" << std::endl;
-        std::cout << "  *********************************" << std::endl;
+        if(showIcons) {
+            std::cout << "    A   B   C   D   E   F   G   H" << std::endl;
+            std::cout << "  *********************************" << std::endl;
+        } else {
+            std::cout << "    A     B     C     D     E     F     G     H" << std::endl;
+            std::cout << "   ************************************************" << std::endl;
+        }
+
+
         for(int row = 8; row >= 1; row--) {
 
             std::cout << row << " ";
@@ -54,13 +69,21 @@ bool ChessField::repaint() {
                         }
                     }
                 }
-                std::cout << " * " << printField(column, row, f) << " ";
+                std::cout << " * " << printField(column, row, f, showIcons) << " ";
             }
             std::cout << "*" << std::endl;
 
-            std::cout << "  *********************************" << std::endl;
+            if(showIcons) {
+                std::cout << "  *********************************" << std::endl;
+            } else {
+                std::cout << "   ************************************************" << std::endl;
+            }
         }
-        std::cout << "    A   B   C   D   E   F   G   H" << std::endl;
+        if(showIcons) {
+            std::cout << "    A   B   C   D   E   F   G   H" << std::endl;
+        } else {
+            std::cout << "    A     B     C     D     E     F     G     H" << std::endl;
+        }
     } catch(std::exception *ex) {
         std::cout << ex->what() << std::endl;
         return false;
@@ -123,7 +146,7 @@ void ChessField::move() {
 }
 
 ChessField::~ChessField() {
+    delete this->moveController;
     delete this->player1;
     delete this->player2;
-    delete this->moveController;
 }
