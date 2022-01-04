@@ -2,42 +2,39 @@
 // Created by dominic on 17.12.21.
 //
 
-#include <iostream>
-#include "model/Player.hpp"
-#include "model/ChessField.hpp"
+#include "gui/Gui.cpp"
+#include "helper/Settings.hpp"
 
 int main () {
-    
-    /*//move calculation test...
-    Player* firstPlayer = new Player(true);
-    Player* secondPlayer = new Player(false);
-    //Figure* figure = firstPlayer->getUncapturedFigures()->at(0);
-    MoveController* moveController = new MoveController(firstPlayer, secondPlayer);
-    //std::vector<Move*>* allMoves = moveController->getPseudoLegalMoves(figure);
-    std::vector<Move*>* allMoves = moveController->getPseudoLegalMovesForAll(firstPlayer->getUncapturedFigures());
-    if (allMoves->size() > 0) {
-        for (int i = 0; i < allMoves->size(); i++) {
-            Move* m = allMoves->at(i);
-            std::cout << m->getAsString() << std::endl;
+    auto settings = new Settings();
+    Gui* gui = new Gui();
+
+    gui->printWelcomeScreen();
+
+    int main_setting = 0;
+    do {
+        main_setting = gui->printMainMenu();
+        switch (main_setting) {
+            case 1:
+                do {
+                    gui->printChessField(settings);
+                    main_setting = gui->printMenuInTheGame();
+                    if(main_setting != -1) {
+                        if(main_setting == 1) {
+                            gui->selectAFigure(settings);
+                        } else if(main_setting == 2) {
+                            gui->getAllCapturedFigures();
+                        }
+                    }
+                } while (main_setting != -1);
+                break;
+            case 2:
+                gui->printSettings(settings);
+                break;
         }
-    } else {
-        std::cout << "Diese Figur hat keine Zuege!" << std::endl;
-    }
+    } while (main_setting != -1);
 
-    delete(firstPlayer);
-    delete(secondPlayer);
-    delete(moveController);*/
-
-    Player* firstPlayer = new Player(true);
-    Player* secondPlayer = new Player(false);
-    ChessField* chessField = new ChessField(firstPlayer, secondPlayer);
-    chessField->repaint();
-
-    while (true) {
-        chessField->move();
-        chessField->repaint();
-    }
-
-    delete(chessField);
+    delete settings;
+    delete gui;
     return 0;
 }

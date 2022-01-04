@@ -1,8 +1,7 @@
-start:
-	./main.o
+PROJ_DIR := $(realpath $(CURDIR)/..)
+SOURCE_DIR := $(PROJ_DIR)
+BUILD_DIR := $(PROJ_DIR)/Build
 
-all:
-	g++ main.cpp -I ./model -o main.o
+TARGET = YetAnotherChessGame.o
 
-clean:
-	rm -rf *.o
+https://riptutorial.com/makefile/example/21376/building-from-different-source-folders-to-different-target-folders

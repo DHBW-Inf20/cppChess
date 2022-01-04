@@ -29,7 +29,7 @@ class Figure {
         int getHorizontalPosition();
         int getVerticalPosition();
         bool getNotCaptured();
-        std::string returnIcon();
+        std::string returnIcon(bool showIcon);
 
     protected:
         std::string icon;

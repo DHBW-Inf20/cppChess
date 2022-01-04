@@ -52,6 +52,10 @@ bool Figure::getNotCaptured() {
     return this->notCaptured;
 }
 
-std::string Figure::returnIcon() {
-    return this->icon;
+std::string Figure::returnIcon(bool showIcon) {
+    if(showIcon) {
+        return this->icon;
+    } else {
+        return this->name;
+    }
 }

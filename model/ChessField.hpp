@@ -10,20 +10,17 @@
 #include "Player.hpp"
 #include "MoveController.hpp"
 
-#define WHITE_SQUARE 0xDB
-#define BLACK_SQUARE 0xFF
-
 class ChessField {
     public:
         ChessField(Player* player1, Player* player2);
-        bool repaint();
-        void move();
+        bool repaint(bool showIcons);
+        int getCurrentPlayer();
+        void nextPlayer();
         ~ChessField();
 
     private:
         Player* player1;
         Player* player2;
-        MoveController* moveController;
         int currentPlayer;
 };
 
