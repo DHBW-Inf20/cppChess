@@ -1,7 +1,81 @@
-PROJ_DIR := $(realpath $(CURDIR)/..)
+PROJ_DIR := $(realpath $(CURDIR)/.)
 SOURCE_DIR := $(PROJ_DIR)
 BUILD_DIR := $(PROJ_DIR)/Build
 
+# Name of the file
 TARGET = YetAnotherChessGame.o
 
-https://riptutorial.com/makefile/example/21376/building-from-different-source-folders-to-different-target-folders
+# Enable Verbose-Mode
+VERBOSE = TRUE
+
+# List of directories in project
+DIR_LIST = gui helper model model/figures model/moves .
+
+SOURCE_DIRS = $(foreach dir, $(DIR_LIST), $(addprefix $(SOURCE_DIR)/, $(dir)))
+TARGET_DIRS = $(foreach dir, $(DIR_LIST), $(addprefix $(BUILD_DIR)/, $(dir)))
+
+INCLUDES = $(foreach dir, $(SOURCE_DIRS), $(addprefix -I, $(dir)))
+
+VPATH = $(SOURCE_DIRS)
+
+SOURCES = $(foreach dir, $(SOURCE_DIRS), $(wildcard $(dir)/*.cpp))
+
+OBJECTS := $(subst $(SOURCE_DIRS), $(BUILD_DIR), $(SOURCES:.cpp=.o))
+
+DEPS := $(OBJECTS:.o=.d)
+
+CC = g++
+
+ifeq ($(OS),Windows_NT)
+    RM = del /F /Q
+    RMDIR = -RMDIR /S /Q
+    MKDIR = -mkdir
+    ERRIGNORE = 2>NUL || true
+    SEP=\\
+else
+    RM = rm -rf
+    RMDIR = rm -rf
+    MKDIR = mkdir -p
+    ERRIGNORE = 2>/dev/null
+    SEP=/
+endif
+
+# Remove space after separator
+PSEP = $(strip $(SEP))
+
+# Hide or not the calls depending of VERBOSE
+ifeq ($(VERBOSE),TRUE)
+    HIDE =
+else
+    HIDE = @
+endif
+
+# Define the function that will generate each rule
+define generateRules
+$(1)/%.o: %.cpp
+    @echo Building $$@
+    $(HIDE)$(CC) -c $$(INCLUDES) -o $$(subst /,$$(PSEP),$$@) $$(subst /,$$(PSEP),$$<) -MMD
+endef
+
+.PHONY: all clean directories
+
+all: directories $(TARGET)
+
+$(TARGET): $(OBJECTS)
+	$(HIDE)echo Linking $@
+	$(HIDE)$(CC) $(OBJECTS) -o $(TARGET)
+
+# Include dependencies
+-include $(DEPS)
+
+# Generate rules
+$(foreach targetdir, $(TARGETDIRS), $(eval $(call generateRules, $(targetdir))))
+
+directories:
+	$(HIDE)$(MKDIR) $(subst /,$(PSEP),$(TARGET_DIRS)) $(ERRIGNORE)
+
+# Remove all objects, dependencies and executable files generated during the build
+clean:
+	$(HIDE)$(RMDIR) $(subst /,$(PSEP),$(TARGET_DIRS)) $(ERRIGNORE)
+	$(HIDE)$(RM) $(TARGET) $(ERRIGNORE)
+	@echo Cleaning done !
