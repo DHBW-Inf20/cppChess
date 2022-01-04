@@ -83,8 +83,14 @@ void Gui::printSettings(Settings* settings) {
 
 int Gui::printMenuInTheGame() {
     std::string temp_input;
-    std::cout << "It's the turn of player " << this->chessField->getCurrentPlayer() << "!" << std::endl;
-    std::cout << "(S)elect figure, (C)aptured figures, (Q)uit game!" << std::endl;
+    std::cout << "It's ";
+    if (this->chessField->getCurrentPlayer() == 1) {
+        std::cout << "White's";
+    } else {
+        std::cout << "Black's";
+    }
+    std::cout << " turn now!" << std::endl;
+    std::cout << "(S)elect figure, (C)ompare material, (Q)uit game!" << std::endl;
     std::cout << "Your input: ";
     std::cin >> temp_input;
 
@@ -106,19 +112,38 @@ int Gui::printMenuInTheGame() {
     }
 }
 
-void Gui::getAllCapturedFigures() {
-    Player* tmp;
+void Gui::getMaterialComparison() {
+    Player* currentPlayer;
+    Player* opponentPlayer;
     if(this->chessField->getCurrentPlayer() == 1) {
-        tmp = this->player1;
+        currentPlayer = this->player1;
+        opponentPlayer = this->player2;
     } else {
-        tmp = this->player2;
+        currentPlayer = this->player2;
+        opponentPlayer = this->player1;
     }
 
-    std::cout << "List of captured figures: " << std::endl;
-    for(Figure* f : *tmp->getAllFigures()) {
-        if(!f->getNotCaptured()) {
-            std::cout << f->getName() << std::endl;
+    int currentMaterialValue = currentPlayer->getUncapturedMaterialValue();
+    int opponentMaterialValue = opponentPlayer->getUncapturedMaterialValue();
+    
+    if (currentMaterialValue > opponentMaterialValue) {
+        std::cout << "You are currently up " << (currentMaterialValue-opponentMaterialValue);
+        if (currentMaterialValue-opponentMaterialValue > 1) {
+            std::cout << " points ";
+        } else {
+            std::cout << " point ";
         }
+        std::cout << "of material!" << std::endl;
+    } else if (currentMaterialValue < opponentMaterialValue) {
+        std::cout << "You are currently down " << (opponentMaterialValue-currentMaterialValue);
+        if (opponentMaterialValue-currentMaterialValue > 1) {
+            std::cout << " points ";
+        } else {
+            std::cout << " point ";
+        }
+        std::cout << "of material!" << std::endl;
+    } else {
+        std::cout << "There is equal material on the board!" << std::endl;
     }
 }
 
@@ -134,7 +159,7 @@ void Gui::selectAFigure(Settings* settings) {
         current = this->player2;
     }
 
-    Figure* selectedFigure = current->getPieceAtPosition(convertHorizontal(position), convertVertical(position));
+    Figure* selectedFigure = current->getPieceAtPosition((int) convertHorizontal(position), (int) convertVertical(position));
     if(selectedFigure == nullptr) {
         std::cout << "You don't have a figure on this square!" << std::endl;
         return this->selectAFigure(settings);
@@ -158,7 +183,7 @@ void Gui::selectAFigure(Settings* settings) {
             }
 
             std::string choice;
-            std::cout << "Enter your choice or (S)elect another figure: ";
+            std::cout << "Enter your choice (1,2,...) or (S)elect another figure: ";
             std::cin >> choice;
 
             if(choice == "s" || choice == "S") {
@@ -179,13 +204,13 @@ void Gui::selectAFigure(Settings* settings) {
             } else {
                 Move* mv = nullptr;
                 for(Move* possible : *moves) {
-                    if(convertPos(possible->getEndVerticalPosition(), possible->getEndHorizontalPosition()) == choice) {
+                    if((convertHorizontal(choice) == possible->getEndHorizontalPosition()) && (convertVertical(choice) == possible->getEndVerticalPosition())) {
                         mv = possible;
                         break;
                     }
                 }
                 if(mv == nullptr) {
-                    std::cout << "No valid Move!" << std::endl;
+                    std::cout << "This is not a valid move!" << std::endl;
                     return this->selectAFigure(settings);
                 } else {
                     this->moveController->addMoveToHistory(mv);

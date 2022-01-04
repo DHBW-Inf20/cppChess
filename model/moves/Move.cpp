@@ -6,6 +6,7 @@
 #include "../figures/Pawn.hpp"
 #include "../figures/King.hpp"
 #include "../figures/Rook.hpp"
+#include "../../helper/Converter.hpp"
 #include <string>
 #include <iostream>
 
@@ -58,9 +59,8 @@ int Move::getEndVerticalPosition() {
 }
 
 std::string Move::getAsString() {
-    std::string outputString = "Figure from (" + std::to_string(this->getStartHorizontalPosition()) 
-        + "," + std::to_string(this->getStartVerticalPosition()) + ") moves to (" + std::to_string(this->getEndHorizontalPosition())
-        + "," + std::to_string(this->getEndVerticalPosition()) + ")";
+    std::string outputString = this->getFigure()->getName() + " from " + convertPos(this->getStartVerticalPosition(), this->getStartHorizontalPosition())
+        + " moves to " + convertPos(this->getEndVerticalPosition(), this->getEndHorizontalPosition()) + "!";
     return outputString;
 }
 

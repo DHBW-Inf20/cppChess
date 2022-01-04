@@ -4,12 +4,13 @@
 
 #include "Figure.hpp"
 
-Figure::Figure(std::string name, bool isWhite, int horizontalPosition, int verticalPosition) {
+Figure::Figure(std::string name, bool isWhite, int horizontalPosition, int verticalPosition, int value) {
     this->setName(name);
     this->setIsWhite(isWhite);
     this->setHorizontalPosition(horizontalPosition);
     this->setVerticalPosition(verticalPosition);
     this->setNotCaptured(true);
+    this->setValue(value);
 }
 
 void Figure::setName(std::string name) {
@@ -32,6 +33,10 @@ void Figure::setNotCaptured(bool notCaptured) {
     this->notCaptured = notCaptured;
 }
 
+void Figure::setValue(int value) {
+    this->value = value;
+}
+
 std::string Figure::getName() {
     return this->name;
 }
@@ -50,6 +55,10 @@ int Figure::getVerticalPosition() {
 
 bool Figure::getNotCaptured() {
     return this->notCaptured;
+}
+
+int Figure::getValue() {
+    return this->value;
 }
 
 std::string Figure::returnIcon(bool showIcon) {

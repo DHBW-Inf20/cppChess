@@ -6,6 +6,7 @@
 #include "../figures/Pawn.hpp"
 #include "../figures/King.hpp"
 #include "../figures/Rook.hpp"
+#include "../../helper/Converter.hpp"
 
 
 Capture::Capture(Figure* figure, Figure* capturedFigure) : Move(figure, capturedFigure->getHorizontalPosition(), capturedFigure->getVerticalPosition()) {
@@ -23,9 +24,9 @@ Figure* Capture::getCapturedFigure() {
 }
 
 std::string Capture::getAsString() {
-    std::string outputString = "Figure from (" + std::to_string(this->getStartHorizontalPosition()) 
-        + "," + std::to_string(this->getStartVerticalPosition()) + ") captures on " + this->getCapturedFigure()->getName()
-        + " (" + std::to_string(this->getEndHorizontalPosition()) + "," + std::to_string(this->getEndVerticalPosition()) + ")";
+    std::string outputString = this->getFigure()->getName() + " from " + convertPos(this->getStartVerticalPosition(), 
+        this->getStartHorizontalPosition()) + " captures " + this->getCapturedFigure()->getName() + " on "
+        + convertPos(this->getEndVerticalPosition(), this->getEndHorizontalPosition()) + "!";
     return outputString;
 }
 

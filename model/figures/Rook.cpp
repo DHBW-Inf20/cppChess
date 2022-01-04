@@ -4,7 +4,7 @@
 
 #include "Rook.hpp"
 
-Rook::Rook(std::string name, bool isWhite, int horizontalPosition, int verticalPosition) : Figure (name, isWhite, horizontalPosition, verticalPosition) {
+Rook::Rook(std::string name, bool isWhite, int horizontalPosition, int verticalPosition) : Figure (name, isWhite, horizontalPosition, verticalPosition, 5) {
     if(isWhite) {
         this->icon = "\u265C";
     } else {

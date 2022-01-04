@@ -4,7 +4,7 @@
 
 #include "King.hpp"
 
-King::King(std::string name, bool isWhite, int horizontalPosition, int verticalPosition) : Figure (name, isWhite, horizontalPosition, verticalPosition) {
+King::King(std::string name, bool isWhite, int horizontalPosition, int verticalPosition) : Figure (name, isWhite, horizontalPosition, verticalPosition, -1) {
     if(isWhite) {
         this->icon = "\u265A";
     } else {

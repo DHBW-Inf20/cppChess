@@ -15,7 +15,7 @@ class Gui {
         int printMenuInTheGame();
         void printChessField(Settings* settings);
         void printSettings(Settings* settings);
-        void getAllCapturedFigures();
+        void getMaterialComparison();
         void selectAFigure(Settings* settings);
         ~Gui();
 

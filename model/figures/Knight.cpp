@@ -4,7 +4,7 @@
 
 #include "Knight.hpp"
 
-Knight::Knight(std::string name, bool isWhite, int horizontalPosition, int verticalPosition) : Figure (name, isWhite, horizontalPosition, verticalPosition) {
+Knight::Knight(std::string name, bool isWhite, int horizontalPosition, int verticalPosition) : Figure (name, isWhite, horizontalPosition, verticalPosition, 3) {
     if(isWhite) {
         this->icon = "\u265E";
     } else {

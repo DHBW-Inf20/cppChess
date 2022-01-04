@@ -2,7 +2,7 @@
 // Created by dominic on 17.12.21.
 //
 
-#include "gui/Gui.cpp"
+#include "gui/Gui.hpp"
 #include "helper/Settings.hpp"
 
 int main () {
@@ -23,7 +23,7 @@ int main () {
                         if(main_setting == 1) {
                             gui->selectAFigure(settings);
                         } else if(main_setting == 2) {
-                            gui->getAllCapturedFigures();
+                            gui->getMaterialComparison();
                         }
                     }
                 } while (main_setting != -1);

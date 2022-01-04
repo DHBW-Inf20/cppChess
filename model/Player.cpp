@@ -91,7 +91,7 @@ Player::~Player() {
     }
 }
 
-Figure *Player::getPieceAtPosition(int horizontal, int vertical) {
+Figure* Player::getPieceAtPosition(int horizontal, int vertical) {
     std::vector<Figure*>* figures = this->getAllFigures();
     for(Figure* figure : *figures) {
         if(figure->getNotCaptured() && figure->getHorizontalPosition() == horizontal && figure->getVerticalPosition() == vertical) {
@@ -99,4 +99,13 @@ Figure *Player::getPieceAtPosition(int horizontal, int vertical) {
         }
     }
     return nullptr;
+}
+
+int Player::getUncapturedMaterialValue() {
+    std::vector<Figure*>* uncapturedFigures = this->getUncapturedFigures();
+    int sumValue = 0;
+    for (Figure* figure : *uncapturedFigures) {
+        sumValue += figure->getValue();
+    }
+    return sumValue;
 }

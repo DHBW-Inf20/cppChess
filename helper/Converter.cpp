@@ -8,21 +8,37 @@ unsigned int convertHorizontal(std::string position) {
     char hor = position[0];
 
     switch(hor) {
-        case 'A' | 'a':
+        case 'A':
             return 1;
-        case 'B' | 'b':
+        case 'a':
+            return 1;
+        case 'B':
             return 2;
-        case 'C' | 'c':
+        case 'b':
+            return 2;
+        case 'C':
             return 3;
-        case 'D' | 'd':
+        case 'c':
+            return 3;
+        case 'D': 
             return 4;
-        case 'E' | 'e':
+        case 'd':
+            return 4;
+        case 'E': 
             return 5;
-        case 'F' | 'f':
+        case 'e':
+            return 5;
+        case 'F': 
             return 6;
-        case 'G' | 'g':
+        case 'f':
+            return 6;
+        case 'G': 
             return 7;
-        case 'H' | 'h':
+        case 'g':
+            return 7;
+        case 'H': 
+            return 8;
+        case 'h':
             return 8;
         default:
             return -1;
@@ -36,21 +52,21 @@ unsigned int convertVertical(std::string position) {
 std::string convertPos(int vert, int hor) {
     switch(hor) {
         case 1:
-            return "a" + std::to_string(vert);
+            return "A" + std::to_string(vert);
         case 2:
-            return "b" + std::to_string(vert);
+            return "B" + std::to_string(vert);
         case 3:
-            return "c" + std::to_string(vert);
+            return "C" + std::to_string(vert);
         case 4:
-            return "d" + std::to_string(vert);
+            return "D" + std::to_string(vert);
         case 5:
-            return "e" + std::to_string(vert);
+            return "E" + std::to_string(vert);
         case 6:
-            return "f" + std::to_string(vert);
+            return "F" + std::to_string(vert);
         case 7:
-            return "g" + std::to_string(vert);
+            return "G" + std::to_string(vert);
         case 8:
-            return "h" + std::to_string(vert);
+            return "H" + std::to_string(vert);
         default:
             return "not found";
     }

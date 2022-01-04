@@ -15,21 +15,24 @@ class Figure {
         int horizontalPosition;
         int verticalPosition;
         bool notCaptured;
+        int value;
 
     public:
-        Figure(std::string name, bool isWhite, int horizontalPosition, int verticalPosition);
+        Figure(std::string name, bool isWhite, int horizontalPosition, int verticalPosition, int value);
         virtual ~Figure() = default;
         void setName(std::string name);
         void setIsWhite(bool isWhite);
         void setHorizontalPosition(int horizontalPosition);
         void setVerticalPosition(int verticalPosition);
         void setNotCaptured(bool notCaptured);
+        void setValue(int value);
         std::string getName();
         bool getIsWhite();
         int getHorizontalPosition();
         int getVerticalPosition();
         bool getNotCaptured();
         std::string returnIcon(bool showIcon);
+        int getValue();
 
     protected:
         std::string icon;

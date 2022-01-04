@@ -4,7 +4,7 @@
 
 #include "Pawn.hpp"
 
-Pawn::Pawn(std::string name, bool isWhite, int horizontalPosition, int verticalPosition) : Figure (name, isWhite, horizontalPosition, verticalPosition) {
+Pawn::Pawn(std::string name, bool isWhite, int horizontalPosition, int verticalPosition) : Figure (name, isWhite, horizontalPosition, verticalPosition, 1) {
     if(isWhite) {
         this->icon = "\u265F";
     } else {
