@@ -16,7 +16,7 @@ class Gui {
         void printChessField(Settings* settings);
         void printSettings(Settings* settings);
         void getAllCapturedFigures();
-        void selectAFigure();
+        void selectAFigure(Settings* settings);
         ~Gui();
 
     private:

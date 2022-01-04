@@ -62,6 +62,11 @@ void Gui::printSettings(Settings* settings) {
         } else {
             std::cout << "* Press 1 to show names instead of icons in field! *" << std::endl;
         }
+        if(!settings->getShowPossibleMoves()) {
+            std::cout << "* Press 2 to show possible moves!                  *" << std::endl;
+        } else {
+            std::cout << "* Press 2 to hide possible moves!                  *" << std::endl;
+        }
         std::cout << "* Press q to quit the game!                        *" << std::endl;
         std::cout << "****************************************************" << std::endl;
         std::cout << "Your input: ";
@@ -69,6 +74,9 @@ void Gui::printSettings(Settings* settings) {
 
         if(temp_input == "1") {
             settings->setShowIcons(!settings->getShowIcons());
+        }
+        if(temp_input == "2") {
+            settings->setShowPossibleMoves(!settings->getShowPossibleMoves());
         }
     } while (temp_input != "q" && temp_input != "Q");
 }
@@ -114,55 +122,79 @@ void Gui::getAllCapturedFigures() {
     }
 }
 
-void Gui::selectAFigure() {
+void Gui::selectAFigure(Settings* settings) {
     std::string position;
     std::cout << "Select a figure by coordinates (A1): ";
     std::cin >> position;
 
     Player* current;
-    Player* opponent;
     if(this->chessField->getCurrentPlayer() == 1) {
         current = this->player1;
-        opponent = this->player2;
     } else {
         current = this->player2;
-        opponent = this->player1;
     }
 
     Figure* selectedFigure = current->getPieceAtPosition(convertHorizontal(position), convertVertical(position));
     if(selectedFigure == nullptr) {
         std::cout << "You don't have a figure on this square!" << std::endl;
-        return this->selectAFigure();
+        return this->selectAFigure(settings);
     } else {
-        std::string input;
         std::cout << selectedFigure->getName() << " selected at position " << position << "!" << std::endl;
-        std::cout << "Are you sure (Y,N)? ";
-        std::cin >> input;
-        if(input != "Y") {
-            return this->selectAFigure();
-        }
 
-        std::cout << "Possible Moves: " << std::endl;
         std::vector<Move *>* moves = this->moveController->getPseudoLegalMoves(selectedFigure);
         if(moves->empty()) {
             std::cout << "There are no moves for this figure!" << std::endl;
-            return this->selectAFigure();
-        }
-        int i = 1;
-        for(Move* possible : *moves) {
-            std::cout << i << ". " << convertPos(possible->getEndVerticalPosition(), possible->getEndHorizontalPosition()) << std::endl;
-            i++;
+            return this->selectAFigure(settings);
         }
 
-        int choice;
-        std::cout << "Enter your choice: ";
-        std::cin >> choice;
+        // list all Moves
+        if(settings->getShowPossibleMoves()) {
+            std::cout << "Possible Moves: " << std::endl;
 
-        Move* mv = moves->at(choice-1);
-        this->moveController->addMoveToHistory(mv);
-        mv->execute();
-        std::cout << mv->getAsString() << std::endl;
-        this->chessField->nextPlayer();
+            int i = 1;
+            for(Move* possible : *moves) {
+                std::cout << i << ". " << convertPos(possible->getEndVerticalPosition(), possible->getEndHorizontalPosition()) << std::endl;
+                i++;
+            }
+
+            std::string choice;
+            std::cout << "Enter your choice or (S)elect another figure: ";
+            std::cin >> choice;
+
+            if(choice == "s" || choice == "S") {
+                return this->selectAFigure(settings);
+            } else {
+                Move* mv = moves->at(std::stoi(choice) - 1);
+                this->moveController->addMoveToHistory(mv);
+                mv->execute();
+                std::cout << mv->getAsString() << std::endl;
+                this->chessField->nextPlayer();
+            }
+        } else {
+            std::string choice;
+            std::cout << "Enter the end position (A1) or (S)elect another figure: ";
+            std::cin >> choice;
+            if(choice == "s" || choice == "S") {
+                return this->selectAFigure(settings);
+            } else {
+                Move* mv = nullptr;
+                for(Move* possible : *moves) {
+                    if(convertPos(possible->getEndVerticalPosition(), possible->getEndHorizontalPosition()) == choice) {
+                        mv = possible;
+                        break;
+                    }
+                }
+                if(mv == nullptr) {
+                    std::cout << "No valid Move!" << std::endl;
+                    return this->selectAFigure(settings);
+                } else {
+                    this->moveController->addMoveToHistory(mv);
+                    mv->execute();
+                    std::cout << mv->getAsString() << std::endl;
+                    this->chessField->nextPlayer();
+                }
+            }
+        }
     }
 }
 

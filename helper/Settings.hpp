@@ -10,9 +10,12 @@ class Settings {
     public:
         bool getShowIcons();
         void setShowIcons(bool showIcons);
+        bool getShowPossibleMoves();
+        void setShowPossibleMoves(bool showPossibleMoves);
 
     private:
         bool showIcons;
+        bool showPossibleMoves;
 };
 
 

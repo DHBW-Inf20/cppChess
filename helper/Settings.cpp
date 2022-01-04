@@ -11,3 +11,11 @@ bool Settings::getShowIcons() {
 void Settings::setShowIcons(bool showIcons) {
     this->showIcons = showIcons;
 }
+
+bool Settings::getShowPossibleMoves() {
+    return this->showPossibleMoves;
+}
+
+void Settings::setShowPossibleMoves(bool showPossibleMoves) {
+    this->showPossibleMoves = showPossibleMoves;
+}
