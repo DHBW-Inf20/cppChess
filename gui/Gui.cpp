@@ -6,11 +6,13 @@
 #include <string>
 
 #include "Gui.hpp"
+#include "../helper/Converter.hpp"
 
 Gui::Gui() {
     this->player1 = new Player(true);
     this->player2 = new Player(false);
     this->chessField = new ChessField(this->player1, this->player2);
+    this->moveController = new MoveController(this->player1, this->player2);
 }
 
 /**
@@ -93,6 +95,74 @@ int Gui::printMenuInTheGame() {
     } else {
         std::cout << "No valid input!" << std::endl;
         return this->printMenuInTheGame();
+    }
+}
+
+void Gui::getAllCapturedFigures() {
+    Player* tmp;
+    if(this->chessField->getCurrentPlayer() == 1) {
+        tmp = this->player1;
+    } else {
+        tmp = this->player2;
+    }
+
+    std::cout << "List of captured figures: " << std::endl;
+    for(Figure* f : *tmp->getAllFigures()) {
+        if(!f->getNotCaptured()) {
+            std::cout << f->getName() << std::endl;
+        }
+    }
+}
+
+void Gui::selectAFigure() {
+    std::string position;
+    std::cout << "Select a figure by coordinates (A1): ";
+    std::cin >> position;
+
+    Player* current;
+    Player* opponent;
+    if(this->chessField->getCurrentPlayer() == 1) {
+        current = this->player1;
+        opponent = this->player2;
+    } else {
+        current = this->player2;
+        opponent = this->player1;
+    }
+
+    Figure* selectedFigure = current->getPieceAtPosition(convertHorizontal(position), convertVertical(position));
+    if(selectedFigure == nullptr) {
+        std::cout << "You don't have a figure on this square!" << std::endl;
+        return this->selectAFigure();
+    } else {
+        std::string input;
+        std::cout << selectedFigure->getName() << " selected at position " << position << "!" << std::endl;
+        std::cout << "Are you sure (Y,N)? ";
+        std::cin >> input;
+        if(input != "Y") {
+            return this->selectAFigure();
+        }
+
+        std::cout << "Possible Moves: " << std::endl;
+        std::vector<Move *>* moves = this->moveController->getPseudoLegalMoves(selectedFigure);
+        if(moves->empty()) {
+            std::cout << "There are no moves for this figure!" << std::endl;
+            return this->selectAFigure();
+        }
+        int i = 1;
+        for(Move* possible : *moves) {
+            std::cout << i << ". " << convertPos(possible->getEndVerticalPosition(), possible->getEndHorizontalPosition()) << std::endl;
+            i++;
+        }
+
+        int choice;
+        std::cout << "Enter your choice: ";
+        std::cin >> choice;
+
+        Move* mv = moves->at(choice-1);
+        this->moveController->addMoveToHistory(mv);
+        mv->execute();
+        std::cout << mv->getAsString() << std::endl;
+        this->chessField->nextPlayer();
     }
 }
 

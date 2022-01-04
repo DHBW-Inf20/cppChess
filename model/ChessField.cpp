@@ -4,7 +4,6 @@
 
 #include "ChessField.hpp"
 #include "Player.hpp"
-#include "../helper/Converter.hpp"
 
 #include <iostream>
 #include <string>
@@ -14,11 +13,18 @@ ChessField::ChessField(Player* player1, Player* player2) {
     this->player1 = player1;
     this->player2 = player2;
     this->currentPlayer = 1;
-    this->moveController = new MoveController(player1, player2);
 }
 
 int ChessField::getCurrentPlayer() {
     return this->currentPlayer;
+}
+
+void ChessField::nextPlayer() {
+    if(this->currentPlayer == 1) {
+        this->currentPlayer = 2;
+    } else {
+        this->currentPlayer = 1;
+    }
 }
 
 std::string printField(int horizontal, int vertical, Figure* figure, bool showIcons) {
@@ -91,62 +97,7 @@ bool ChessField::repaint(bool showIcons) {
     return true;
 }
 
-
-void ChessField::move() {
-    Player* current;
-    Player* opponent;
-    std::cout << "It's the turn of Player " << this->currentPlayer << std::endl;
-    if(this->currentPlayer == 1) {
-        current = this->player1;
-        opponent = this->player2;
-        this->currentPlayer = 2;
-    } else {
-        current = this->player2;
-        opponent = this->player1;
-        this->currentPlayer = 1;
-    }
-
-    Figure* selectedFigure = nullptr;
-    std::vector<Move *>* moves;
-    do {
-        std::string position;
-        std::cout << "Enter the position of your figure:";
-        std::cin >> position;
-
-        Figure* selectedFigure = current->getPieceAtPosition(convertHorizontal(position), convertVertical(position));
-        if (selectedFigure != nullptr) {
-             moves = this->moveController->getPseudoLegalMoves(selectedFigure);
-             if (moves->size() == 0) {
-                 std::cout << "This figure has no moves!" << std::endl;
-             } else {
-                 break;
-             }
-        } else {
-            std::cout << "You don't have a figure on this square!";
-        }
-
-    } while(!selectedFigure);
-    
-    std::cout << "Possible Moves:" << std::endl;
-
-    int i = 1;
-    for(Move* possible : *moves) {
-        std::cout << i << ". " << convertPos(possible->getEndVerticalPosition(), possible->getEndHorizontalPosition()) << std::endl;
-        i++;
-    }
-
-    int choice;
-    std::cout << "Your choice:";
-    std::cin >> choice;
-
-    Move* mv = moves->at(choice-1);
-    this->moveController->addMoveToHistory(mv);
-    mv->execute();
-    std::cout << mv->getAsString() << std::endl;
-}
-
 ChessField::~ChessField() {
-    delete this->moveController;
     delete this->player1;
     delete this->player2;
 }

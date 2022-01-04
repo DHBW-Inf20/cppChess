@@ -20,7 +20,11 @@ int main () {
                     gui->printChessField(settings);
                     main_setting = gui->printMenuInTheGame();
                     if(main_setting != -1) {
-
+                        if(main_setting == 1) {
+                            gui->selectAFigure();
+                        } else if(main_setting == 2) {
+                            gui->getAllCapturedFigures();
+                        }
                     }
                 } while (main_setting != -1);
                 break;

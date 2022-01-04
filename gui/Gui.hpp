@@ -5,6 +5,7 @@
 #include "../model/Player.hpp"
 #include "../model/ChessField.hpp"
 #include "../helper/Settings.hpp"
+#include "../model/MoveController.hpp"
 
 class Gui {
     public:
@@ -14,9 +15,12 @@ class Gui {
         int printMenuInTheGame();
         void printChessField(Settings* settings);
         void printSettings(Settings* settings);
+        void getAllCapturedFigures();
+        void selectAFigure();
         ~Gui();
 
     private:
+        MoveController* moveController;
         ChessField* chessField;
         Player* player1;
         Player* player2;
