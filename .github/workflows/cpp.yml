@@ -14,4 +14,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: make
-      run: make -f MAKEFILE .PHONY
+      run: make -f MAKEFILE .PHONY target_file=YetAnotherChessGame.o
+    - name: Download a Build Artifact
+      uses: actions/download-artifact@v2.1.0
+      with:
+        name: YetAnotherChessGame.o
+        path: 
