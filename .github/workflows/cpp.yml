@@ -18,5 +18,5 @@ jobs:
     - name: Download a Build Artifact
       uses: actions/download-artifact@v2.1.0
       with:
-        name: /home/runner/work/YetAnotherChessGame/YetAnotherChessGame/Build/YetAnotherChessGame
-        path: 
+        name: YetAnotherChessGame
+        path: /home/runner/work/YetAnotherChessGame/YetAnotherChessGame/Build/
