@@ -14,9 +14,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: make
-      run: make -f MAKEFILE all target_file=/home/runner/work/YetAnotherChessGame/YetAnotherChessGame/Build/YetAnotherChessGame.o
+      run: make -f MAKEFILE all target_file=/home/runner/work/YetAnotherChessGame/YetAnotherChessGame/Build/YetAnotherChessGame
     - name: Download a Build Artifact
       uses: actions/download-artifact@v2.1.0
       with:
-        name: /home/runner/work/YetAnotherChessGame/YetAnotherChessGame/Build/YetAnotherChessGame.o
+        name: /home/runner/work/YetAnotherChessGame/YetAnotherChessGame/Build/YetAnotherChessGame
         path: 
