@@ -5,7 +5,12 @@
 #include "gui/Gui.hpp"
 #include "helper/Settings.hpp"
 
+#include <Windows.h>
+
 int main () {
+    SetConsoleOutputCP(CP_UTF8);
+    SetConsoleCP(CP_UTF8);
+
     auto settings = new Settings();
     Gui* gui = new Gui();
 
@@ -27,6 +32,7 @@ int main () {
                         }
                     }
                 } while (main_setting != -1);
+                main_setting = 1;
                 break;
             case 2:
                 gui->printSettings(settings);
