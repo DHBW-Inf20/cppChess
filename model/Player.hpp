@@ -31,11 +31,13 @@ class Player {
         Player(bool isWhite, std::vector<Figure*>* figures);
         ~Player();
         void setIsWhite(bool isWhite);
+        bool getIsWhite();
         std::vector<Figure*>* getAllFigures();
         std::vector<Figure*>* getUncapturedFigures();
         Figure* getPieceAtPosition(int horizontal, int vertical);
         Figure* hasFigureOnSquare(int horizontalPosition, int verticalPosition);
         int getUncapturedMaterialValue();
+        King* getKing();
         Player* clonePlayer();
 };
 

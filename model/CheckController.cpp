@@ -3,6 +3,7 @@
 //
 
 #include "CheckController.hpp"
+#include "MoveController.hpp"
 
 CheckController::CheckController(Player* whitePlayer, Player* blackPlayer) {
     this->whitePlayer = whitePlayer;
@@ -47,8 +48,14 @@ std::vector<Player*>* CheckController::getClonedPositionAfterMove(Move* move) {
     }
 
     std::vector<Player*>* clonedPlayers = new std::vector<Player*>();
-    clonedPlayers->push_back(clonedWhitePlayer);
-    clonedPlayers->push_back(clonedBlackPlayer);
+    if (move->getFigure()->getIsWhite()) {
+        clonedPlayers->push_back(clonedWhitePlayer);
+        clonedPlayers->push_back(clonedBlackPlayer);
+    } else {
+        clonedPlayers->push_back(clonedBlackPlayer);
+        clonedPlayers->push_back(clonedWhitePlayer);
+    }
+
     return clonedPlayers;
 }
 
@@ -67,6 +74,27 @@ std::vector<Move*>* CheckController::validateMoves(std::vector<Move*>* moves) {
 }
 
 bool CheckController::isCheck(std::vector<Player*>* players) {
+    Player* owner = players->at(0);
+    Player* opponent = players->at(1);
+    MoveController* moveController;
+    if (owner->getIsWhite()) {
+        moveController = new MoveController(owner, opponent);
+    } else {
+        moveController = new MoveController(opponent, owner);
+    }
+    
+    King* king = owner->getKing();
+    int horizontalPosition = king->getHorizontalPosition();
+    int verticalPosition = king->getVerticalPosition();
+
+    std::vector<Move*>* allMoves = moveController->getPseudoLegalMovesForAll(opponent->getUncapturedFigures());
+    
+    for (Move* move : *allMoves) {
+        if (king->getHorizontalPosition() == move->getEndHorizontalPosition() && king->getVerticalPosition() == move->getEndVerticalPosition()) {
+            return true;
+        }
+    }
+    
     return false;
 }
 

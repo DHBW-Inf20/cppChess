@@ -18,6 +18,7 @@ class Gui {
         void printSettings(Settings* settings);
         void getMaterialComparison();
         void selectAFigure(Settings* settings);
+        bool isCheckmate();
         ~Gui();
 
     private:
@@ -26,6 +27,7 @@ class Gui {
         ChessField* chessField;
         Player* player1;
         Player* player2;
+        bool checkmate;
 };
 
 #endif

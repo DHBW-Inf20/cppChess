@@ -31,7 +31,7 @@ int main () {
                             gui->getMaterialComparison();
                         }
                     }
-                } while (main_setting != -1);
+                } while (main_setting != -1 && !gui->isCheckmate());
                 main_setting = 1;
                 break;
             case 2:

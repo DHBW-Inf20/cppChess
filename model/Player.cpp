@@ -45,6 +45,10 @@ void Player::setIsWhite(bool isWhite) {
     this->isWhite = isWhite;
 }
 
+bool Player::getIsWhite() {
+    return this->isWhite;
+}
+
 std::vector<Figure*>* Player::getAllFigures() {
     return figures;
 }
@@ -106,6 +110,15 @@ Player* Player::clonePlayer() {
         return clonedPlayer;
     } else {
         std::cout << "An error occured...";
+        return nullptr;
+    }
+}
+
+King* Player::getKing() {
+    Figure* kingFigure = this->figures->at(4);
+    if (King* king = dynamic_cast<King*>(kingFigure)) {
+        return king;
+    } else {
         return nullptr;
     }
 }
