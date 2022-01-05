@@ -3,10 +3,18 @@ SOURCE_DIR := $(PROJ_DIR)
 BUILD_DIR := $(PROJ_DIR)/Build
 
 # Name of the file
-TARGET = YetAnotherChessGame.o
+ifdef target_file
+	TARGET = $(target_file)
+else
+	TARGET = ${PROJ_DIR}/YetAnotherChessGame.exe
+endif
 
 # Enable Verbose-Mode
-VERBOSE = TRUE
+ifdef verbose
+	VERBOSE = TRUE
+else
+	VERBOSE = FALSE
+endif
 
 # List of directories in project
 DIR_LIST = gui helper model model/figures model/moves .
@@ -20,7 +28,7 @@ VPATH = $(SOURCE_DIRS)
 
 SOURCES = $(foreach dir, $(SOURCE_DIRS), $(wildcard $(dir)/*.cpp))
 
-OBJECTS := $(subst $(SOURCE_DIRS), $(BUILD_DIR), $(SOURCES:.cpp=.o))
+OBJECTS := $(subst $(SOURCE_DIR), $(BUILD_DIR), $(SOURCES:.cpp=.o))
 
 DEPS := $(OBJECTS:.o=.d)
 
@@ -30,7 +38,7 @@ ifeq ($(OS),Windows_NT)
     RM = del /F /Q
     RMDIR = -RMDIR /S /Q
     MKDIR = -mkdir
-    ERRIGNORE = 2>NUL || true
+    ERRIGNORE = 2>nul
     SEP=\\
 else
     RM = rm -rf
@@ -53,8 +61,8 @@ endif
 # Define the function that will generate each rule
 define generateRules
 $(1)/%.o: %.cpp
-    @echo Building $$@
-    $(HIDE)$(CC) -c $$(INCLUDES) -o $$(subst /,$$(PSEP),$$@) $$(subst /,$$(PSEP),$$<) -MMD
+	@echo Building $$@
+	$(HIDE)$(CC) -c $$(INCLUDES) -o $$(subst /,$$(PSEP),$$@) $$(subst /,$$(PSEP),$$<) -MMD
 endef
 
 .PHONY: all clean directories
@@ -69,7 +77,7 @@ $(TARGET): $(OBJECTS)
 -include $(DEPS)
 
 # Generate rules
-$(foreach targetdir, $(TARGETDIRS), $(eval $(call generateRules, $(targetdir))))
+$(foreach targetdir, $(TARGET_DIRS), $(eval $(call generateRules, $(targetdir))))
 
 directories:
 	$(HIDE)$(MKDIR) $(subst /,$(PSEP),$(TARGET_DIRS)) $(ERRIGNORE)
@@ -77,5 +85,4 @@ directories:
 # Remove all objects, dependencies and executable files generated during the build
 clean:
 	$(HIDE)$(RMDIR) $(subst /,$(PSEP),$(TARGET_DIRS)) $(ERRIGNORE)
-	$(HIDE)$(RM) $(TARGET) $(ERRIGNORE)
 	@echo Cleaning done !
