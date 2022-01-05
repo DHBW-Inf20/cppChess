@@ -14,9 +14,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: make
-      run: make -f MAKEFILE all target_file=$GITHUB_WORKSPACE/YetAnotherChessGame.exe
+      run: make -f MAKEFILE all target_file=YetAnotherChessGame.exe
     - name: Download a Build Artifact
       uses: actions/upload-artifact@v2
       with:
         name: YetAnotherChessGame
-        path: $GITHUB_WORKSPACE/YetAnotherChessGame.exe
+        path: YetAnotherChessGame.exe
