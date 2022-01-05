@@ -23,3 +23,8 @@ void Pawn::incrementMoveCounter() {
 int Pawn::getMoveCounter() {
     return this->moveCounter;
 }
+
+Pawn* Pawn::cloneFigure() {
+    Pawn* clonedPawn = new Pawn(this->getName(), this->getIsWhite(), this->getHorizontalPosition(), this->getVerticalPosition());
+    return clonedPawn;
+}

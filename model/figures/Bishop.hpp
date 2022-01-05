@@ -11,6 +11,7 @@ class Bishop : public Figure {
     public:
         Bishop(std::string name, bool isWhite, int horizontalPosition, int verticalPosition);
         ~Bishop() override;
+        Bishop* cloneFigure() override;
 };
 
 

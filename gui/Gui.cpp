@@ -13,6 +13,7 @@ Gui::Gui() {
     this->player2 = new Player(false);
     this->chessField = new ChessField(this->player1, this->player2);
     this->moveController = new MoveController(this->player1, this->player2);
+    this->checkController = new CheckController(this->player1, this->player2);
 }
 
 /**
@@ -166,8 +167,10 @@ void Gui::selectAFigure(Settings* settings) {
     } else {
         std::cout << selectedFigure->getName() << " selected at position " << position << "!" << std::endl;
 
-        std::vector<Move *>* moves = this->moveController->getPseudoLegalMoves(selectedFigure);
-        if(moves->empty()) {
+        std::vector<Move*>* moves = this->moveController->getPseudoLegalMoves(selectedFigure);
+        std::vector<Move*>* validMoves = this->checkController->validateMoves(moves);
+
+        if(validMoves->empty()) {
             std::cout << "There are no moves for this figure!" << std::endl;
             return this->selectAFigure(settings);
         }
@@ -177,7 +180,7 @@ void Gui::selectAFigure(Settings* settings) {
             std::cout << "Possible Moves: " << std::endl;
 
             int i = 1;
-            for(Move* possible : *moves) {
+            for(Move* possible : *validMoves) {
                 std::cout << i << ". " << convertPos(possible->getEndVerticalPosition(), possible->getEndHorizontalPosition()) << std::endl;
                 i++;
             }
@@ -189,7 +192,7 @@ void Gui::selectAFigure(Settings* settings) {
             if(choice == "s" || choice == "S") {
                 return this->selectAFigure(settings);
             } else {
-                Move* mv = moves->at(std::stoi(choice) - 1);
+                Move* mv = validMoves->at(std::stoi(choice) - 1);
                 this->moveController->addMoveToHistory(mv);
                 mv->execute();
                 std::cout << mv->getAsString() << std::endl;
@@ -203,7 +206,7 @@ void Gui::selectAFigure(Settings* settings) {
                 return this->selectAFigure(settings);
             } else {
                 Move* mv = nullptr;
-                for(Move* possible : *moves) {
+                for(Move* possible : *validMoves) {
                     if((convertHorizontal(choice) == possible->getEndHorizontalPosition()) && (convertVertical(choice) == possible->getEndVerticalPosition())) {
                         mv = possible;
                         break;

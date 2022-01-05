@@ -23,10 +23,12 @@ class Player {
         Knight *firstKnight, *secondKnight;
         Queen *queen;
         King *king;
+        std::vector<Figure*> *figures = new std::vector<Figure*>;
         std::vector<Pawn*> *pawns = new std::vector<Pawn*>;
 
     public:
         Player(bool isWhite);
+        Player(bool isWhite, std::vector<Figure*>* figures);
         ~Player();
         void setIsWhite(bool isWhite);
         std::vector<Figure*>* getAllFigures();
@@ -34,6 +36,7 @@ class Player {
         Figure* getPieceAtPosition(int horizontal, int vertical);
         Figure* hasFigureOnSquare(int horizontalPosition, int verticalPosition);
         int getUncapturedMaterialValue();
+        Player* clonePlayer();
 };
 
 

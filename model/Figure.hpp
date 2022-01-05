@@ -19,7 +19,7 @@ class Figure {
 
     public:
         Figure(std::string name, bool isWhite, int horizontalPosition, int verticalPosition, int value);
-        virtual ~Figure() = default;
+        virtual ~Figure();
         void setName(std::string name);
         void setIsWhite(bool isWhite);
         void setHorizontalPosition(int horizontalPosition);
@@ -33,6 +33,7 @@ class Figure {
         bool getNotCaptured();
         std::string returnIcon(bool showIcon);
         int getValue();
+        virtual Figure* cloneFigure() = 0;
 
     protected:
         std::string icon;

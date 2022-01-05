@@ -14,6 +14,7 @@ class Pawn : public Figure {
         ~Pawn() override;
         void incrementMoveCounter();
         int getMoveCounter();
+        Pawn* cloneFigure() override;
 
     private:
         int moveCounter;

@@ -21,3 +21,8 @@ void Rook::incrementMoveCounter() {
 int Rook::getMoveCounter() {
     return this->moveCounter;
 }
+
+Rook* Rook::cloneFigure() {
+    Rook* clonedRook = new Rook(this->getName(), this->getIsWhite(), this->getHorizontalPosition(), this->getVerticalPosition());
+    return clonedRook;
+}

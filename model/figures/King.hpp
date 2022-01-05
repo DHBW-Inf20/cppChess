@@ -13,6 +13,7 @@ class King : public Figure {
         ~King() override;
         void incrementMoveCounter();
         int getMoveCounter();
+        King* cloneFigure() override;
 
     private:
         int moveCounter;

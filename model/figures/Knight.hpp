@@ -11,6 +11,7 @@ class Knight : public Figure {
     public:
         Knight(std::string name, bool isWhite, int horizontalPosition, int verticalPosition);
         ~Knight() override;
+        Knight* cloneFigure() override;
 };
 
 #endif //YETANOTHERCHESSGAME_HORSE_H

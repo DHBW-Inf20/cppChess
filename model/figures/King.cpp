@@ -22,3 +22,8 @@ void King::incrementMoveCounter() {
 int King::getMoveCounter() {
     return this->moveCounter;
 }
+
+King* King::cloneFigure() {
+    King* clonedKing = new King(this->getName(), this->getIsWhite(), this->getHorizontalPosition(), this->getVerticalPosition());
+    return clonedKing;
+}

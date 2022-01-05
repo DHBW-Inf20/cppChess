@@ -6,6 +6,7 @@
 #include "../model/ChessField.hpp"
 #include "../helper/Settings.hpp"
 #include "../model/MoveController.hpp"
+#include "../model/CheckController.hpp"
 
 class Gui {
     public:
@@ -21,6 +22,7 @@ class Gui {
 
     private:
         MoveController* moveController;
+        CheckController* checkController;
         ChessField* chessField;
         Player* player1;
         Player* player2;

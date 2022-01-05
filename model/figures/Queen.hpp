@@ -11,6 +11,7 @@ class Queen : public Figure {
     public:
         Queen(std::string name, bool isWhite, int horizontalPosition, int verticalPosition);
         ~Queen() override;
+        Queen* cloneFigure() override;
 };
 
 

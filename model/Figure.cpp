@@ -13,6 +13,8 @@ Figure::Figure(std::string name, bool isWhite, int horizontalPosition, int verti
     this->setValue(value);
 }
 
+Figure::~Figure() {}
+
 void Figure::setName(std::string name) {
     this->name = name;
 }

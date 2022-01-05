@@ -13,3 +13,8 @@ Queen::Queen(std::string name, bool isWhite, int horizontalPosition, int vertica
 }
 
 Queen::~Queen() {}
+
+Queen* Queen::cloneFigure() {
+    Queen* clonedQueen = new Queen(this->getName(), this->getIsWhite(), this->getHorizontalPosition(), this->getVerticalPosition());
+    return clonedQueen;
+}

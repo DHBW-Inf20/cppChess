@@ -13,3 +13,8 @@ Bishop::Bishop(std::string name, bool isWhite, int horizontalPosition, int verti
 }
 
 Bishop::~Bishop() {}
+
+Bishop* Bishop::cloneFigure() {
+    Bishop* clonedBishop = new Bishop(this->getName(), this->getIsWhite(), this->getHorizontalPosition(), this->getVerticalPosition());
+    return clonedBishop;
+}

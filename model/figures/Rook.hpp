@@ -13,6 +13,7 @@ class Rook : public Figure {
         ~Rook() override;
         void incrementMoveCounter();
         int getMoveCounter();
+        Rook* cloneFigure() override;
 
     private:
         int moveCounter;
