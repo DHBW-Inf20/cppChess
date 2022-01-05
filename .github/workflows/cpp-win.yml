@@ -1,0 +1,22 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: windows-2022
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: make
+      run: make -f MAKEFILE all target_file=/home/runner/work/YetAnotherChessGame/YetAnotherChessGame/Build/YetAnotherChessGame.exe
+    - name: Download a Build Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: YetAnotherChessGame
+        path: /home/runner/work/YetAnotherChessGame/YetAnotherChessGame/Build/YetAnotherChessGame.exe
