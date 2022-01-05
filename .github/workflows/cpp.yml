@@ -16,7 +16,7 @@ jobs:
     - name: make
       run: make -f MAKEFILE all target_file=/home/runner/work/YetAnotherChessGame/YetAnotherChessGame/Build/YetAnotherChessGame
     - name: Download a Build Artifact
-      uses: actions/download-artifact@v2.1.0
+      uses: actions/upload-artifact@v2
       with:
         name: YetAnotherChessGame
-        path: /home/runner/work/YetAnotherChessGame/YetAnotherChessGame/Build/
+        path: /home/runner/work/YetAnotherChessGame/YetAnotherChessGame/Build/YetAnotherChessGame
