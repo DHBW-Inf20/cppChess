@@ -10,7 +10,7 @@ The Project is licensed under the General Public License V3.
 You need an active installation of the c++-Compiler gcc and make.
 
 ### Call Make to build the game
-Call Make with the option -f to add the makefile in the root of the project as param.<br> E.g. make -f [makefile]
+Call Make with the option -f to add the makefile in the root of the project as param and use .PHONY as target.<br> E.g. make -f [makefile] .PHONY
 
 ### Arguments
 verbose=1 Enables the verbose-mode<br>
