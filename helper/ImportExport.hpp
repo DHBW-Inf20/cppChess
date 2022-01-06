@@ -11,6 +11,7 @@
 class ImportExport {
     public:
         ImportExport(std::string path, char separator);
+        bool exists();
         std::string getPath();
         void setPath(std::string path);
         char getSeparator();

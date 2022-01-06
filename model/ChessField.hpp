@@ -15,6 +15,7 @@ class ChessField {
         ChessField(Player* player1, Player* player2);
         bool repaint(bool showIcons);
         int getCurrentPlayer();
+        void setCurrentPlayer(int player);
         void nextPlayer();
         ~ChessField();
 

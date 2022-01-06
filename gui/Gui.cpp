@@ -3,7 +3,6 @@
 //
 
 #include <iostream>
-#include <string>
 
 #include "Gui.hpp"
 #include "../helper/Converter.hpp"
@@ -26,13 +25,14 @@ void Gui::printWelcomeScreen() {
 
 /**
  * Prints the Main-Menu
- * @return 1 for new game, 2 for settings, -1 to quit the game
+ * @return 1 for new game, 2 to load a game, 3 for settings, -1 to quit the game
  */
 int Gui::printMainMenu() {
     std::string temp_input;
     std::cout << "**************************************************" << std::endl;
     std::cout << "* Press 1 to start a new Game!                   *" << std::endl;
-    std::cout << "* Press 2 to enter the settings!                 *" << std::endl;
+    std::cout << "* Press 2 to load a Game!                        *" << std::endl;
+    std::cout << "* Press s to enter the settings!                 *" << std::endl;
     std::cout << "* Press q to quit the game!                      *" << std::endl;
     std::cout << "**************************************************" << std::endl;
     std::cout << "Your input: ";
@@ -44,6 +44,8 @@ int Gui::printMainMenu() {
         return 1;
     } else if(temp_input == "2") {
         return 2;
+    } else if(temp_input == "s" || temp_input == "S") {
+        return 3;
     } else {
         std::cout << "No valid input!" << std::endl;
         return this->printMainMenu();
@@ -52,6 +54,124 @@ int Gui::printMainMenu() {
 
 void Gui::printChessField(Settings* settings) {
     this->chessField->repaint(settings->getShowIcons());
+}
+
+void Gui::loadAGame(Settings* settings) {
+    try {
+        std::string path;
+        std::cout << "Enter a path to a valid Game-File: ";
+        std::cin >> path;
+        this->importExport = new ImportExport(path, ';');
+        bool fileExists = this->importExport->exists();
+
+        if(fileExists) {
+            // name of game in the first line
+            std::vector<std::vector<std::string>> data = this->importExport->importData();
+            std::string first = data.at(0).at(0);
+            int player = std::stoi(data.at(0).at(2));
+            if(first != "YetAnotherChessGame") {
+                throw 1;
+            }
+
+            // all figures are captured
+            for(Figure* figure : *this->player1->getAllFigures()) {
+                figure->setNotCaptured(false);
+            }
+            for(Figure* figure : *this->player2->getAllFigures()) {
+                figure->setNotCaptured(false);
+            }
+
+            int row = 1;
+            int column = 1;
+            for(std::vector<std::string> line : data) {
+                if(row != 1) {
+                    for(std::string field : line) {
+                        if(field != "") {
+                            Player* tmp = nullptr;
+                            if(field[0] == 'b') {
+                                if(!player1->getIsWhite()) {
+                                    tmp = player1;
+                                } else if(!player2->getIsWhite()) {
+                                    tmp = player2;
+                                }
+                            } else if(field[0] == 'w') {
+                                if(player1->getIsWhite()) {
+                                    tmp = player1;
+                                } else if(player2->getIsWhite()) {
+                                    tmp = player2;
+                                }
+                            }
+
+                            if(tmp == nullptr) {
+                                throw -1;
+                            }
+                            for(Figure* figure : *tmp->getAllFigures()) {
+                                if(figure->getName() == field && !figure->getNotCaptured()) {
+                                    figure->setNotCaptured(true);
+                                    figure->setVerticalPosition(row-1);
+                                    figure->setHorizontalPosition(column);
+                                    break;
+                                }
+                            }
+                        }
+                        column++;
+                    }
+                }
+                row++;
+                column = 1;
+            }
+            this->chessField->setCurrentPlayer(player);
+        } else {
+            throw -1;
+        }
+        this->chessField->repaint(settings->getShowIcons());
+    } catch(int data) {
+        std::cout << "Loading the game failed! Please enter a valid path!" << std::endl;
+    }
+}
+
+void Gui::saveTheGame() {
+    try {
+        std::string path;
+        std::cout << "Enter a path to save the game (File with 'csv' as extension): ";
+        std::cin >> path;
+
+        this->importExport = new ImportExport(path, ';');
+        bool fileExists = this->importExport->exists();
+
+        if(!fileExists) {
+            std::vector<std::vector<std::string>> data;
+            std::vector<std::string> firstLine;
+            firstLine.push_back("YetAnotherChessGame");
+            firstLine.push_back("1.0");
+            firstLine.push_back(std::to_string(this->chessField->getCurrentPlayer()));
+            data.push_back(firstLine);
+
+            for(int i = 0; i<=7; i++) {
+                std::vector<std::string> line;
+                for(int j = 0; j<=7; j++) {
+                    line.push_back("");
+                }
+                data.push_back(line);
+            }
+
+            for(Figure* figure : *this->player1->getAllFigures()) {
+                if(figure->getNotCaptured()) {
+                    data.at(figure->getVerticalPosition()).at(figure->getHorizontalPosition()-1) = figure->getName();
+                }
+            }
+            for(Figure* figure : *this->player2->getAllFigures()) {
+                if(figure->getNotCaptured()) {
+                    data.at(figure->getVerticalPosition()).at(figure->getHorizontalPosition()-1) = figure->getName();
+                }
+            }
+            this->importExport->exportData(data);
+        } else {
+            throw -1;
+        }
+    } catch(int data) {
+        std::cout << "Saving the game failed! Please enter a valid path!" << std::endl;
+    }
 }
 
 void Gui::printSettings(Settings* settings) {
@@ -101,10 +221,16 @@ int Gui::printMenuInTheGame() {
     } else if(temp_input == "c" || temp_input == "C") {
         return 2;
     } else if(temp_input == "q" || temp_input == "Q") {
-        std::cout << "Are you sure to quit the game (Y,N)?";
+        std::cout << "Are you sure (Y,N)? ";
         std::cin >> temp_input;
         if(temp_input == "Y") {
-            return -1;
+            std::cout << "Do you want to save the game (Y,N)? ";
+            std::cin >> temp_input;
+            if(temp_input == "Y" || temp_input == "y") {
+                return 3;
+            } else {
+                return -1;
+            }
         } else {
             return this->printMenuInTheGame();
         }

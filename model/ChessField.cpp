@@ -19,6 +19,10 @@ int ChessField::getCurrentPlayer() {
     return this->currentPlayer;
 }
 
+void ChessField::setCurrentPlayer(int player) {
+    this->currentPlayer = player;
+}
+
 void ChessField::nextPlayer() {
     if(this->currentPlayer == 1) {
         this->currentPlayer = 2;

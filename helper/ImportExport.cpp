@@ -10,6 +10,13 @@ ImportExport::ImportExport(std::string path, char separator) {
     this->separator = separator;
 }
 
+bool ImportExport::exists() {
+    std::ifstream stream(this->path);
+    bool result = stream.good();
+    stream.close();
+    return result;
+}
+
 std::string ImportExport::getPath() {
     return this->path;
 }
@@ -27,13 +34,16 @@ void ImportExport::setSeparator(char separator) {
 }
 
 void tokenize(std::string const &str, const char delim,std::vector<std::string> &out) {
-    size_t start;
-    size_t end = 0;
+    std::string::size_type lastPos = 0;
+    std::string::size_type pos = str.find_first_of(delim, lastPos);
 
-    while ((start = str.find_first_not_of(delim, end)) != std::string::npos) {
-        end = str.find(delim, start);
-        out.push_back(str.substr(start, end - start));
+    while(std::string::npos != pos && std::string::npos != lastPos) {
+        out.push_back(str.substr(lastPos, pos - lastPos));
+        lastPos = pos+1;
+        pos = str.find_first_of(delim, lastPos);
     }
+
+    out.push_back(str.substr(lastPos, pos - lastPos));
 }
 
 std::vector <std::vector<std::string>> ImportExport::importData() {

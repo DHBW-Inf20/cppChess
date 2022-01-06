@@ -6,7 +6,7 @@ BUILD_DIR := $(PROJ_DIR)/Build
 ifdef target_file
 	TARGET = $(target_file)
 else
-	TARGET = ${PROJ_DIR}/YetAnotherChessGame.exe
+	TARGET = ${PROJ_DIR}/YetAnotherChessGame
 endif
 
 # Enable Verbose-Mode
