@@ -22,6 +22,9 @@ int main () {
         }
         switch (main_setting) {
             case 1:
+                if(!loaded) {
+                    gui->resetChessField();
+                }
                 loaded = false;
                 do {
                     gui->printChessField(settings);

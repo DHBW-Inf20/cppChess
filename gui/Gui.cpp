@@ -8,6 +8,10 @@
 #include "../helper/Converter.hpp"
 
 Gui::Gui() {
+   this->resetChessField();
+}
+
+void Gui::resetChessField() {
     this->player1 = new Player(true);
     this->player2 = new Player(false);
     this->chessField = new ChessField(this->player1, this->player2);

@@ -12,6 +12,7 @@
 class Gui {
     public:
         Gui();
+        void resetChessField();
         void printWelcomeScreen();
         int printMainMenu();
         int printMenuInTheGame();
