@@ -4,15 +4,13 @@
 
 #include <string>
 #include "gui/Gui.hpp"
-#include "helper/Settings.hpp"
 
 int main () {
-    auto settings = new Settings();
     Gui* gui = new Gui();
 
     gui->printWelcomeScreen();
 
-    int main_setting = 0;
+    int main_setting;
     bool loaded = false;
     do {
         if(!loaded) {
@@ -27,11 +25,12 @@ int main () {
                 }
                 loaded = false;
                 do {
-                    gui->printChessField(settings);
+                    gui->clear();
+                    gui->printChessField();
                     main_setting = gui->printMenuInTheGame();
                     if(main_setting != -1) {
                         if(main_setting == 1) {
-                            gui->selectAFigure(settings);
+                            gui->selectAFigure();
                         } else if(main_setting == 2) {
                             gui->getMaterialComparison();
                         } else if(main_setting == 3) {
@@ -43,16 +42,15 @@ int main () {
                 main_setting = 1;
                 break;
             case 2:
-                gui->loadAGame(settings);
+                gui->loadAGame();
                 loaded = true;
                 break;
             case 3:
-                gui->printSettings(settings);
+                gui->printSettings();
                 break;
         }
     } while (main_setting != -1);
 
-    delete settings;
     delete gui;
     return 0;
 }

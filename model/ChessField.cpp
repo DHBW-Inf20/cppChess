@@ -6,8 +6,6 @@
 #include "Player.hpp"
 
 #include <iostream>
-#include <string>
-#include <vector>
 
 ChessField::ChessField(Player* player1, Player* player2) {
     this->player1 = player1;
@@ -101,7 +99,4 @@ bool ChessField::repaint(bool showIcons) {
     return true;
 }
 
-ChessField::~ChessField() {
-    delete this->player1;
-    delete this->player2;
-}
+ChessField::~ChessField() {}

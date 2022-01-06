@@ -16,16 +16,18 @@ class Gui {
         void printWelcomeScreen();
         int printMainMenu();
         int printMenuInTheGame();
-        void printChessField(Settings* settings);
-        void printSettings(Settings* settings);
-        void loadAGame(Settings* settings);
+        void printChessField();
+        void printSettings();
+        void loadAGame();
         void saveTheGame();
         void getMaterialComparison();
-        void selectAFigure(Settings* settings);
+        void selectAFigure();
         bool isCheckmate();
+        void clear();
         ~Gui();
 
     private:
+        Settings* settings;
         ImportExport* importExport;
         MoveController* moveController;
         CheckController* checkController;

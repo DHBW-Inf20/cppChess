@@ -8,6 +8,7 @@
 #include "../helper/Converter.hpp"
 
 Gui::Gui() {
+    this->settings = new Settings();
    this->resetChessField();
 }
 
@@ -56,11 +57,11 @@ int Gui::printMainMenu() {
     }
 }
 
-void Gui::printChessField(Settings* settings) {
-    this->chessField->repaint(settings->getShowIcons());
+void Gui::printChessField() {
+    this->chessField->repaint(this->settings->getShowIcons());
 }
 
-void Gui::loadAGame(Settings* settings) {
+void Gui::loadAGame() {
     try {
         std::string path;
         std::cout << "Enter a path to a valid Game-File: ";
@@ -128,7 +129,7 @@ void Gui::loadAGame(Settings* settings) {
         } else {
             throw -1;
         }
-        this->chessField->repaint(settings->getShowIcons());
+        this->chessField->repaint(this->settings->getShowIcons());
     } catch(int data) {
         std::cout << "Loading the game failed! Please enter a valid path!" << std::endl;
     }
@@ -178,17 +179,17 @@ void Gui::saveTheGame() {
     }
 }
 
-void Gui::printSettings(Settings* settings) {
+void Gui::printSettings() {
     std::string temp_input;
 
     do {
         std::cout << "****************************************************" << std::endl;
-        if(!settings->getShowIcons()) {
+        if(!this->settings->getShowIcons()) {
             std::cout << "* Press 1 to show Icons instead of names in field! *" << std::endl;
         } else {
             std::cout << "* Press 1 to show names instead of icons in field! *" << std::endl;
         }
-        if(!settings->getShowPossibleMoves()) {
+        if(!this->settings->getShowPossibleMoves()) {
             std::cout << "* Press 2 to show possible moves!                  *" << std::endl;
         } else {
             std::cout << "* Press 2 to hide possible moves!                  *" << std::endl;
@@ -199,10 +200,10 @@ void Gui::printSettings(Settings* settings) {
         std::cin >> temp_input;
 
         if(temp_input == "1") {
-            settings->setShowIcons(!settings->getShowIcons());
+            this->settings->setShowIcons(!this->settings->getShowIcons());
         }
         if(temp_input == "2") {
-            settings->setShowPossibleMoves(!settings->getShowPossibleMoves());
+            this->settings->setShowPossibleMoves(!this->settings->getShowPossibleMoves());
         }
     } while (temp_input != "q" && temp_input != "Q");
 }
@@ -279,7 +280,7 @@ void Gui::getMaterialComparison() {
     }
 }
 
-void Gui::selectAFigure(Settings* settings) {
+void Gui::selectAFigure() {
     std::string position;
     std::cout << "Select a figure by coordinates (A1): ";
     std::cin >> position;
@@ -294,20 +295,20 @@ void Gui::selectAFigure(Settings* settings) {
     Figure* selectedFigure = current->getPieceAtPosition((int) convertHorizontal(position), (int) convertVertical(position));
     if(selectedFigure == nullptr) {
         std::cout << "You don't have a figure on this square!" << std::endl;
-        return this->selectAFigure(settings);
+        return this->selectAFigure();
     } else {
         std::vector<Move*>* moves = this->moveController->getPseudoLegalMoves(selectedFigure);
         std::vector<Move*>* validMoves = this->checkController->validateMoves(moves);
 
         if(validMoves->empty()) {
             std::cout << "There are no moves for this figure!" << std::endl;
-            return this->selectAFigure(settings);
+            return this->selectAFigure();
         } else {
             std::cout << selectedFigure->getName() << " selected at position " << position << "!" << std::endl;
         }
 
         // list all Moves
-        if(settings->getShowPossibleMoves()) {
+        if(this->settings->getShowPossibleMoves()) {
             std::cout << "Possible Moves: " << std::endl;
 
             int i = 1;
@@ -321,7 +322,7 @@ void Gui::selectAFigure(Settings* settings) {
             std::cin >> choice;
 
             if(choice == "s" || choice == "S") {
-                return this->selectAFigure(settings);
+                return this->selectAFigure();
             } else {
                 Move* mv = validMoves->at(std::stoi(choice) - 1);
                 this->moveController->addMoveToHistory(mv);
@@ -373,7 +374,7 @@ void Gui::selectAFigure(Settings* settings) {
             std::cout << "Enter the end position (A1) or (S)elect another figure: ";
             std::cin >> choice;
             if(choice == "s" || choice == "S") {
-                return this->selectAFigure(settings);
+                return this->selectAFigure();
             } else {
                 Move* mv = nullptr;
                 for(Move* possible : *validMoves) {
@@ -384,7 +385,7 @@ void Gui::selectAFigure(Settings* settings) {
                 }
                 if(mv == nullptr) {
                     std::cout << "This is not a valid move!" << std::endl;
-                    return this->selectAFigure(settings);
+                    return this->selectAFigure();
                 } else {
                     this->moveController->addMoveToHistory(mv);
                     mv->execute();
@@ -438,8 +439,44 @@ bool Gui::isCheckmate() {
     return this->checkmate;
 }
 
+void Gui::clear() {
+    std::string os;
+    #ifdef _WIN32
+        os = "win";
+    #elif _WIN64
+        os = "win";
+    #elif __CYGWIN__
+        os = "win";
+    #elif unix
+        os = "unix";
+    #elif __unix
+        os = "unix";
+    #elif __unix__
+        os = "unix";
+    #elif __APPLE__
+        os = "mac";
+    #elif __MACH__
+        os = "mac";
+    #else
+        os = "undefined";
+    #endif
+
+    if(os != "undefined") {
+        if(os == "win") {
+            std::system("cls");
+        } else if(os == "unix") {
+            //std::cout << "\x1B[2J\x1B[H";
+            std::system("clear");
+        } else {
+            //std::cout << "\x1B[2J\x1B[H";
+            std::system("clear");
+        }
+    }
+}
+
 Gui::~Gui() {
     delete this->chessField;
     delete this->player1;
     delete this->player2;
+    delete this->settings;
 }
