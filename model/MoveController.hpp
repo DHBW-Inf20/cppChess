@@ -32,6 +32,7 @@ class MoveController {
         std::vector<Move*>* getPawnMoves(Pawn* pawn);
         std::vector<Move*>* getQueenMoves(Queen* queen);
         std::vector<Move*>* getRookMoves(Rook* rook);
+        bool compareMoves(Move* a, Move* b);
 };
 
 #endif //YETANOTHERCHESSGAME_MOVECONTROLLER_H

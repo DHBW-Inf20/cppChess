@@ -4,6 +4,8 @@
 
 #include "MoveController.hpp"
 
+#include <algorithm>
+
 MoveController::MoveController(Player* whitePlayer, Player* blackPlayer) {
     this->whitePlayer = whitePlayer;
     this->blackPlayer = blackPlayer;
@@ -62,6 +64,14 @@ std::vector<Move*>* MoveController::getPseudoLegalMovesForAll(std::vector<Figure
             allPseudoLegalMoves->push_back(move);
         }
     }
+    std::sort(allPseudoLegalMoves->begin(), allPseudoLegalMoves->end(), [](Move* a, Move* b) -> bool 
+    {
+        if (a->getEndHorizontalPosition() < b->getEndHorizontalPosition()) return true;
+        if (a->getEndHorizontalPosition() > b->getEndHorizontalPosition()) return false;
+        if (a->getEndVerticalPosition() < b->getEndVerticalPosition()) return true;
+        if (b->getEndVerticalPosition() > b->getEndVerticalPosition()) return false;
+        return false;
+    });
     return allPseudoLegalMoves;
 }
 
@@ -155,6 +165,14 @@ std::vector<Move*>* MoveController::getBishopMoves(Bishop* bishop) {
             breakPoint = true;
         } 
     }
+    std::sort(pseudoLegalMoves->begin(), pseudoLegalMoves->end(), [](Move* a, Move* b) -> bool 
+    {
+        if (a->getEndHorizontalPosition() < b->getEndHorizontalPosition()) return true;
+        if (a->getEndHorizontalPosition() > b->getEndHorizontalPosition()) return false;
+        if (a->getEndVerticalPosition() < b->getEndVerticalPosition()) return true;
+        if (b->getEndVerticalPosition() > b->getEndVerticalPosition()) return false;
+        return false;
+    });
     return pseudoLegalMoves;
 }
 
@@ -246,7 +264,14 @@ std::vector<Move*>* MoveController::getKingMoves(King* king) {
             pseudoLegalMoves->push_back(new Move(king, figHorizontalPosition, figVerticalPosition-1));
         }   
     }
-
+    std::sort(pseudoLegalMoves->begin(), pseudoLegalMoves->end(), [](Move* a, Move* b) -> bool 
+    {
+        if (a->getEndHorizontalPosition() < b->getEndHorizontalPosition()) return true;
+        if (a->getEndHorizontalPosition() > b->getEndHorizontalPosition()) return false;
+        if (a->getEndVerticalPosition() < b->getEndVerticalPosition()) return true;
+        if (b->getEndVerticalPosition() > b->getEndVerticalPosition()) return false;
+        return false;
+    });
     return pseudoLegalMoves;
 }
 
@@ -353,6 +378,14 @@ std::vector<Move*>* MoveController::getKnightMoves(Knight* knight) {
             }
         }
     }
+    std::sort(pseudoLegalMoves->begin(), pseudoLegalMoves->end(), [](Move* a, Move* b) -> bool 
+    {
+        if (a->getEndHorizontalPosition() < b->getEndHorizontalPosition()) return true;
+        if (a->getEndHorizontalPosition() > b->getEndHorizontalPosition()) return false;
+        if (a->getEndVerticalPosition() < b->getEndVerticalPosition()) return true;
+        if (b->getEndVerticalPosition() > b->getEndVerticalPosition()) return false;
+        return false;
+    });
     return pseudoLegalMoves;
 }
 
@@ -408,6 +441,14 @@ std::vector<Move*>* MoveController::getPawnMoves(Pawn* pawn) {
             pseudoLegalMoves->push_back(new Capture(pawn, opponent->getPieceAtPosition(figHorizontalPosition+1, figVerticalPosition-1)));
         }
     }
+    std::sort(pseudoLegalMoves->begin(), pseudoLegalMoves->end(), [](Move* a, Move* b) -> bool 
+    {
+        if (a->getEndHorizontalPosition() < b->getEndHorizontalPosition()) return true;
+        if (a->getEndHorizontalPosition() > b->getEndHorizontalPosition()) return false;
+        if (a->getEndVerticalPosition() < b->getEndVerticalPosition()) return true;
+        if (b->getEndVerticalPosition() > b->getEndVerticalPosition()) return false;
+        return false;
+    });
     return pseudoLegalMoves;
 }
 
@@ -569,6 +610,14 @@ std::vector<Move*>* MoveController::getQueenMoves(Queen* queen) {
             breakPoint = true;
         }
     }
+    std::sort(pseudoLegalMoves->begin(), pseudoLegalMoves->end(), [](Move* a, Move* b) -> bool 
+    {
+        if (a->getEndHorizontalPosition() < b->getEndHorizontalPosition()) return true;
+        if (a->getEndHorizontalPosition() > b->getEndHorizontalPosition()) return false;
+        if (a->getEndVerticalPosition() < b->getEndVerticalPosition()) return true;
+        if (b->getEndVerticalPosition() > b->getEndVerticalPosition()) return false;
+        return false;
+    });
     return pseudoLegalMoves;
 }
 
@@ -654,5 +703,13 @@ std::vector<Move*>* MoveController::getRookMoves(Rook* rook) {
             breakPoint = true;
         }
     }
+    std::sort(pseudoLegalMoves->begin(), pseudoLegalMoves->end(), [](Move* a, Move* b) -> bool 
+    {
+        if (a->getEndHorizontalPosition() < b->getEndHorizontalPosition()) return true;
+        if (a->getEndHorizontalPosition() > b->getEndHorizontalPosition()) return false;
+        if (a->getEndVerticalPosition() < b->getEndVerticalPosition()) return true;
+        if (b->getEndVerticalPosition() > b->getEndVerticalPosition()) return false;
+        return false;
+    });
     return pseudoLegalMoves;
 }

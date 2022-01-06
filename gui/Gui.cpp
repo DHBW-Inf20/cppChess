@@ -202,7 +202,12 @@ void Gui::selectAFigure(Settings* settings) {
                 if (chessField->getCurrentPlayer() == 1) {
                     std::vector<Move*>* nextPseudoLegalMoves = moveController->getPseudoLegalMovesForAll(this->player2->getUncapturedFigures());
                     if (checkController->validateMoves(nextPseudoLegalMoves)->empty()) {
-                        std::cout << "White won by checkmate!!!" << std::endl;
+                        std::vector<Player*> players {this->player2, this->player1};
+                        if (checkController->isCheck(&players)) {
+                            std::cout << "White won by checkmate!!!" << std::endl;
+                        } else {
+                            std::cout << "Draw by stalemate!!!" << std::endl;
+                        }
                         this->checkmate = true;
                     } else {
                         std::vector<Player*>* players = new std::vector<Player*>();
@@ -215,7 +220,12 @@ void Gui::selectAFigure(Settings* settings) {
                 } else {
                     std::vector<Move*>* nextPseudoLegalMoves = moveController->getPseudoLegalMovesForAll(this->player1->getUncapturedFigures());
                     if (checkController->validateMoves(nextPseudoLegalMoves)->empty()) {
-                        std::cout << "Black won by checkmate!!!" << std::endl;
+                        std::vector<Player*> players {this->player1, this->player2};
+                        if (checkController->isCheck(&players)) {
+                            std::cout << "Black won by checkmate!!!" << std::endl;
+                        } else {
+                            std::cout << "Draw by stalemate!!!" << std::endl;
+                        }
                         this->checkmate = true;
                     } else {
                         std::vector<Player*>* players = new std::vector<Player*>();
@@ -253,8 +263,13 @@ void Gui::selectAFigure(Settings* settings) {
                     if (chessField->getCurrentPlayer() == 1) {
                         std::vector<Move*>* nextPseudoLegalMoves = moveController->getPseudoLegalMovesForAll(this->player2->getUncapturedFigures());
                         if (checkController->validateMoves(nextPseudoLegalMoves)->empty()) {
+                            std::vector<Player*> players {this->player2, this->player1};
+                        if (checkController->isCheck(&players)) {
                             std::cout << "White won by checkmate!!!" << std::endl;
-                            this->checkmate = true;
+                        } else {
+                            std::cout << "Draw by stalemate!!!" << std::endl;
+                        }
+                        this->checkmate = true;
                         } else {
                             std::vector<Player*>* players = new std::vector<Player*>();
                             players->push_back(this->player2);
@@ -266,8 +281,13 @@ void Gui::selectAFigure(Settings* settings) {
                     } else {
                         std::vector<Move*>* nextPseudoLegalMoves = moveController->getPseudoLegalMovesForAll(this->player1->getUncapturedFigures());
                         if (checkController->validateMoves(nextPseudoLegalMoves)->empty()) {
+                            std::vector<Player*> players {this->player1, this->player2};
+                        if (checkController->isCheck(&players)) {
                             std::cout << "Black won by checkmate!!!" << std::endl;
-                            this->checkmate = true;
+                        } else {
+                            std::cout << "Draw by stalemate!!!" << std::endl;
+                        }
+                        this->checkmate = true;
                         } else {
                             std::vector<Player*>* players = new std::vector<Player*>();
                             players->push_back(this->player1);
