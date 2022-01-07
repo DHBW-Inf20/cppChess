@@ -5,6 +5,7 @@
 #include "MoveController.hpp"
 
 #include <algorithm>
+#include <iostream>
 
 MoveController::MoveController(Player* whitePlayer, Player* blackPlayer) {
     this->whitePlayer = whitePlayer;
@@ -22,7 +23,12 @@ Move* MoveController::getMoveAtIndex(int index) {
 }
 
 Move* MoveController::getLastMove() {
-    return this->moveHistory->at(this->moveHistory->size()-1);
+    if (this->moveHistory->size() > 0) {
+        return this->moveHistory->at(this->moveHistory->size()-1);
+    } else {
+        return nullptr;
+    }
+    
 }
 
 std::vector<Move*>* MoveController::getPseudoLegalMoves(Figure* figure) {
@@ -422,7 +428,19 @@ std::vector<Move*>* MoveController::getPawnMoves(Pawn* pawn) {
         if (opponent->hasFigureOnSquare(figHorizontalPosition+1, figVerticalPosition+1)) {
             pseudoLegalMoves->push_back(new Capture(pawn, opponent->getPieceAtPosition(figHorizontalPosition+1, figVerticalPosition+1)));
         }
-
+        //en Passant
+        if (Move* lastMove = this->getLastMove()) {
+            Figure* lastFigure = lastMove->getFigure();
+            if (Pawn* lastPawn = dynamic_cast<Pawn*>(lastFigure)) {
+                if ((lastMove->getStartHorizontalPosition() == pawn->getHorizontalPosition()+1) || (lastMove->getStartHorizontalPosition() == pawn->getHorizontalPosition()-1)) {
+                    if ((lastMove->getEndHorizontalPosition() == pawn->getHorizontalPosition()+1) || (lastMove->getEndHorizontalPosition() == pawn->getHorizontalPosition()-1)) {    
+                        if ((lastMove->getStartVerticalPosition() == pawn->getVerticalPosition()+2) && (lastMove->getEndVerticalPosition() == pawn->getVerticalPosition())) {
+                            pseudoLegalMoves->push_back(new EnPassant(pawn, lastPawn, pawn->getVerticalPosition()+1));
+                        }
+                    }
+                }
+            }
+        }
     } else {    //this->getIsWhite() == false
         //normaler Zug: eins vorwärts
         if (!owner->hasFigureOnSquare(figHorizontalPosition, figVerticalPosition-1) && !opponent->hasFigureOnSquare(figHorizontalPosition, figVerticalPosition-1)) {
@@ -439,6 +457,19 @@ std::vector<Move*>* MoveController::getPawnMoves(Pawn* pawn) {
         //gegnerische Figur (diagonal rechts) schlagen
         if (opponent->hasFigureOnSquare(figHorizontalPosition+1, figVerticalPosition-1)) {
             pseudoLegalMoves->push_back(new Capture(pawn, opponent->getPieceAtPosition(figHorizontalPosition+1, figVerticalPosition-1)));
+        }
+        //en Passant
+        if (Move* lastMove = this->getLastMove()) {
+            Figure* lastFigure = lastMove->getFigure();
+            if (Pawn* lastPawn = dynamic_cast<Pawn*>(lastFigure)) {
+                if ((lastMove->getStartHorizontalPosition() == pawn->getHorizontalPosition()+1) || (lastMove->getStartHorizontalPosition() == pawn->getHorizontalPosition()-1)) {
+                    if ((lastMove->getEndHorizontalPosition() == pawn->getHorizontalPosition()+1) || (lastMove->getEndHorizontalPosition() == pawn->getHorizontalPosition()-1)) {    
+                        if ((lastMove->getStartVerticalPosition() == pawn->getVerticalPosition()-2) && (lastMove->getEndVerticalPosition() == pawn->getVerticalPosition())) {
+                            pseudoLegalMoves->push_back(new EnPassant(pawn, lastPawn, pawn->getVerticalPosition()-1));
+                        }
+                    }
+                }
+            }
         }
     }
     std::sort(pseudoLegalMoves->begin(), pseudoLegalMoves->end(), [](Move* a, Move* b) -> bool 
