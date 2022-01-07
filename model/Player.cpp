@@ -133,22 +133,21 @@ void Player::setTimeMode(int timeMode) {
         this->moves = -1;
         this->timeToFinish = -1;
     } else if(this->timeMode == 5) {
-        this->time = 900000;
+        this->time = 1800000;
         this->extra_time = 10000;
         this->moves = -1;
         this->timeToFinish = -1;
     } else if(this->timeMode == 6) {
-        this->time = 5400000;
+        this->time = 7200000;
         this->extra_time = 30000;
         this->moves = 40;
-        this->timeToFinish = 1800000;
+        this->timeToFinish = 3600000;
     } else {
         this->time = 0;
         this->extra_time = 0;
         this->moves = -1;
         this->timeToFinish = -1;
     }
-    std::cout << this->time << this->extra_time << this->moves << this->timeToFinish << std::endl;
 }
 
 int Player::getTimeMode() {
