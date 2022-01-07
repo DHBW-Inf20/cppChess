@@ -186,6 +186,14 @@ long Player::getTime() {
     }
 }
 
+void Player::setTime(long time) {
+    if(this->moves != -1 && this->moves < this->numberOfMoves) {
+        this->timeToFinish = time;
+    } else {
+        this->time = time;
+    }
+}
+
 bool Player::timeIsOver() {
     if(this->timeMode == 3) {
         return false;

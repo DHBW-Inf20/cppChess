@@ -72,11 +72,14 @@ void Gui::loadAGame() {
         bool fileExists = this->importExport->exists();
 
         if(fileExists) {
-            // name of game in the first line
+            // meta-data in first line
             std::vector<std::vector<std::string>> data = this->importExport->importData();
             std::string first = data.at(0).at(0);
             int player = std::stoi(data.at(0).at(2));
             int timeMode = std::stoi(data.at(0).at(3));
+            this->player1->setTime(std::stoi(data.at(0).at(4)));
+            this->player2->setTime(std::stoi(data.at(0).at(4)));
+
             if(first != "YetAnotherChessGame") {
                 throw 1;
             }
@@ -155,6 +158,8 @@ void Gui::saveTheGame() {
             firstLine.push_back("1.0");
             firstLine.push_back(std::to_string(this->chessField->getCurrentPlayer()));
             firstLine.push_back(std::to_string(this->settings->getTimeMode()));
+            firstLine.push_back(std::to_string(this->player1->getTime()));
+            firstLine.push_back(std::to_string(this->player2->getTime()));
             data.push_back(firstLine);
 
             for(int i = 0; i<=7; i++) {

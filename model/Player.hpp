@@ -45,6 +45,7 @@ class Player {
         void start();
         void stop();
         long getTime();
+        void setTime(long time);
         bool timeIsOver();
 };
 
