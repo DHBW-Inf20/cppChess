@@ -19,3 +19,11 @@ bool Settings::getShowPossibleMoves() {
 void Settings::setShowPossibleMoves(bool showPossibleMoves) {
     this->showPossibleMoves = showPossibleMoves;
 }
+
+int Settings::getTimeMode() {
+    return this->timeMode;
+}
+
+void Settings::setTimeMode(int timeMode) {
+    this->timeMode = timeMode;
+}

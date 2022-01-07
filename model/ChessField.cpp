@@ -23,8 +23,10 @@ void ChessField::setCurrentPlayer(int player) {
 
 void ChessField::nextPlayer() {
     if(this->currentPlayer == 1) {
+        this->player1->stop();
         this->currentPlayer = 2;
     } else {
+        this->player2->stop();
         this->currentPlayer = 1;
     }
 }

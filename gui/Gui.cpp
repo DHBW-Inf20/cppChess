@@ -9,12 +9,14 @@
 
 Gui::Gui() {
     this->settings = new Settings();
-   this->resetChessField();
+    this->resetChessField();
 }
 
 void Gui::resetChessField() {
     this->player1 = new Player(true);
     this->player2 = new Player(false);
+    this->player1->setTimeMode(this->settings->getTimeMode());
+    this->player2->setTimeMode(this->settings->getTimeMode());
     this->chessField = new ChessField(this->player1, this->player2);
     this->moveController = new MoveController(this->player1, this->player2);
     this->checkController = new CheckController(this->player1, this->player2);
@@ -74,6 +76,7 @@ void Gui::loadAGame() {
             std::vector<std::vector<std::string>> data = this->importExport->importData();
             std::string first = data.at(0).at(0);
             int player = std::stoi(data.at(0).at(2));
+            int timeMode = std::stoi(data.at(0).at(3));
             if(first != "YetAnotherChessGame") {
                 throw 1;
             }
@@ -126,6 +129,7 @@ void Gui::loadAGame() {
                 column = 1;
             }
             this->chessField->setCurrentPlayer(player);
+            this->settings->setTimeMode(timeMode);
         } else {
             throw -1;
         }
@@ -150,6 +154,7 @@ void Gui::saveTheGame() {
             firstLine.push_back("YetAnotherChessGame");
             firstLine.push_back("1.0");
             firstLine.push_back(std::to_string(this->chessField->getCurrentPlayer()));
+            firstLine.push_back(std::to_string(this->settings->getTimeMode()));
             data.push_back(firstLine);
 
             for(int i = 0; i<=7; i++) {
@@ -194,7 +199,12 @@ void Gui::printSettings() {
         } else {
             std::cout << "* Press 2 to hide possible moves!                  *" << std::endl;
         }
-        std::cout << "* Press Q to return to the start menu!                        *" << std::endl;
+        std::cout << "* Set Time-Mode (Your choice: " << this->settings->getTimeMode() << "):                  *" << std::endl;
+        std::cout << "*     3 for none                                   *" << std::endl;
+        std::cout << "*     4 for blitz                                  *" << std::endl;
+        std::cout << "*     5 for rapid                                  *" << std::endl;
+        std::cout << "*     6 for classical                              *" << std::endl;
+        std::cout << "* Press Q to return to the start menu!             *" << std::endl;
         std::cout << "****************************************************" << std::endl;
         std::cout << "Your input: ";
         std::cin >> temp_input;
@@ -205,6 +215,11 @@ void Gui::printSettings() {
         if(temp_input == "2") {
             this->settings->setShowPossibleMoves(!this->settings->getShowPossibleMoves());
         }
+        if(temp_input == "3" || temp_input == "4" || temp_input == "5" || temp_input == "6") {
+            this->settings->setTimeMode(std::stoi(temp_input));
+        }
+        this->player1->setTimeMode(this->settings->getTimeMode());
+        this->player2->setTimeMode(this->settings->getTimeMode());
     } while (temp_input != "q" && temp_input != "Q");
 }
 
@@ -212,11 +227,24 @@ int Gui::printMenuInTheGame() {
     std::string temp_input;
     std::cout << "It's ";
     if (this->chessField->getCurrentPlayer() == 1) {
+        this->player1->start();
         std::cout << "White's";
+
+        if(this->settings->getTimeMode() == 3) {
+            std::cout << " turn now!" << std::endl;
+        } else {
+            std::cout << " turn now! He got " << (this->player1->getTime() / 1000) << "s time!" << std::endl;
+        }
     } else {
+        this->player2->start();
         std::cout << "Black's";
+
+        if(this->settings->getTimeMode() == 3) {
+            std::cout << " turn now!" << std::endl;
+        } else {
+            std::cout << " turn now! He got " << (this->player2->getTime() / 1000) << "s time!" << std::endl;
+        }
     }
-    std::cout << " turn now!" << std::endl;
     std::cout << "(S)elect figure, (C)ompare material, (Q)uit game!" << std::endl;
     std::cout << "Your input: ";
     std::cin >> temp_input;
@@ -328,6 +356,15 @@ void Gui::selectAFigure() {
                 this->moveController->addMoveToHistory(mv);
                 mv->execute();
                 std::cout << mv->getAsString() << std::endl;
+
+                if(this->player1->timeIsOver()) {
+                    std::cout << "Black won by TimeOver of white!" << std::endl;
+                    this->checkmate = true;
+                }
+                if(this->player2->timeIsOver()) {
+                    std::cout << "White won by TimeOver of black!" << std::endl;
+                    this->checkmate = true;
+                }
 
                 //verify, if an player is in check
                 if (chessField->getCurrentPlayer() == 1) {

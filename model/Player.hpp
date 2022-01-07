@@ -18,13 +18,14 @@
 class Player {
     private:
         bool isWhite;
-        Rook *firstRook, *secondRook;
-        Bishop *firstBishop, *secondBishop;
-        Knight *firstKnight, *secondKnight;
-        Queen *queen;
-        King *king;
         std::vector<Figure*> *figures = new std::vector<Figure*>;
-        std::vector<Pawn*> *pawns = new std::vector<Pawn*>;
+        int numberOfMoves;
+        long time;
+        int moves;
+        int timeToFinish;
+        long extra_time;
+        int timeMode = 3;
+        long startTime;
 
     public:
         Player(bool isWhite);
@@ -32,6 +33,8 @@ class Player {
         ~Player();
         void setIsWhite(bool isWhite);
         bool getIsWhite();
+        void setTimeMode(int timeMode);
+        int getTimeMode();
         std::vector<Figure*>* getAllFigures();
         std::vector<Figure*>* getUncapturedFigures();
         Figure* getPieceAtPosition(int horizontal, int vertical);
@@ -39,6 +42,10 @@ class Player {
         int getUncapturedMaterialValue();
         King* getKing();
         Player* clonePlayer();
+        void start();
+        void stop();
+        long getTime();
+        bool timeIsOver();
 };
 
 

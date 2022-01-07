@@ -4,6 +4,7 @@
 
 #include "Player.hpp"
 #include <iostream>
+#include <chrono>
 
 Player::Player(bool isWhite) {
     this->setIsWhite(isWhite);
@@ -120,5 +121,79 @@ King* Player::getKing() {
         return king;
     } else {
         return nullptr;
+    }
+}
+
+void Player::setTimeMode(int timeMode) {
+    this->timeMode = timeMode;
+    this->numberOfMoves = 0;
+    if(this->timeMode == 4) {
+        this->time = 180000;
+        this->extra_time = 2000;
+        this->moves = -1;
+        this->timeToFinish = -1;
+    } else if(this->timeMode == 5) {
+        this->time = 900000;
+        this->extra_time = 10000;
+        this->moves = -1;
+        this->timeToFinish = -1;
+    } else if(this->timeMode == 6) {
+        this->time = 5400000;
+        this->extra_time = 30000;
+        this->moves = 40;
+        this->timeToFinish = 1800000;
+    } else {
+        this->time = 0;
+        this->extra_time = 0;
+        this->moves = -1;
+        this->timeToFinish = -1;
+    }
+    std::cout << this->time << this->extra_time << this->moves << this->timeToFinish << std::endl;
+}
+
+int Player::getTimeMode() {
+    return this->timeMode;
+}
+
+void Player::start() {
+    std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
+    this->startTime = ms.count();
+}
+
+void Player::stop() {
+    if(this->timeMode != 3) {
+        std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
+        long diff = ms.count() - this->startTime;
+
+        if(this->moves != -1 && this->moves < this->numberOfMoves) {
+            this->timeToFinish = this->timeToFinish - diff + this->extra_time;
+        } else {
+            this->time = this->time - diff + this->extra_time;
+        }
+        this->numberOfMoves++;
+    }
+}
+
+long Player::getTime() {
+    if(this->timeMode == 3) {
+        return 0;
+    } else {
+        if(this->moves != -1 && this->moves < this->numberOfMoves) {
+            return this->timeToFinish;
+        } else {
+            return this->time;
+        }
+    }
+}
+
+bool Player::timeIsOver() {
+    if(this->timeMode == 3) {
+        return false;
+    } else {
+        if(this->moves != -1 && this->moves < this->numberOfMoves) {
+            return this->timeToFinish <= 0;
+        } else {
+            return this->time <= 0;
+        }
     }
 }
