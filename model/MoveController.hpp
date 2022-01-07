@@ -9,6 +9,7 @@
 #include "moves/Move.hpp"
 #include "moves/Capture.hpp"
 #include "moves/Castle.hpp"
+#include "moves/EnPassant.hpp"
 #include <vector>
 
 class MoveController {

@@ -238,7 +238,7 @@ int Gui::printMenuInTheGame() {
         if(this->settings->getTimeMode() == 3) {
             std::cout << " turn now!" << std::endl;
         } else {
-            std::cout << " turn now! He got " << (this->player1->getTime() / 1000) << "s time!" << std::endl;
+            std::cout << " turn now! He's got " << (this->player1->getTime() / 1000) << "s left!" << std::endl;
         }
     } else {
         this->player2->start();
@@ -247,7 +247,7 @@ int Gui::printMenuInTheGame() {
         if(this->settings->getTimeMode() == 3) {
             std::cout << " turn now!" << std::endl;
         } else {
-            std::cout << " turn now! He got " << (this->player2->getTime() / 1000) << "s time!" << std::endl;
+            std::cout << " turn now! He's got " << (this->player2->getTime() / 1000) << "s left!" << std::endl;
         }
     }
     std::cout << "(S)elect figure, (C)ompare material, (Q)uit game!" << std::endl;
@@ -360,14 +360,14 @@ void Gui::selectAFigure() {
                 Move* mv = validMoves->at(std::stoi(choice) - 1);
                 this->moveController->addMoveToHistory(mv);
                 mv->execute();
-                std::cout << mv->getAsString() << std::endl;
+                //std::cout << mv->getAsString() << std::endl;
 
                 if(this->player1->timeIsOver()) {
-                    std::cout << "Black won by TimeOver of white!" << std::endl;
+                    std::cout << "Black won by timeout!" << std::endl;
                     this->checkmate = true;
                 }
                 if(this->player2->timeIsOver()) {
-                    std::cout << "White won by TimeOver of black!" << std::endl;
+                    std::cout << "White won by timeout!" << std::endl;
                     this->checkmate = true;
                 }
 
