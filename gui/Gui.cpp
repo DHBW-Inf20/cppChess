@@ -366,7 +366,17 @@ void Gui::selectAFigure() {
 
             int i = 1;
             for(Move* possible : *validMoves) {
-                std::cout << i << ". " << convertPos(possible->getEndVerticalPosition(), possible->getEndHorizontalPosition()) << std::endl;
+                std::cout << i << ". ";
+                if (Castle* c = dynamic_cast<Castle*>(possible)) {
+                    if (c->getIsShort()) {
+                        std::cout << "O-O";
+                    } else {
+                        std::cout << "O-O-O";
+                    }
+                } else {
+                    std::cout << convertPos(possible->getEndVerticalPosition(), possible->getEndHorizontalPosition());
+                }
+                std::cout << std::endl;
                 i++;
             }
 
@@ -377,9 +387,20 @@ void Gui::selectAFigure() {
             if(choice == "s" || choice == "S") {
                 return this->selectAFigure();
             } else {
-                Move* mv = validMoves->at(std::stoi(choice) - 1);
-                this->moveController->addMoveToHistory(mv);
-                mv->execute();
+                try {
+                    int number = std::stoi(choice);
+                    if (number-1 <= validMoves->size()) {
+                        Move* mv = validMoves->at(number - 1);
+                        this->moveController->addMoveToHistory(mv);
+                        mv->execute();
+                    } else {
+                        std::cout << "Please enter a valid number (1,2,...)!" << std::endl;
+                        return this->selectAFigure();
+                    }
+                } catch(...) {
+                    std::cout << "This input is not valid!" << std::endl;
+                    return this->selectAFigure();
+                }
 
                 if(this->player1->timeIsOver()) {
                     std::cout << "Black won by timeout!" << std::endl;

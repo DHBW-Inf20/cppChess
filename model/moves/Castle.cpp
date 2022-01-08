@@ -4,46 +4,39 @@
 
 #include "Castle.hpp"
 
-Castle::Castle(King* king, int kingEndHorizontalPosition, int kingEndVerticalPosition, Rook* rook, int rookEndHorizontalPosition, int rookEndVerticalPosition) : Move(king, kingEndHorizontalPosition, kingEndVerticalPosition) {
-    this->setRook(rook);
-    this->setRookStartHorizontalPosition(rook->getHorizontalPosition());
-    this->setRookStartVerticalPosition(rook->getVerticalPosition());
-    this->setRookEndHorizontalPosition(rookEndHorizontalPosition);
-    this->setRookEndVerticalPosition(rookEndVerticalPosition);
+Castle::Castle(King* king, Rook* rook, bool isShort) : Move(king, -1, king->getVerticalPosition()) {
+    this->isShort = isShort;
+    this->rook = rook;
+    this->setRookEndVerticalPosition(rook->getVerticalPosition());
+    if (isShort) {
+        this->setEndHorizontalPosition(7);
+        this->setRookEndHorizontalPosition(6);
+    } else {
+        this->setEndHorizontalPosition(3);
+        this->setRookEndHorizontalPosition(4);
+    }
 }
 
 Castle::~Castle() {}
 
-void Castle::setRook(Rook* rook) {
-    this->rook = rook;
-}
-
-void Castle::setRookStartHorizontalPosition(int rookStartHorizontalPosition) {
-    this->rookStartHorizontalPosition = rookStartHorizontalPosition;
-}
-
-void Castle::setRookStartVerticalPosition(int rookStartVerticalPosition) {
-    this->rookStartVerticalPosition = rookStartVerticalPosition;
-}
-
-void Castle::setRookEndHorizontalPosition(int rookEndHorizontalPosition) {
-    this->rookEndHorizontalPosition = rookEndHorizontalPosition;
-}
-
-void Castle::setRookEndVerticalPosition(int rookEndVerticalPosition) {
-    this->rookEndVerticalPosition = rookEndVerticalPosition;
+King* Castle::getKing() {
+    return dynamic_cast<King*>(this->getFigure());
 }
 
 Rook* Castle::getRook() {
     return this->rook;
 }
 
-int Castle::getRookStartHorizontalPosition() {
-    return this->rookStartHorizontalPosition;
+bool Castle::getIsShort() {
+    return this->isShort;
 }
 
-int Castle::getRookStartVerticalPosition() {
-    return this->rookStartVerticalPosition;
+void Castle::setRookEndHorizontalPosition(int pos) {
+    this->rookEndHorizontalPosition = pos;
+}
+
+void Castle::setRookEndVerticalPosition(int pos) {
+    this->rookEndVerticalPosition = pos;
 }
 
 int Castle::getRookEndHorizontalPosition() {
@@ -52,4 +45,31 @@ int Castle::getRookEndHorizontalPosition() {
 
 int Castle::getRookEndVerticalPosition() {
     return this->rookEndVerticalPosition;
+}
+
+void Castle::execute() {
+    this->getKing()->setHorizontalPosition(this->getEndHorizontalPosition());
+    this->getKing()->setVerticalPosition(this->getEndVerticalPosition());
+    this->getKing()->incrementMoveCounter();
+
+    this->getRook()->setHorizontalPosition(this->getRookEndHorizontalPosition());
+    this->getRook()->setVerticalPosition(this->getRookEndVerticalPosition());
+    this->getRook()->incrementMoveCounter();
+}
+
+std::string Castle::getAsString() {
+    std::string outputString = "";
+    bool isWhite = this->getKing()->getIsWhite();
+    if (isWhite) {
+        outputString += "White ";
+    } else {
+        outputString += "Black ";
+    }
+    outputString += " castles ";
+    if (this->isShort) {
+        outputString += "short!";
+    } else {
+        outputString += "long!";
+    }
+    return outputString;
 }

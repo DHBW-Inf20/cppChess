@@ -13,24 +13,23 @@ class Castle : public Move {
 
     private:
         Rook* rook;
-        int rookStartHorizontalPosition;
-        int rookStartVerticalPosition;
+        bool isShort;
         int rookEndHorizontalPosition;
         int rookEndVerticalPosition;
-        void setRook(Rook* rook);
-        void setRookStartHorizontalPosition(int rookStartHorizontalPosition);
-        void setRookStartVerticalPosition(int rookStartVerticalPosition);
-        void setRookEndHorizontalPosition(int rookEndHorizontalPosition);
-        void setRookEndVerticalPosition(int rookEndVerticalPosition);
-
-    public:
-        Castle(King* king, int kingEndHorizontalPosition, int kingEndVerticalPosition, Rook* rook, int rookEndHorizontalPosition, int rookEndVerticalPosition);
-        ~Castle();
-        Rook* getRook();
-        int getRookStartHorizontalPosition();
-        int getRookStartVerticalPosition();
+        
+        void setRookEndHorizontalPosition(int pos);
+        void setRookEndVerticalPosition(int pos);
         int getRookEndHorizontalPosition();
         int getRookEndVerticalPosition();
+
+    public:
+        Castle(King* king, Rook* rook, bool isShort);
+        ~Castle();
+        bool getIsShort();
+        King* getKing();
+        Rook* getRook();
+        void execute();
+        std::string getAsString();
 };
 
 #endif //YETANOTHERCHESSGAME_CASTLE_H

@@ -270,6 +270,32 @@ std::vector<Move*>* MoveController::getKingMoves(King* king) {
             pseudoLegalMoves->push_back(new Move(king, figHorizontalPosition, figVerticalPosition-1));
         }   
     }
+    //Castle
+    if (king ->getMoveCounter() == 0) {
+        Player* owner;
+        if (king->getIsWhite()) {
+            owner = this->whitePlayer;
+        } else {
+            owner = this->blackPlayer;
+        }
+        if (std::vector<Rook*>* rooks = owner->getRooks()) {
+            for (Rook* rook : *rooks) {
+                if (rook->getMoveCounter() == 0) {
+                    int vertPos = king->getVerticalPosition();
+                    if (rook->getHorizontalPosition() == 1) {
+                        if (!whitePlayer->hasFigureOnSquare(2, vertPos) && !whitePlayer->hasFigureOnSquare(3, vertPos) && !whitePlayer->hasFigureOnSquare(4, vertPos) && !blackPlayer->hasFigureOnSquare(2, vertPos) && !blackPlayer->hasFigureOnSquare(3, vertPos) && !blackPlayer->hasFigureOnSquare(4, vertPos)) {
+                            pseudoLegalMoves->push_back(new Castle(king, rook, false));
+                        }
+                    } else {    //getHorizontalPosition() == 8
+                        if (!whitePlayer->hasFigureOnSquare(6, vertPos) && !whitePlayer->hasFigureOnSquare(7, vertPos) && !blackPlayer->hasFigureOnSquare(6, vertPos) && !blackPlayer->hasFigureOnSquare(7, vertPos)) {
+                            pseudoLegalMoves->push_back(new Castle(king, rook, true));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     std::sort(pseudoLegalMoves->begin(), pseudoLegalMoves->end(), [](Move* a, Move* b) -> bool 
     {
         if (a->getEndHorizontalPosition() < b->getEndHorizontalPosition()) return true;

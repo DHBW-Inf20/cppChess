@@ -26,7 +26,7 @@ int main () {
                 loaded = false;
                 do {
                     if (main_setting != 2) {
-                        gui->clear();
+                        //gui->clear();
                     }
                     gui->printChessField();
                     main_setting = gui->printMenuInTheGame();

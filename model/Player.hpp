@@ -41,6 +41,7 @@ class Player {
         Figure* hasFigureOnSquare(int horizontalPosition, int verticalPosition);
         int getUncapturedMaterialValue();
         King* getKing();
+        std::vector<Rook*>* getRooks();
         Player* clonePlayer();
         void start();
         void stop();

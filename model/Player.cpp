@@ -124,6 +124,21 @@ King* Player::getKing() {
     }
 }
 
+std::vector<Rook*>* Player::getRooks() {
+    std::vector<Rook*>* rooks = new std::vector<Rook*>();
+    std::vector<Figure*>* allUncapturedFigures = this->getUncapturedFigures();
+    for (Figure* f : *allUncapturedFigures) {
+        if (Rook* r = dynamic_cast<Rook*>(f)) {
+            rooks->push_back(r);
+        }
+    }
+    if (!rooks->empty()) {
+        return rooks;
+    } else {
+        return nullptr;
+    }
+}
+
 void Player::setTimeMode(int timeMode) {
     this->timeMode = timeMode;
     this->numberOfMoves = 0;

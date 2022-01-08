@@ -62,6 +62,19 @@ std::vector<Player*>* CheckController::getClonedPositionAfterMove(Move* move) {
 std::vector<Move*>* CheckController::validateMoves(std::vector<Move*>* moves) {
     std::vector<Move*>* validMoves = new std::vector<Move*>();
     for (Move* move : *moves) {
+        if (Castle* castle = dynamic_cast<Castle*>(move)) {
+            std::vector<Player*>* currentPosition;
+            if (castle->getKing()->getIsWhite()) {
+                currentPosition->push_back(this->whitePlayer);
+                currentPosition->push_back(this->blackPlayer);
+            } else {
+                currentPosition->push_back(this->blackPlayer);
+                currentPosition->push_back(this->whitePlayer);
+            }
+            if (this->isCheck(currentPosition)) {
+                break;
+            }
+        }
         std::vector<Player*>* clonedPosition = this->getClonedPositionAfterMove(move);
         if (!this->isCheck(clonedPosition)) {
             validMoves->push_back(move);
