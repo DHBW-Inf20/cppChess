@@ -62,7 +62,7 @@ endif
 define generateRules
 $(1)/%.o: %.cpp
 	@echo Building $$@
-	$(HIDE)$(CC) -c $$(INCLUDES) -o $$(subst /,$$(PSEP),$$@) $$(subst /,$$(PSEP),$$<) -MMD
+	$(HIDE)$(CC) -std=c++11 -c $$(INCLUDES) -o $$(subst /,$$(PSEP),$$@) $$(subst /,$$(PSEP),$$<) -MMD
 endef
 
 .PHONY: all clean directories
@@ -71,7 +71,7 @@ all: directories $(TARGET)
 
 $(TARGET): $(OBJECTS)
 	$(HIDE)echo Linking $@
-	$(HIDE)$(CC) $(OBJECTS) -o $(TARGET)
+	$(HIDE)$(CC) -std=c++11 $(OBJECTS) -o $(TARGET)
 
 # Include dependencies
 -include $(DEPS)
