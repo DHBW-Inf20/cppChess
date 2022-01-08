@@ -6,6 +6,7 @@
 
 #include "Gui.hpp"
 #include "../helper/Converter.hpp"
+#include <ctype.h>
 
 Gui::Gui() {
     this->settings = new Settings();
@@ -317,6 +318,10 @@ void Gui::selectAFigure() {
     std::string position;
     std::cout << "Select a figure by coordinates (A1): ";
     std::cin >> position;
+
+    if(!std::isalpha(position[0]) || !std::isdigit(position[1])) {
+        return this->selectAFigure();
+    }
 
     Player* current;
     if(this->chessField->getCurrentPlayer() == 1) {
