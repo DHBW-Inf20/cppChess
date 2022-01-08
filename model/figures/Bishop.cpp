@@ -6,9 +6,9 @@
 
 Bishop::Bishop(std::string name, bool isWhite, int horizontalPosition, int verticalPosition) : Figure (name, isWhite, horizontalPosition, verticalPosition, 3) {
     if(isWhite) {
-        this->icon = "\u265D";
-    } else {
         this->icon = "\u2657";
+    } else {
+        this->icon = "\u265D";
     }
 }
 

@@ -52,8 +52,8 @@ std::string printField(int horizontal, int vertical, Figure* figure, bool showIc
 bool ChessField::repaint(bool showIcons) {
     try {
         if(showIcons) {
-            std::cout << "    A   B   C   D   E   F   G   H" << std::endl;
-            std::cout << "  *********************************" << std::endl;
+            std::cout << "     A    B    C    D    E    F    G    H" << std::endl;
+            std::cout << "   ****************************************" << std::endl;
         } else {
             std::cout << "    A     B     C     D     E     F     G     H" << std::endl;
             std::cout << "   ************************************************" << std::endl;
@@ -84,13 +84,13 @@ bool ChessField::repaint(bool showIcons) {
             std::cout << "*" << std::endl;
 
             if(showIcons) {
-                std::cout << "  *********************************" << std::endl;
+                std::cout << "   ****************************************" << std::endl;
             } else {
                 std::cout << "   ************************************************" << std::endl;
             }
         }
         if(showIcons) {
-            std::cout << "    A   B   C   D   E   F   G   H" << std::endl;
+            std::cout << "     A    B    C    D    E    F    G    H" << std::endl;
         } else {
             std::cout << "    A     B     C     D     E     F     G     H" << std::endl;
         }

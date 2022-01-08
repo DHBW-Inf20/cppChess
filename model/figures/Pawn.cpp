@@ -6,9 +6,9 @@
 
 Pawn::Pawn(std::string name, bool isWhite, int horizontalPosition, int verticalPosition) : Figure (name, isWhite, horizontalPosition, verticalPosition, 1) {
     if(isWhite) {
-        this->icon = "\u265F";
-    } else {
         this->icon = "\u2659";
+    } else {
+        this->icon = "\u265F";
     }
 
     this->moveCounter = 0;
