@@ -314,14 +314,29 @@ void Gui::getMaterialComparison() {
     }
 }
 
+bool validInput(std::string input) {
+    if(!std::isalpha(input[0]) || !std::isdigit(input[1])) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+Figure* getFigure(Player* player, std::string input) {
+    if(!validInput(input)) {
+        return nullptr;
+    }
+
+    int horizontal = (int) convertHorizontal(input);
+    int vertical = (int) convertVertical(input);
+
+    return player->getPieceAtPosition(horizontal, vertical);
+}
+
 void Gui::selectAFigure() {
     std::string position;
     std::cout << "Select a figure by coordinates (A1): ";
     std::cin >> position;
-
-    if(!std::isalpha(position[0]) || !std::isdigit(position[1])) {
-        return this->selectAFigure();
-    }
 
     Player* current;
     if(this->chessField->getCurrentPlayer() == 1) {
@@ -330,7 +345,7 @@ void Gui::selectAFigure() {
         current = this->player2;
     }
 
-    Figure* selectedFigure = current->getPieceAtPosition((int) convertHorizontal(position), (int) convertVertical(position));
+    Figure* selectedFigure = getFigure(current, position);
     if(selectedFigure == nullptr) {
         std::cout << "You don't have a figure on this square!" << std::endl;
         return this->selectAFigure();
@@ -365,7 +380,6 @@ void Gui::selectAFigure() {
                 Move* mv = validMoves->at(std::stoi(choice) - 1);
                 this->moveController->addMoveToHistory(mv);
                 mv->execute();
-                //std::cout << mv->getAsString() << std::endl;
 
                 if(this->player1->timeIsOver()) {
                     std::cout << "Black won by timeout!" << std::endl;
@@ -424,10 +438,12 @@ void Gui::selectAFigure() {
                 return this->selectAFigure();
             } else {
                 Move* mv = nullptr;
-                for(Move* possible : *validMoves) {
-                    if((convertHorizontal(choice) == possible->getEndHorizontalPosition()) && (convertVertical(choice) == possible->getEndVerticalPosition())) {
-                        mv = possible;
-                        break;
+                if(validInput(choice)) {
+                    for(Move* possible : *validMoves) {
+                        if((convertHorizontal(choice) == possible->getEndHorizontalPosition()) && (convertVertical(choice) == possible->getEndVerticalPosition())) {
+                            mv = possible;
+                            break;
+                        }
                     }
                 }
                 if(mv == nullptr) {
@@ -436,7 +452,16 @@ void Gui::selectAFigure() {
                 } else {
                     this->moveController->addMoveToHistory(mv);
                     mv->execute();
-                    std::cout << mv->getAsString() << std::endl;
+
+                    if(this->player1->timeIsOver()) {
+                        std::cout << "Black won by timeout!" << std::endl;
+                        this->checkmate = true;
+                    }
+                    if(this->player2->timeIsOver()) {
+                        std::cout << "White won by timeout!" << std::endl;
+                        this->checkmate = true;
+                    }
+
                     //verify, if any player is in check
                     if (chessField->getCurrentPlayer() == 1) {
                         std::vector<Move*>* nextPseudoLegalMoves = moveController->getPseudoLegalMovesForAll(this->player2->getUncapturedFigures());
