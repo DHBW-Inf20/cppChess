@@ -3,7 +3,7 @@
 //
 
 #include <string>
-#include "gui/Gui.hpp"
+#include "Gui.hpp"
 
 int main () {
     Gui* gui = new Gui();
