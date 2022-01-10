@@ -205,11 +205,16 @@ void Gui::printSettings() {
         } else {
             std::cout << "* Press 2 to hide possible moves!                  *" << std::endl;
         }
+        if(!this->settings->getResetUI()) {
+            std::cout << "* Press 3 to enable UI clearing after every move!  *" << std::endl;
+        } else {
+            std::cout << "* Press 3 to disable UI clearing after every move! *" << std::endl;
+        }
         std::cout << "* Set Time-Mode (Your choice: " << this->settings->getTimeMode() << "):                  *" << std::endl;
-        std::cout << "*     3 for none                                   *" << std::endl;
-        std::cout << "*     4 for blitz                                  *" << std::endl;
-        std::cout << "*     5 for rapid                                  *" << std::endl;
-        std::cout << "*     6 for classical                              *" << std::endl;
+        std::cout << "*     4 for none                                   *" << std::endl;
+        std::cout << "*     5 for blitz                                  *" << std::endl;
+        std::cout << "*     6 for rapid                                  *" << std::endl;
+        std::cout << "*     7 for classical                              *" << std::endl;
         std::cout << "* Press Q to return to the start menu!             *" << std::endl;
         std::cout << "****************************************************" << std::endl;
         std::cout << "Your input: ";
@@ -221,7 +226,10 @@ void Gui::printSettings() {
         if(temp_input == "2") {
             this->settings->setShowPossibleMoves(!this->settings->getShowPossibleMoves());
         }
-        if(temp_input == "3" || temp_input == "4" || temp_input == "5" || temp_input == "6") {
+        if(temp_input == "3") {
+            this->settings->setResetUI(!this->settings->getResetUI());
+        }
+        if(temp_input == "4" || temp_input == "5" || temp_input == "6" || temp_input == "7") {
             this->settings->setTimeMode(std::stoi(temp_input));
         }
         this->player1->setTimeMode(this->settings->getTimeMode());
@@ -236,7 +244,7 @@ int Gui::printMenuInTheGame() {
         this->player1->start();
         std::cout << "White's";
 
-        if(this->settings->getTimeMode() == 3) {
+        if(this->settings->getTimeMode() == 4) {
             std::cout << " turn now!" << std::endl;
         } else {
             std::cout << " turn now! He's got " << (this->player1->getTime() / 1000) << "s left!" << std::endl;
@@ -245,7 +253,7 @@ int Gui::printMenuInTheGame() {
         this->player2->start();
         std::cout << "Black's";
 
-        if(this->settings->getTimeMode() == 3) {
+        if(this->settings->getTimeMode() == 4) {
             std::cout << " turn now!" << std::endl;
         } else {
             std::cout << " turn now! He's got " << (this->player2->getTime() / 1000) << "s left!" << std::endl;
@@ -334,6 +342,7 @@ Figure* getFigure(Player* player, std::string input) {
 }
 
 void Gui::selectAFigure() {
+
     std::string position;
     std::cout << "Select a figure by coordinates (A1): ";
     std::cin >> position;
@@ -404,7 +413,9 @@ void Gui::selectAFigure() {
                         Move* mv = validMoves->at(number - 1);
                         this->moveController->addMoveToHistory(mv);
                         mv->execute();
-                        //std::cout << mv->getAsString() << std::endl;
+                        if (!this->settings->getResetUI()) {
+                            std::cout << mv->getAsString() << std::endl;
+                        }
                         for (Move* m : *validMoves) {
                             delete(m);
                         }
@@ -506,7 +517,9 @@ void Gui::selectAFigure() {
                 } else {
                     this->moveController->addMoveToHistory(mv);
                     mv->execute();
-                    //std::cout << mv->getAsString() << std::endl;
+                    if (!this->settings->getResetUI()) {
+                        std::cout << mv->getAsString() << std::endl;
+                    }
 
                     for (Move* m : *validMoves) {
                         delete(m);
@@ -613,6 +626,10 @@ void Gui::clear() {
             std::system("clear");
         }
     }
+}
+
+Settings* Gui::getSettings() {
+    return this->settings;
 }
 
 Gui::~Gui() {

@@ -12,13 +12,16 @@ class Settings {
         void setShowIcons(bool showIcons);
         bool getShowPossibleMoves();
         void setShowPossibleMoves(bool showPossibleMoves);
+        bool getResetUI();
+        void setResetUI(bool resetUI);
         int getTimeMode();
         void setTimeMode(int timeMode);
 
     private:
         bool showIcons;
         bool showPossibleMoves;
-        int timeMode = 3;
+        bool resetUI;
+        int timeMode = 4;
 };
 
 

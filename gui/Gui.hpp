@@ -24,6 +24,7 @@ class Gui {
         void selectAFigure();
         bool isCheckmate();
         void clear();
+        Settings* getSettings();
         ~Gui();
 
     private:

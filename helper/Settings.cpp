@@ -20,6 +20,14 @@ void Settings::setShowPossibleMoves(bool showPossibleMoves) {
     this->showPossibleMoves = showPossibleMoves;
 }
 
+bool Settings::getResetUI() {
+    return this->resetUI;
+}
+
+void Settings::setResetUI(bool resetUI) {
+    this->resetUI = resetUI;
+}
+
 int Settings::getTimeMode() {
     return this->timeMode;
 }

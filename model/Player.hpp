@@ -24,7 +24,7 @@ class Player {
         int moves;
         int timeToFinish;
         long extra_time;
-        int timeMode = 3;
+        int timeMode = 4;
         long startTime;
 
     public:

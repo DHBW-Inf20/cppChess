@@ -25,8 +25,8 @@ int main () {
                 }
                 loaded = false;
                 do {
-                    if (main_setting != 2) {
-                        //gui->clear();
+                    if (main_setting != 2 && gui->getSettings()->getResetUI()) {
+                        gui->clear();
                     }
                     gui->printChessField();
                     main_setting = gui->printMenuInTheGame();
@@ -42,6 +42,7 @@ int main () {
                     }
                 } while (main_setting != -1 && !gui->isCheckmate());
                 main_setting = 1;
+                gui->clear();
                 break;
             case 2:
                 gui->loadAGame();

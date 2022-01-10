@@ -142,17 +142,17 @@ std::vector<Rook*>* Player::getRooks() {
 void Player::setTimeMode(int timeMode) {
     this->timeMode = timeMode;
     this->numberOfMoves = 0;
-    if(this->timeMode == 4) {
+    if(this->timeMode == 5) {
         this->time = 180000;
         this->extra_time = 2000;
         this->moves = -1;
         this->timeToFinish = -1;
-    } else if(this->timeMode == 5) {
+    } else if(this->timeMode == 6) {
         this->time = 1800000;
         this->extra_time = 10000;
         this->moves = -1;
         this->timeToFinish = -1;
-    } else if(this->timeMode == 6) {
+    } else if(this->timeMode == 7) {
         this->time = 7200000;
         this->extra_time = 30000;
         this->moves = 40;
@@ -175,7 +175,7 @@ void Player::start() {
 }
 
 void Player::stop() {
-    if(this->timeMode != 3) {
+    if(this->timeMode != 4) {
         std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
         long diff = ms.count() - this->startTime;
 
@@ -189,7 +189,7 @@ void Player::stop() {
 }
 
 long Player::getTime() {
-    if(this->timeMode == 3) {
+    if(this->timeMode == 4) {
         return 0;
     } else {
         if(this->moves != -1 && this->moves < this->numberOfMoves) {
@@ -209,7 +209,7 @@ void Player::setTime(long time) {
 }
 
 bool Player::timeIsOver() {
-    if(this->timeMode == 3) {
+    if(this->timeMode == 4) {
         return false;
     } else {
         if(this->moves != -1 && this->moves < this->numberOfMoves) {
