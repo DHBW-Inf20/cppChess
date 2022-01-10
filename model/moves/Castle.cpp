@@ -17,8 +17,6 @@ Castle::Castle(King* king, Rook* rook, bool isShort) : Move(king, -1, king->getV
     }
 }
 
-Castle::~Castle() {}
-
 King* Castle::getKing() {
     return dynamic_cast<King*>(this->getFigure());
 }

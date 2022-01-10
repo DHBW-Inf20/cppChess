@@ -24,12 +24,11 @@ class Castle : public Move {
 
     public:
         Castle(King* king, Rook* rook, bool isShort);
-        ~Castle();
         bool getIsShort();
         King* getKing();
         Rook* getRook();
-        void execute();
-        std::string getAsString();
+        void execute() override;
+        std::string getAsString() override;
 };
 
 #endif //YETANOTHERCHESSGAME_CASTLE_H

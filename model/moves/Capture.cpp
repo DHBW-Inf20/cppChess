@@ -13,10 +13,8 @@ Capture::Capture(Figure* figure, Figure* capturedFigure) : Move(figure, captured
     this->setCapturedFigure(capturedFigure);
 }
 
-Capture::~Capture() {}
-
-void Capture::setCapturedFigure(Figure* figure) {
-    this->capturedFigure = figure;
+void Capture::setCapturedFigure(Figure* capturedFigure) {
+    this->capturedFigure = capturedFigure;
 }
 
 Figure* Capture::getCapturedFigure() {

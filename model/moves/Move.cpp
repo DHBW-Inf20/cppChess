@@ -8,7 +8,6 @@
 #include "../figures/Rook.hpp"
 #include "../../helper/Converter.hpp"
 #include <string>
-#include <iostream>
 
 Move::Move(Figure* figure, int endHorizontalPosition, int endVerticalPosition) {
     this->setFigure(figure);

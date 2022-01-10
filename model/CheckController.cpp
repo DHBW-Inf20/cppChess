@@ -107,6 +107,11 @@ bool CheckController::isCheck(std::vector<Player*>* players) {
             return true;
         }
     }
+
+    delete(moveController);
+    for (Move* m : *allMoves) {
+        delete(m);
+    }
     
     return false;
 }

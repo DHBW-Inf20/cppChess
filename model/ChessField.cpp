@@ -52,47 +52,91 @@ std::string printField(int horizontal, int vertical, Figure* figure, bool showIc
 bool ChessField::repaint(bool showIcons) {
     try {
         if(showIcons) {
-            std::cout << "     A    B    C    D    E    F    G    H" << std::endl;
+            if (this->currentPlayer == 1) {
+                std::cout << "     A    B    C    D    E    F    G    H" << std::endl;
+            } else {
+                std::cout << "     H    G    F    E    D    C    B    A" << std::endl;
+            }
             std::cout << "   ****************************************" << std::endl;
         } else {
-            std::cout << "    A     B     C     D     E     F     G     H" << std::endl;
+            if (this->currentPlayer == 1) {
+                std::cout << "    A     B     C     D     E     F     G     H" << std::endl;
+            } else {
+                std::cout << "    H     G     F     E     D     C     B     A" << std::endl;
+            }
             std::cout << "   ************************************************" << std::endl;
         }
 
-
-        for(int row = 8; row >= 1; row--) {
-
-            std::cout << row << " ";
-            for(int column = 1; column <= 8; column++) {
-                Figure* f = nullptr;
-                for(Figure* figure : *this->player1->getUncapturedFigures()) {
-                    if(column == figure->getHorizontalPosition() && row == figure->getVerticalPosition()) {
-                        f = figure;
-                        break;
-                    }
-                }
-                if(f == nullptr) {
-                    for(Figure* figure : *this->player2->getUncapturedFigures()) {
+        if (this->currentPlayer == 1) {
+            for(int row = 8; row >= 1; row--) {
+                std::cout << row << " ";
+                for(int column = 1; column <= 8; column++) {
+                    Figure* f = nullptr;
+                    for(Figure* figure : *this->player1->getUncapturedFigures()) {
                         if(column == figure->getHorizontalPosition() && row == figure->getVerticalPosition()) {
                             f = figure;
                             break;
                         }
                     }
+                    if(f == nullptr) {
+                        for(Figure* figure : *this->player2->getUncapturedFigures()) {
+                            if(column == figure->getHorizontalPosition() && row == figure->getVerticalPosition()) {
+                                f = figure;
+                                break;
+                            }
+                        }
+                    }
+                    std::cout << " * " << printField(column, row, f, showIcons) << " ";
                 }
-                std::cout << " * " << printField(column, row, f, showIcons) << " ";
+                std::cout << "*" << std::endl;
+                if (showIcons) {
+                    std::cout << "   ****************************************" << std::endl;
+                } else {
+                    std::cout << "   ************************************************" << std::endl;
+                }
             }
-            std::cout << "*" << std::endl;
-
-            if(showIcons) {
-                std::cout << "   ****************************************" << std::endl;
-            } else {
-                std::cout << "   ************************************************" << std::endl;
+        } else {
+            for(int row = 1; row <= 8; row++) {
+                std::cout << row << " ";
+                for(int column = 8; column >= 1; column--) {
+                    Figure* f = nullptr;
+                    for(Figure* figure : *this->player1->getUncapturedFigures()) {
+                        if(column == figure->getHorizontalPosition() && row == figure->getVerticalPosition()) {
+                            f = figure;
+                            break;
+                        }
+                    }
+                    if(f == nullptr) {
+                        for(Figure* figure : *this->player2->getUncapturedFigures()) {
+                            if(column == figure->getHorizontalPosition() && row == figure->getVerticalPosition()) {
+                                f = figure;
+                                break;
+                            }
+                        }
+                    }
+                    std::cout << " * " << printField(column, row, f, showIcons) << " ";
+                }
+                std::cout << "*" << std::endl;
+                if (showIcons) {
+                    std::cout << "   ****************************************" << std::endl;
+                } else {
+                    std::cout << "   ************************************************" << std::endl;
+                }
             }
         }
+        
         if(showIcons) {
-            std::cout << "     A    B    C    D    E    F    G    H" << std::endl;
+            if (this->currentPlayer == 1) {
+                std::cout << "     A    B    C    D    E    F    G    H" << std::endl;
+            } else {
+                std::cout << "     H    G    F    E    D    C    B    A" << std::endl;
+            }
         } else {
-            std::cout << "    A     B     C     D     E     F     G     H" << std::endl;
+            if (this->currentPlayer == 1) {
+                std::cout << "    A     B     C     D     E     F     G     H" << std::endl;
+            } else {
+                std::cout << "    H     G     F     E     D     C     B     A" << std::endl;
+            }
         }
     } catch(std::exception *ex) {
         std::cout << ex->what() << std::endl;
