@@ -37,7 +37,7 @@ CC = g++
 ifeq ($(OS),Windows_NT)
     RM = del /F /Q
     RMDIR = -RMDIR /S /Q
-    MKDIR = mkdir
+    MKDIR = -mkdir
     ERRIGNORE = 2>nul
     SEP=\\
 else
