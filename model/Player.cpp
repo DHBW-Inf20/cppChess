@@ -42,6 +42,13 @@ Player::Player(bool isWhite, std::vector<Figure*>* inputFigures) {
     }
 }
 
+Player::~Player() {
+    for (Figure* figure: *figures) {
+        delete(figure);
+    }
+    figures->clear();
+}
+
 void Player::setIsWhite(bool isWhite) {
     this->isWhite = isWhite;
 }
@@ -67,8 +74,7 @@ std::vector<Figure*>* Player::getUncapturedFigures() {
 
 Figure* Player::hasFigureOnSquare(int horizontalPosition, int verticalPosition) {
     std::vector<Figure*>* uncapturedFigures = this->getUncapturedFigures();
-    for (int i = 0; i < uncapturedFigures->size(); i++) {
-        Figure* f = uncapturedFigures->at(i);
+    for (Figure* f : *uncapturedFigures) {
         if ((f->getHorizontalPosition() == horizontalPosition) && (f->getVerticalPosition() == verticalPosition)) {
             return f;
         }
@@ -76,16 +82,10 @@ Figure* Player::hasFigureOnSquare(int horizontalPosition, int verticalPosition) 
     return nullptr;
 }
 
-Player::~Player() {
-    for (Figure* figure: *figures) {
-        delete(figure);
-    }
-}
-
 Figure* Player::getPieceAtPosition(int horizontal, int vertical) {
-    std::vector<Figure*>* allFigures = this->getAllFigures();
+    std::vector<Figure*>* allFigures = this->getUncapturedFigures();
     for(Figure* figure : *allFigures) {
-        if(figure->getNotCaptured() && figure->getHorizontalPosition() == horizontal && figure->getVerticalPosition() == vertical) {
+        if(figure->getHorizontalPosition() == horizontal && figure->getVerticalPosition() == vertical) {
             return figure;
         }
     }

@@ -14,12 +14,11 @@ class EnPassant : public Move {
 
     public:
         EnPassant(Pawn* figure, Pawn* capturedFigure, int endVerticalPosition);
-        ~EnPassant();
         Pawn* getPawn();
         void setCapturedPawn(Pawn* figure);
         Pawn* getCapturedPawn();
-        std::string getAsString();
-        void execute();
+        std::string getAsString() override;
+        void execute() override;
 };
 
 #endif //YETANOTHERCHESSGAME_ENPASSANT_H

@@ -15,10 +15,9 @@ class Capture : public Move {
 
     public:
         Capture(Figure* figure, Figure* capturedFigure);
-        ~Capture();
         Figure* getCapturedFigure();
-        std::string getAsString();
-        void execute();
+        std::string getAsString() override;
+        void execute() override;
 };
 
 #endif //YETANOTHERCHESSGAME_CAPTURE_H

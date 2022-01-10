@@ -9,8 +9,6 @@ EnPassant::EnPassant(Pawn* figure, Pawn* capturedFigure, int endVerticalPosition
     this->setCapturedPawn(capturedFigure);
 }
 
-EnPassant::~EnPassant() {}
-
 void EnPassant::setCapturedPawn(Pawn* figure) {
     this->capturedPawn = figure;
 }
