@@ -78,10 +78,13 @@ std::vector<Move*>* CheckController::validateMoves(std::vector<Move*>* moves) {
         std::vector<Player*>* clonedPosition = this->getClonedPositionAfterMove(move);
         if (!this->isCheck(clonedPosition)) {
             validMoves->push_back(move);
+        } else {
+            delete(move);
         }
         for (Player* p: *clonedPosition) {
             delete(p);
         }
+        std::vector<Player*>().swap(*clonedPosition);
     }
     return validMoves;
 }
@@ -112,6 +115,7 @@ bool CheckController::isCheck(std::vector<Player*>* players) {
     for (Move* m : *allMoves) {
         delete(m);
     }
+    std::vector<Move*>().swap(*allMoves);
     
     return false;
 }

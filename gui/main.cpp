@@ -25,7 +25,7 @@ int main () {
                 }
                 loaded = false;
                 do {
-                    if (main_setting != 2 && gui->getSettings()->getResetUI()) {
+                    if (main_setting != 2 && gui->getSettings()->getResetUI() && !gui->isCheckmate()) {
                         gui->clear();
                     }
                     gui->printChessField();

@@ -72,16 +72,20 @@ bool ChessField::repaint(bool showIcons) {
                 std::cout << row << " ";
                 for(int column = 1; column <= 8; column++) {
                     Figure* f = nullptr;
-                    for(Figure* figure : *this->player1->getUncapturedFigures()) {
+                    std::vector<Figure*>* figures = this->player1->getUncapturedFigures();
+                    for(Figure* figure : *figures) {
                         if(column == figure->getHorizontalPosition() && row == figure->getVerticalPosition()) {
                             f = figure;
+                            std::vector<Figure*>().swap(*figures);
                             break;
                         }
                     }
                     if(f == nullptr) {
-                        for(Figure* figure : *this->player2->getUncapturedFigures()) {
+                        figures = this->player2->getUncapturedFigures();
+                        for(Figure* figure : *figures) {
                             if(column == figure->getHorizontalPosition() && row == figure->getVerticalPosition()) {
                                 f = figure;
+                                std::vector<Figure*>().swap(*figures);
                                 break;
                             }
                         }
@@ -100,16 +104,20 @@ bool ChessField::repaint(bool showIcons) {
                 std::cout << row << " ";
                 for(int column = 8; column >= 1; column--) {
                     Figure* f = nullptr;
-                    for(Figure* figure : *this->player1->getUncapturedFigures()) {
+                    std::vector<Figure*>* figures = this->player1->getUncapturedFigures();
+                    for(Figure* figure : *figures) {
                         if(column == figure->getHorizontalPosition() && row == figure->getVerticalPosition()) {
                             f = figure;
+                            std::vector<Figure*>().swap(*figures);
                             break;
                         }
                     }
                     if(f == nullptr) {
+                        figures = this->player2->getUncapturedFigures();
                         for(Figure* figure : *this->player2->getUncapturedFigures()) {
                             if(column == figure->getHorizontalPosition() && row == figure->getVerticalPosition()) {
                                 f = figure;
+                                std::vector<Figure*>().swap(*figures);
                                 break;
                             }
                         }

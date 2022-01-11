@@ -46,7 +46,7 @@ void tokenize(std::string const &str, const char delim,std::vector<std::string> 
     out.push_back(str.substr(lastPos, pos - lastPos));
 }
 
-std::vector <std::vector<std::string>> ImportExport::importData() {
+std::vector<std::vector<std::string>> ImportExport::importData() {
     std::vector<std::vector<std::string>> data;
     std::ifstream stream;
     stream.open(this->path);

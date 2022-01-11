@@ -46,7 +46,7 @@ Player::~Player() {
     for (Figure* figure: *figures) {
         delete(figure);
     }
-    figures->clear();
+    std::vector<Figure*>().swap(*figures);
 }
 
 void Player::setIsWhite(bool isWhite) {
