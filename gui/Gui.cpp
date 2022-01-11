@@ -139,7 +139,6 @@ void Gui::loadAGame() {
         } else {
             throw -1;
         }
-        this->chessField->repaint(this->settings->getShowIcons());
     } catch(int data) {
         std::cout << "Loading the game failed! Please enter a valid path!" << std::endl;
     }
@@ -369,7 +368,8 @@ void Gui::selectAFigure() {
         for (Move* m : *moves) {
             delete(m);
         }
-        std::vector<Move*>().swap(*moves);
+        moves->clear();
+        moves->shrink_to_fit();
 
         if(validMoves->empty()) {
             std::cout << "There are no moves for this figure!" << std::endl;
@@ -406,7 +406,8 @@ void Gui::selectAFigure() {
                 for (Move *m : *validMoves) {
                     delete(m);
                 }
-                std::vector<Move*>().swap(*validMoves);
+                validMoves->clear();
+                validMoves->shrink_to_fit();
                 return this->selectAFigure();
             } else {
                 try {
@@ -421,21 +422,24 @@ void Gui::selectAFigure() {
                         for (Move* m : *validMoves) {
                             delete(m);
                         }
-                        std::vector<Move*>().swap(*validMoves);
+                        validMoves->clear();
+                        validMoves->shrink_to_fit();
                     } else {
                         std::cout << "Please enter a valid number (1,2,...)!" << std::endl;
                         for (Move* m : *validMoves) {
                             delete(m);
                         }
-                        std::vector<Move*>().swap(*validMoves);
+                        validMoves->clear();
+                        validMoves->shrink_to_fit();
                         return this->selectAFigure();
                     }
                 } catch(...) {
                     std::cout << "This input is not valid!" << std::endl;
                     for (Move* m : *validMoves) {
-                            delete(m);
-                        }
-                    std::vector<Move*>().swap(*validMoves);
+                        delete(m);
+                    }
+                    validMoves->clear();
+                    validMoves->shrink_to_fit();
                     return this->selectAFigure();
                 }
 
@@ -468,7 +472,8 @@ void Gui::selectAFigure() {
                         if (checkController->isCheck(players)) {
                             std::cout << "Attention, Black: You are in check!" << std::endl;
                         }
-                        std::vector<Player*>().swap(*players);
+                        players->clear();
+                        players->shrink_to_fit();
                     }
                     for (Move* m : *nextPseudoLegalMoves) {
                         delete(m);
@@ -476,9 +481,12 @@ void Gui::selectAFigure() {
                     for (Move* m : *notCheckMoves) {
                         delete(m);
                     }
-                    std::vector<Figure*>().swap(*uncapturedFigures);
-                    std::vector<Move*>().swap(*nextPseudoLegalMoves);
-                    std::vector<Move*>().swap(*notCheckMoves);
+                    uncapturedFigures->clear();
+                    uncapturedFigures->shrink_to_fit();
+                    nextPseudoLegalMoves->clear();
+                    nextPseudoLegalMoves->shrink_to_fit();
+                    notCheckMoves->clear();
+                    notCheckMoves->shrink_to_fit();
                 } else {
                     std::vector<Figure*>* uncapturedFigures = this->player1->getUncapturedFigures();
                     std::vector<Move*>* nextPseudoLegalMoves = moveController->getPseudoLegalMovesForAll(uncapturedFigures);
@@ -491,7 +499,8 @@ void Gui::selectAFigure() {
                             std::cout << "Draw by stalemate!!!" << std::endl;
                         }
                         this->printChessField();
-                        std::vector<Player*>().swap(players);
+                        players.clear();
+                        players.shrink_to_fit();
                         this->checkmate = true;
                     } else {
                         std::vector<Player*>* players = new std::vector<Player*>();
@@ -500,7 +509,8 @@ void Gui::selectAFigure() {
                         if (checkController->isCheck(players)) {
                             std::cout << "Attention, White: You are in check!" << std::endl;
                         }
-                        std::vector<Player*>().swap(*players);
+                        players->clear();
+                        players->shrink_to_fit();
                     }
                     for (Move* m : *nextPseudoLegalMoves) {
                         delete(m);
@@ -508,8 +518,12 @@ void Gui::selectAFigure() {
                     for (Move* m : *notCheckMoves) {
                         delete(m);
                     }
-                    std::vector<Move*>().swap(*nextPseudoLegalMoves);
-                    std::vector<Move*>().swap(*notCheckMoves);
+                    uncapturedFigures->clear();
+                    uncapturedFigures->shrink_to_fit();
+                    nextPseudoLegalMoves->clear();
+                    nextPseudoLegalMoves->shrink_to_fit();
+                    notCheckMoves->clear();
+                    notCheckMoves->shrink_to_fit();
                 }
                 this->chessField->nextPlayer();
             }
@@ -521,7 +535,8 @@ void Gui::selectAFigure() {
                 for (Move* m : *validMoves) {
                     delete(m);
                 }
-                std::vector<Move*>().swap(*validMoves);
+                validMoves->clear();
+                validMoves->shrink_to_fit();
                 return this->selectAFigure();
             } else {
                 Move* mv = nullptr;
@@ -538,7 +553,8 @@ void Gui::selectAFigure() {
                     for (Move* m : *validMoves) {
                         delete(m);
                     }
-                    std::vector<Move*>().swap(*validMoves);
+                    validMoves->clear();
+                    validMoves->shrink_to_fit();
                     return this->selectAFigure();
                 } else {
                     this->moveController->addMoveToHistory(mv);
@@ -549,7 +565,8 @@ void Gui::selectAFigure() {
                     for (Move* m : *validMoves) {
                         delete(m);
                     }
-                    std::vector<Move*>().swap(*validMoves);
+                    validMoves->clear();
+                    validMoves->shrink_to_fit();
 
                     if(this->player1->timeIsOver()) {
                         std::cout << "Black won by timeout!" << std::endl;
@@ -574,7 +591,8 @@ void Gui::selectAFigure() {
                             }
                             this->printChessField();
                             this->checkmate = true;
-                            std::vector<Player*>().swap(players);
+                            players.clear();
+                            players.shrink_to_fit();
                         } else {
                             std::vector<Player*>* players = new std::vector<Player*>();
                             players->push_back(this->player2);
@@ -582,7 +600,8 @@ void Gui::selectAFigure() {
                             if (checkController->isCheck(players)) {
                                 std::cout << "Attention, Black: You are in check!" << std::endl;
                             }
-                            std::vector<Player*>().swap(*players);
+                            players->clear();
+                            players->shrink_to_fit();
                         }
                         for (Move* m : *nextPseudoLegalMoves) {
                             delete(m);
@@ -590,9 +609,12 @@ void Gui::selectAFigure() {
                         for (Move* m : *notCheckMoves) {
                             delete(m);
                         }
-                        std::vector<Move*>().swap(*nextPseudoLegalMoves);
-                        std::vector<Move*>().swap(*notCheckMoves);
-                        std::vector<Figure*>().swap(*blackFigures);
+                        nextPseudoLegalMoves->clear();
+                        nextPseudoLegalMoves->shrink_to_fit();
+                        notCheckMoves->clear();
+                        notCheckMoves->shrink_to_fit();
+                        blackFigures->clear();
+                        blackFigures->shrink_to_fit();
                     } else {
                         std::vector<Figure*>* whiteFigures = player1->getUncapturedFigures();
                         std::vector<Move*>* nextPseudoLegalMoves = moveController->getPseudoLegalMovesForAll(whiteFigures);
@@ -605,15 +627,18 @@ void Gui::selectAFigure() {
                                 std::cout << "Draw by stalemate!!!" << std::endl;
                             }
                             this->checkmate = true;
-                            std::vector<Player*>().swap(players);
-                        } else {
+                            this->printChessField();
+                            players.clear();
+                            players.shrink_to_fit();
+                        } else { 
                             std::vector<Player*>* players = new std::vector<Player*>();
                             players->push_back(this->player1);
                             players->push_back(this->player2);
                             if (checkController->isCheck(players)) {
                                 std::cout << "Attention, White: You are in check!" << std::endl;
                             }
-                            std::vector<Player*>().swap(*players);
+                            players->clear();
+                            players->shrink_to_fit();
                         }
                         for (Move* m : *nextPseudoLegalMoves) {
                             delete(m);
@@ -621,9 +646,12 @@ void Gui::selectAFigure() {
                         for (Move* m : *notCheckMoves) {
                             delete(m);
                         }
-                        std::vector<Move*>().swap(*nextPseudoLegalMoves);
-                        std::vector<Move*>().swap(*notCheckMoves);
-                        std::vector<Figure*>().swap(*whiteFigures);
+                        nextPseudoLegalMoves->clear();
+                        nextPseudoLegalMoves->shrink_to_fit();
+                        notCheckMoves->clear();
+                        notCheckMoves->shrink_to_fit();
+                        whiteFigures->clear();
+                        whiteFigures->shrink_to_fit();
                     }
                     this->chessField->nextPlayer();
                 }

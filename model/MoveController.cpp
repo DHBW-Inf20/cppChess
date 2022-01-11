@@ -443,7 +443,7 @@ std::vector<Move*>* MoveController::getPawnMoves(Pawn* pawn) {
             pseudoLegalMoves->push_back(new Move(pawn, figHorizontalPosition, figVerticalPosition+1));
         }
         //noch nicht gezogen: zwei vorwärts
-        if (pawn->getMoveCounter() == 0 && !owner->hasFigureOnSquare(figHorizontalPosition, figVerticalPosition+2) && !opponent->hasFigureOnSquare(figHorizontalPosition, figVerticalPosition+2)) {
+        if (pawn->getMoveCounter() == 0 && !owner->hasFigureOnSquare(figHorizontalPosition, figVerticalPosition+2) && !opponent->hasFigureOnSquare(figHorizontalPosition, figVerticalPosition+2) && !owner->hasFigureOnSquare(figHorizontalPosition, figVerticalPosition+1) && !opponent->hasFigureOnSquare(figHorizontalPosition, figVerticalPosition+1)) {
             pseudoLegalMoves->push_back(new Move(pawn, figHorizontalPosition, figVerticalPosition+2));
         }
         //gegnerische Figur (diagonal links) schlagen
@@ -473,7 +473,7 @@ std::vector<Move*>* MoveController::getPawnMoves(Pawn* pawn) {
             pseudoLegalMoves->push_back(new Move(pawn, figHorizontalPosition, figVerticalPosition-1));
         }
         //noch nicht gezogen: zwei vorwärts
-        if (pawn->getMoveCounter() == 0 && !owner->hasFigureOnSquare(figHorizontalPosition, figVerticalPosition-2) && !opponent->hasFigureOnSquare(figHorizontalPosition, figVerticalPosition-2)) {
+        if (pawn->getMoveCounter() == 0 && !owner->hasFigureOnSquare(figHorizontalPosition, figVerticalPosition-2) && !opponent->hasFigureOnSquare(figHorizontalPosition, figVerticalPosition-2) && !owner->hasFigureOnSquare(figHorizontalPosition, figVerticalPosition-1) && !opponent->hasFigureOnSquare(figHorizontalPosition, figVerticalPosition-1)) {
             pseudoLegalMoves->push_back(new Move(pawn, figHorizontalPosition, figVerticalPosition-2));
         }
         //gegnerische Figur (diagonal links) schlagen
