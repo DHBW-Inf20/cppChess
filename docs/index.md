@@ -53,5 +53,11 @@ There is always the option to view the current material comparison. Each figure 
 
 The orientation of the board adapts to the player, who has the move. Therefore, the board rotates after every move. The players get a notification when they are in check. If a checkmate or stalemate is on the board, the game ends and the result is announced. <br>
 
+## Development and Modeling
+The source code is divided into three packages: model, gui and helper. <br>
+* model: The different types of chess figures (pawn, bishop, knight, rook, queen, king) are modeled by different classes, which all derive from the base class "Figure". All figure classes are gathered in the folder "figures". The different types of moves (move, capture, castle, en passant) are also modeled by different classes, which all derive from the base class "Move". They are gathered in the folder "moves". The class "MoveController" calculates all the pseudo-legal moves for a figure. Pseudo-legal moves are moves, which would be legal, if there was no restriction to keeping the king out of check. The class "CheckController" determines, whether a move is really valid by calculating, if the king would be in check after the move was played. The class "Player" holds references to all its figures and also stores information about the player like colour and time left. The class "ChessField" holds the information, which player has the turn. Its also needed to repaint the chess board. <br>
+* gui: The class "Gui" is responsible for communicating with the users. It calls the repaint method and prints various menus like the start menu and the settings menu. It can also clear the console. <br>
+* helper: The class "Converter" is needed to convert alphabetic inputs ("A2") into numbers ("12"). The class "Settings" saves all the decisions made in the settings menu. The class "ImportExport" is needed to import and export chess games. <br>
+
 ## License
 The Project is licensed under the General Public License V3.
