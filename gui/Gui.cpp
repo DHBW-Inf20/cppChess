@@ -28,6 +28,7 @@ void Gui::resetChessField() {
  * Prints the header of the game!
  */
 void Gui::printWelcomeScreen() {
+    this->clear();
     std::cout << "Welcome to YetAnotherChessGame V1.0!" << std::endl;
 }
 
@@ -590,6 +591,7 @@ void Gui::selectAFigure() {
                                 std::cout << "Draw by stalemate!!!" << std::endl;
                             }
                             this->printChessField();
+                            std::cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - -" << std::endl;
                             this->checkmate = true;
                             players.clear();
                             players.shrink_to_fit();
@@ -628,6 +630,7 @@ void Gui::selectAFigure() {
                             }
                             this->checkmate = true;
                             this->printChessField();
+                            std::cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - -" << std::endl;
                             players.clear();
                             players.shrink_to_fit();
                         } else { 
