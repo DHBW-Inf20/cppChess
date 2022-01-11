@@ -1,5 +1,6 @@
 # YetAnotherChessGame
-YetAnotherChessGame is a chess game for the command-line.
+YetAnotherChessGame is a chess game for the command-line. <br>
+Project participants: Dominic Joas & Jannik Dürr
 
 ## Build the Game
 
