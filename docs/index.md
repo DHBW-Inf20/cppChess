@@ -4,10 +4,10 @@ YetAnotherChessGame is a chess game for the command-line.
 ## Build the Game
 
 ### Requirements
-You need an active installation of the C++-Compiler gcc and make.
+You need an active installation of the C++ compiler gcc and make.
 
 ### Call Make to build the game
-Call Make with the option -f to add the makefile in the root of the project as param and use .PHONY as target.<br>
+Call make with the option -f to add the makefile in the root of the project as param and use .PHONY as target.<br>
 ```makefile
 make -f MAKEFILE .PHONY
 ```
@@ -16,16 +16,16 @@ make -f MAKEFILE .PHONY
 verbose=1<br>Enables the verbose-mode<br>
 
 target_file=[file.exe]<br>Path to the output of the build-process - in this case file.exe. 
-If not set, the File is called YetAnotherChessGame.exe and is saved the project root.
+If not set, the file is called YetAnotherChessGame.exe and is saved the project root.
 
 ## Documentation
 
-### Main-Screen 
+### Start Menu 
 Press:<br>
- 1: Start a new Game.<br>
- 2: Load a Game.<br>
+ 1: Start a new game.<br>
+ 2: Load a game.<br>
  S: Open the settings.<br>
- Q: Quit the Game.<br>
+ Q: Quit the game.<br>
 
 ### Settings
 Press:<br>
@@ -33,10 +33,10 @@ Press:<br>
 2: Show the possible moves after selecting a figure. This is recommended for beginners.<br>
 3: Enable UI clearing after every move. <br>
 4-7: Time control modes: <br>
-&nbsp;4. None: Both players have as much time as they want. <br>
-&nbsp;5. Blitz: 3min per player, 2s increment per move. <br>
-&nbsp;6. Rapid: 30min per player, 10s increment per move. <br>
-&nbsp;7. Classical: 2h per player for 40 moves, 30s increment per move. Then 1h for the rest of the game, no increment. <br>
+* 4. None: Both players have as much time as they want. <br>
+* 5. Blitz: 3min per player, 2s increment per move. <br>
+* 6. Rapid: 30min per player, 10s increment per move. <br>
+* 7. Classical: 2h per player for 40 moves, 30s increment per move. Then 1h for the rest of the game, no increment. <br>
 
 ### Input & Output
 It is possible to save and load chess games. <br> 
@@ -60,4 +60,4 @@ The source code is divided into three packages: model, gui and helper. <br>
 * helper: The class "Converter" is needed to convert alphabetic inputs ("A2") into numbers ("12"). The class "Settings" saves all the decisions made in the settings menu. The class "ImportExport" is needed to import and export chess games. <br>
 
 ## License
-The Project is licensed under the General Public License V3.
+The project is licensed under the General Public License V3.
