@@ -22,6 +22,7 @@ class MoveController {
         void addMoveToHistory(Move* move);
         Move* getMoveAtIndex(int index);
         Move* getLastMove();
+        int getMoveCount();
 
     private:
         Player* whitePlayer;

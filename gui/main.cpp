@@ -25,7 +25,7 @@ int main () {
                 }
                 loaded = false;
                 do {
-                    if (main_setting != 2 && gui->getSettings()->getResetUI()) {
+                    if (main_setting != 2 && main_setting != 4 && gui->getSettings()->getResetUI()) {
                         gui->clear();
                     }
                     gui->printChessField();
@@ -38,6 +38,8 @@ int main () {
                         } else if(main_setting == 3) {
                             gui->saveTheGame();
                             main_setting = -1;
+                        } else if (main_setting == 4) {
+                            gui->printLastMoves();
                         }
                     }
                 } while (main_setting != -1 && !gui->isCheckmate());

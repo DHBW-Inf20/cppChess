@@ -84,7 +84,8 @@ std::vector<Move*>* CheckController::validateMoves(std::vector<Move*>* moves) {
         for (Player* p: *clonedPosition) {
             delete(p);
         }
-        std::vector<Player*>().swap(*clonedPosition);
+        clonedPosition->clear();
+        clonedPosition->shrink_to_fit();
     }
     return validMoves;
 }
@@ -115,7 +116,8 @@ bool CheckController::isCheck(std::vector<Player*>* players) {
     for (Move* m : *allMoves) {
         delete(m);
     }
-    std::vector<Move*>().swap(*allMoves);
+    allMoves->clear();
+    allMoves->shrink_to_fit();
     
     return false;
 }

@@ -12,14 +12,28 @@ MoveController::MoveController(Player* whitePlayer, Player* blackPlayer) {
     this->blackPlayer = blackPlayer;
 }
 
-MoveController::~MoveController() {}
+MoveController::~MoveController() {
+    for (Move* m : *moveHistory) {
+        delete(m);
+    }
+    moveHistory->clear();
+    moveHistory->shrink_to_fit();
+}
 
 void MoveController::addMoveToHistory(Move* move) {
     this->moveHistory->push_back(move);
 }
 
 Move* MoveController::getMoveAtIndex(int index) {
-    return this->moveHistory->at(index);
+    if (index >= 0 && index < this->moveHistory->size()) {
+        if (Move* m = this->moveHistory->at(index)) {
+            return m;
+        } else {
+            return nullptr;
+        }
+    } else {
+        return nullptr;
+    }  
 }
 
 Move* MoveController::getLastMove() {
@@ -28,7 +42,10 @@ Move* MoveController::getLastMove() {
     } else {
         return nullptr;
     }
-    
+}
+
+int MoveController::getMoveCount() {
+    return this->moveHistory->size();
 }
 
 std::vector<Move*>* MoveController::getPseudoLegalMoves(Figure* figure) {

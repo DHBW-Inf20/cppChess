@@ -21,6 +21,7 @@ class Gui {
         void loadAGame();
         void saveTheGame();
         void getMaterialComparison();
+        void printLastMoves();
         void selectAFigure();
         bool isCheckmate();
         void clear();

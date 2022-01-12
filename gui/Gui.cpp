@@ -39,8 +39,8 @@ void Gui::printWelcomeScreen() {
 int Gui::printMainMenu() {
     std::string temp_input;
     std::cout << "**************************************************" << std::endl;
-    std::cout << "* Press 1 to start a new Game!                   *" << std::endl;
-    std::cout << "* Press 2 to load a Game!                        *" << std::endl;
+    std::cout << "* Press 1 to start a new game!                   *" << std::endl;
+    std::cout << "* Press 2 to load a game!                        *" << std::endl;
     std::cout << "* Press s to enter the settings!                 *" << std::endl;
     std::cout << "* Press q to quit the game!                      *" << std::endl;
     std::cout << "**************************************************" << std::endl;
@@ -68,7 +68,7 @@ void Gui::printChessField() {
 void Gui::loadAGame() {
     try {
         std::string path;
-        std::cout << "Enter a path to a valid Game-File: ";
+        std::cout << "Enter a path to a valid game-file: ";
         std::cin >> path;
         this->importExport = new ImportExport(path, ';');
         bool fileExists = this->importExport->exists();
@@ -201,9 +201,9 @@ void Gui::printSettings() {
     do {
         std::cout << "****************************************************" << std::endl;
         if(!this->settings->getShowIcons()) {
-            std::cout << "* Press 1 to show Icons instead of names in field! *" << std::endl;
+            std::cout << "* Press 1 to show icons instead of figure names! *" << std::endl;
         } else {
-            std::cout << "* Press 1 to show names instead of icons in field! *" << std::endl;
+            std::cout << "* Press 1 to show figure names instead of icons! *" << std::endl;
         }
         if(!this->settings->getShowPossibleMoves()) {
             std::cout << "* Press 2 to show possible moves!                  *" << std::endl;
@@ -215,7 +215,7 @@ void Gui::printSettings() {
         } else {
             std::cout << "* Press 3 to disable UI clearing after every move! *" << std::endl;
         }
-        std::cout << "* Set Time-Mode (Your choice: " << this->settings->getTimeMode() << "):                  *" << std::endl;
+        std::cout << "* Set time control (current choice: " << this->settings->getTimeMode() << "):                  *" << std::endl;
         std::cout << "*     4 for none                                   *" << std::endl;
         std::cout << "*     5 for blitz                                  *" << std::endl;
         std::cout << "*     6 for rapid                                  *" << std::endl;
@@ -264,7 +264,7 @@ int Gui::printMenuInTheGame() {
             std::cout << " turn now! He's got " << (this->player2->getTime() / 1000) << "s left!" << std::endl;
         }
     }
-    std::cout << "(S)elect figure, (C)ompare material, (Q)uit game!" << std::endl;
+    std::cout << "(S)elect figure, (C)ompare material, (L)ast Moves, (Q)uit game!" << std::endl; 
     std::cout << "Your input: ";
     std::cin >> temp_input;
 
@@ -286,7 +286,10 @@ int Gui::printMenuInTheGame() {
         } else {
             return this->printMenuInTheGame();
         }
-    } else {
+    } else if (temp_input == "L" || temp_input == "l") {
+        return 4;
+    } 
+    else {
         std::cout << "No valid input!" << std::endl;
         return this->printMenuInTheGame();
     }
@@ -325,6 +328,32 @@ void Gui::getMaterialComparison() {
     } else {
         std::cout << "There is equal material on the board!" << std::endl;
     }
+}
+
+void Gui::printLastMoves() {
+    int size = moveController->getMoveCount();
+    if (size > 0) {
+        std::cout << "This are the last moves:" << std::endl;
+        for (int i = 0; i < size; i++) {
+            if (Move* m = moveController->getMoveAtIndex(i)) {
+                std::string startPos = convertPos(m->getStartVerticalPosition(), m->getStartHorizontalPosition());
+                std::string endPos = convertPos(m->getEndVerticalPosition(), m->getEndHorizontalPosition());
+                if (i % 2 == 0) {
+                    std::cout << (i/2)+1 << ". " << startPos << endPos;
+                    if (i ==  size-1) {
+                        std::cout << std::endl;
+                    }
+                } else {
+                    std::cout << " " << startPos << endPos << std::endl;
+                }
+            } else {
+                std::cout << "Move not found...";
+            }
+        }
+    } else {
+        std::cout << "No moves have been played yet!" << std::endl;
+    }
+    
 }
 
 bool validInput(std::string input) {
@@ -366,11 +395,6 @@ void Gui::selectAFigure() {
     } else {
         std::vector<Move*>* moves = this->moveController->getPseudoLegalMoves(selectedFigure);
         std::vector<Move*>* validMoves = this->checkController->validateMoves(moves);
-        for (Move* m : *moves) {
-            delete(m);
-        }
-        moves->clear();
-        moves->shrink_to_fit();
 
         if(validMoves->empty()) {
             std::cout << "There are no moves for this figure!" << std::endl;
@@ -381,7 +405,7 @@ void Gui::selectAFigure() {
 
         // list all Moves
         if(this->settings->getShowPossibleMoves()) {
-            std::cout << "Possible Moves: " << std::endl;
+            std::cout << "Possible moves: " << std::endl;
 
             int i = 1;
             for(Move* possible : *validMoves) {
@@ -421,7 +445,9 @@ void Gui::selectAFigure() {
                             std::cout << mv->getAsString() << std::endl;
                         }
                         for (Move* m : *validMoves) {
-                            delete(m);
+                            if (m != mv) {
+                                 delete(m);
+                            }
                         }
                         validMoves->clear();
                         validMoves->shrink_to_fit();
@@ -500,6 +526,7 @@ void Gui::selectAFigure() {
                             std::cout << "Draw by stalemate!!!" << std::endl;
                         }
                         this->printChessField();
+                        std::cout << "- - - - - - - - - - - - - - - - - - - - - - - - - - -" << std::endl;
                         players.clear();
                         players.shrink_to_fit();
                         this->checkmate = true;
@@ -564,7 +591,9 @@ void Gui::selectAFigure() {
                         std::cout << mv->getAsString() << std::endl;
                     }
                     for (Move* m : *validMoves) {
-                        delete(m);
+                        if (m != mv) {
+                            delete(m);
+                        }
                     }
                     validMoves->clear();
                     validMoves->shrink_to_fit();
